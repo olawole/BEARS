@@ -18,7 +18,7 @@ public class Project implements IProject {
 	@Override
 	public void add(WorkItem wItem) {
 		if (workItems.containsKey(wItem.getItemId())) {
-            throw new IllegalArgumentException("This Work Item already exists: "
+            throw new IllegalArgumentException("This Work Item already exists in the project: "
                     + wItem);
         }
         workItems.put(wItem.getItemId(), wItem);		
@@ -31,6 +31,9 @@ public class Project implements IProject {
 
 	@Override
 	public void setWorkItems(HashMap<String, WorkItem> workItems) {
+		if (workItems == null){
+			throw new IllegalArgumentException("Null Work item set");
+		}
 		this.workItems = workItems;
 	}
 
@@ -41,6 +44,9 @@ public class Project implements IProject {
 
 	@Override
 	public void setNumberOfIterations(int numberOfIterations) {
+		if (numberOfIterations < 0){
+			throw new IllegalArgumentException("Number of iteration must be positive");
+		}
 		this.numberOfIterations = numberOfIterations;
 		
 	}

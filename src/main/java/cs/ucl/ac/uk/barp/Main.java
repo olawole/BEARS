@@ -26,11 +26,11 @@ public class Main {
 	static String algorithmType;
 	
 	public Main() {
-		filename = "usample.csv";
-		noOfReleases = 5;
+		filename = "council1.csv";
+		noOfReleases = 3;
 		noOfInvestmentHorizon = 8;
-		capacity = new double[]{50,50,50,40,40};
-		interestRate = 0.002;
+		capacity = new double[]{600,800,800};
+		interestRate = 0.02;
 		distributionType = "Normal";
 		algorithmType = ConfigSetting.DEFAULT_APRROX_ALGORITHM;
 	}
@@ -50,7 +50,7 @@ public class Main {
 		List<IntegerSolution> solutions = optimisation.run();
 		OptimalSolutions optimal = new OptimalSolutions();
 		new ScatterPlotView(optimal);
-		new RoadMapView(optimal, noOfReleases);
+		new RoadMapView(optimal, noOfReleases, filename);
 		new BarChartView(optimal, noOfReleases);
 		optimal.setSolutions(solutions, project);
 		InformationValueAnalyser.computeInformationValue(optimal, project.getWorkItems());	

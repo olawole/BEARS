@@ -1,59 +1,23 @@
 package cs.ucl.ac.uk.barp.optimization;
 
 import java.util.Arrays;
-import java.util.Map;
-
 import org.apache.commons.math3.distribution.NormalDistribution;
-
-import cs.ucl.ac.uk.barp.project.utilities.StatUtil;
-
 
 /**
  * @author David Stefan
  */
-public class InformationAnalysis {
+public class InformationValue {
 
-	
-	/**
-	 * This method computes the expected value of total perfect information (evtpi). evtpi gives an upper bound to the information that would result from additional data collection and analysis
-	 * @param nbs simulation matrix of the specified information value objective. 
-	 * @return returns the computed evpi value.
-	 * @throws Exception 
-	 */
     public static double evpi(double[][] nbs) throws Exception {
-    	double evtpi = VectorUtils.mean(VectorUtils.colMax(nbs)) - VectorUtils.max(VectorUtils.rowMeans(nbs));
-    	if (evtpi == 0.0){
-    		return VectorUtils.mean(VectorUtils.colMax(nbs)) - VectorUtils.max(VectorUtils.rowMeans(nbs));
-    	}
-        return evtpi;
+        return VectorUtils.mean(VectorUtils.colMax(nbs)) - VectorUtils.max(VectorUtils.rowMeans(nbs));
     }
-    /**
-	 * This method computes the expected value of partial perfect information (evppi). evppi gives an upper bound to how much we should pay to reduce uncertainty about a model parameter.
-	 * @param param model parameter for which we intend to reduce uncertainty.
-	 * @param nbs simulation matrix of the specified information value objective. 
-	 * @return returns the computed evppi value.
-     * @throws Exception 
-	 */
+
     public static double evppi(double[] param, double[][] nbs) throws Exception {
-    	if (param == null){
-    		//During parsing, we populate the list of parameter varibles, but when a paramter (e.g. Cost_OrderChunking[Order Chunking]) is not part of the selected optimal solutions, 
-    		//its simData will be null during the simulation done for computing evtp and evppi. Thus added this check
-    		return 0;
-    	}
-    	double [][] nbs_copy = new double [nbs.length][nbs[0].length];
-    	for (int i =0; i <nbs.length;i ++ ){
-			for (int j = 0 ; j < nbs[0].length; j ++){
-				nbs_copy[i][j] = nbs[i][j];
-			}
-		}
-    	return evppi_changes_nbs(param, nbs_copy);
-    }
-    private static double evppi_changes_nbs(double[] param, double[][] nbs) throws Exception {
 
         // Check if param has at least 100 samples
-//        if (param.length < 100) {
-//            throw new Exception("Too few samples for conducting the simulation.");
-//        }
+        if (param.length < 100) {
+            throw new Exception("Too few samples.");
+        }
 
         // Ensure parameter is stochastic.
         double val = param[0];
@@ -66,29 +30,33 @@ public class InformationAnalysis {
             }
         }
         
-        /*
+        double[][] y = new double[nbs.length][];
+        for (int i =0; i <nbs.length;i ++ ){
+			y[i] = nbs[i];
+		}
+
         if (!isStochastic) {
-            throw new ParameterNotSctochasticException("Input parameter is not stochastic.");
-        }*/
+            throw new Exception("Input parameter is not stochastic.");
+        }
 
         int n = param.length;
-        int d = nbs.length;
+        int d = y.length;
 
         // Ensure input parameter and net benefit matrix have the same number of samples.
-        if (nbs[0].length != n) {
-            throw new Exception("Input parameter and simulation matrix must have the same dimension.");
+        if (y[0].length != n) {
+            throw new Exception("Input parameter and net benefits matrix must have the same dimension.");
         }
 
         // Sort param and nbs by param
-        VectorUtils.quickSortPivot(param, nbs);
+        VectorUtils.quickSortPivot(param, y);
 
         // If nbs has one row only, add row of zeros
         if (d == 1) {
             double[] zeros = VectorUtils.zeros(n);
-            nbs = MatrixUtils.addRow(nbs, zeros);
+            y = MatrixUtils.addRow(y, zeros);
         }
 
-        // Create segmentation templatexxxxxxx
+        // Create segmentation template
         int[][] nSegs = new int[d][d];
 
         for (int[] row : nSegs) {
@@ -102,7 +70,7 @@ public class InformationAnalysis {
 
             for (int j = i + 1; j < d; j++) {
 
-                double[] cm = VectorUtils.div(VectorUtils.cumsum(VectorUtils.diff(nbs[i], nbs[j])), n);
+                double[] cm = VectorUtils.div(VectorUtils.cumsum(VectorUtils.diff(y[i], y[j])), n);
 
                 if (nSegs[i][j] == 1) {
 
@@ -135,7 +103,7 @@ public class InformationAnalysis {
 
         if (segPoints.length > 0) {
 
-            VectorUtils.quickSort(segPoints);
+        	VectorUtils.quickSort(segPoints);
 
             // Copy segmentation points into an array extended by 0 at the start
             // and n - 1 at the end
@@ -153,7 +121,7 @@ public class InformationAnalysis {
 
                 double max = Double.NEGATIVE_INFINITY;
 
-                for (double[] nb : nbs) {
+                for (double[] nb : y) {
                     double sum = 0.0;
                     for (int l = segPoints2[j] + 1; l < segPoints2[j + 1] + 1; l++) {
                         sum += nb[l];
@@ -164,7 +132,7 @@ public class InformationAnalysis {
                 evppi = evppi + max / n;
             }
 
-            double[] means = VectorUtils.rowMeans(nbs);
+            double[] means = VectorUtils.rowMeans(y);
             double max = VectorUtils.max(means);
 
             evppi = evppi - max;
@@ -173,7 +141,7 @@ public class InformationAnalysis {
             evppi = 0;
         }
 
-        return StatUtil.round(evppi, 8);
+        return evppi;
     }
 
     /**
@@ -208,9 +176,9 @@ public class InformationAnalysis {
             }
         }
 
-       /* if (!isStochastic) {
-            throw new ParameterNotSctochasticException("Input parameter is not stochastic.");
-        }*/
+        if (!isStochastic) {
+            throw new Exception("Input parameter is not stochastic.");
+        }
 
         int N = param.length;
         int d = NB.length;
@@ -349,3 +317,4 @@ public class InformationAnalysis {
         return res / N;
     }
 }
+

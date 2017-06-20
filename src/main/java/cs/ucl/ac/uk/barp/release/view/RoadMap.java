@@ -36,7 +36,7 @@ public class RoadMap {
 	    return null;
 	}
 	
-	public void writeDot1(String filename){
+	public void writeDot(String filename){
 		HashMap<Integer, String> rank = new HashMap<Integer, String>();
 		String all = "";
 		String lastNode = "";
@@ -113,7 +113,7 @@ public class RoadMap {
 		}
 		dotString += "}";
 		try {
-			FileWriter output = new FileWriter(ConfigSetting.DOT_DIRECTORY + filename+".dot");
+			FileWriter output = new FileWriter(filename+".dot");
 			output.write(dotString);
 			output.close();
 		} catch (IOException e) {

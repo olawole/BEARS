@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import cs.ucl.ac.uk.barp.distribution.Distribution;
 import cs.ucl.ac.uk.barp.workitem.WorkItem;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
+import cs.ucl.ac.uk.barp.project.utilities.StatUtil;
 
 
 public class MCSimulator {
@@ -22,32 +23,28 @@ public class MCSimulator {
 				Distribution effort = wItem.getEffort();
 				double[][] valuesim = new double[ConfigSetting.NUMBER_OF_SIMULATION][period];
 				double[] effortSim = new double[ConfigSetting.NUMBER_OF_SIMULATION];
-				double sum = 0;
-				double sumVal = 0;
-				//double[] avgsim = new double[period];
+				double[] avgValueSim = new double[ConfigSetting.NUMBER_OF_SIMULATION];
 				for(int j = 0; j < ConfigSetting.NUMBER_OF_SIMULATION; j++){ //create samples without loop
 					valuesim[j] = value.sample(period);
+					avgValueSim[j] = Math.abs(StatUtil.mean(valuesim[j]));
 					effortSim[j] = Math.abs(effort.sample());
-					sum += effortSim[j];
-					sumVal += Math.abs(valuesim[j][0]);
 				}
 				
 				wItem.setValueSimulation(valuesim);
-				wItem.setAverageValue(sumVal / ConfigSetting.NUMBER_OF_SIMULATION);
+				wItem.setAverageSimulation(avgValueSim);
+				wItem.setAverageValue(StatUtil.mean(avgValueSim));
 				wItem.setEffortSimulation(effortSim);
-				wItem.setAverageEffort(sum / ConfigSetting.NUMBER_OF_SIMULATION);
+				wItem.setAverageEffort(StatUtil.mean(effortSim));
 				wItem.setPriority(wItem.getAverageValue() / wItem.getAverageEffort());
 			}
 			else {
 				Distribution effort = wItem.getEffort();
 				double[] effortSim = new double[ConfigSetting.NUMBER_OF_SIMULATION];
-				double sum = 0;
 				for(int j = 0; j < ConfigSetting.NUMBER_OF_SIMULATION; j++){ //create samples without loop
 					effortSim[j] = Math.abs(effort.sample());
-					sum += effortSim[j];
 				}
 				wItem.setEffortSimulation(effortSim);
-				wItem.setAverageEffort(sum / ConfigSetting.NUMBER_OF_SIMULATION);
+				wItem.setAverageEffort(StatUtil.mean(effortSim));
 				wItem.setAverageValue(0);
 				wItem.setPriority(wItem.getAverageValue() / wItem.getAverageEffort());
 			}

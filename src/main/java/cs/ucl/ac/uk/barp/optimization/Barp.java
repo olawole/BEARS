@@ -13,7 +13,7 @@ import cs.ucl.ac.uk.barp.workitem.WorkItem;
 import cs.ucl.ac.uk.barp.project.Project;
 
 
-public class Barp  extends AbstractIntegerProblem {
+public class Barp extends AbstractIntegerProblem {
 
 	/**
 	 * 

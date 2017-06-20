@@ -28,7 +28,18 @@ public class OptimalSolutions {
 		optimalSol.forEach(solution -> {
 			addReleasePlan(solution, projectId);
 		});
+		removeDuplicate();
 		findParetoOptimal();
+	}
+	
+	public void removeDuplicate(){
+		List<ReleasePlan> sol = new ArrayList<ReleasePlan>(solutions);
+		solutions = new ArrayList<ReleasePlan>();
+		sol.forEach(plan->{
+			if (!contains(plan)){
+				solutions.add(plan);
+			}
+		});
 	}
 
 	public void addEvppi(String label, double value) {
@@ -58,7 +69,7 @@ public class OptimalSolutions {
 	}
 
 	public void findParetoOptimal() {
-		List<ReleasePlan> rPlans = solutions;
+		List<ReleasePlan> rPlans = new ArrayList<ReleasePlan>(solutions);
 		solutions = new ArrayList<ReleasePlan>();
 		for (int i = 0; i < rPlans.size(); i++) {
 			boolean pareto = true;
@@ -70,7 +81,7 @@ public class OptimalSolutions {
 					break;
 				}
 			}
-			if (pareto && !solutions.contains(rPlans.get(i))) {
+			if (pareto) {
 				solutions.add(rPlans.get(i));
 			}
 		}
@@ -105,7 +116,24 @@ public class OptimalSolutions {
 
 		return dominate;
 	}
-
+	
+	public boolean isEqual(ReleasePlan plan1, ReleasePlan plan2){
+		boolean equal = false;
+		if (plan1.getBusinessValue() == plan2.getBusinessValue()
+				&& plan1.getInvestmentRisk() == plan2.getInvestmentRisk()) {
+			equal = true;
+		}
+		return equal;
+	}
+	
+	public boolean contains(ReleasePlan plan){
+		for (ReleasePlan p : solutions){
+			if (isEqual(p, plan)){
+				return true;
+			}
+		}
+		return false;
+	}
 	public void sortBusinessValue() {
 		for (int i = 1; i < solutions.size(); i++) {
 			Double index = solutions.get(i).getBusinessValue();

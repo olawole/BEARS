@@ -24,6 +24,8 @@ public class WorkItem implements IWorkItem {
 		
 		private double[][] valueSimulation;
 		
+		private double[] averageSimulation;
+		
 		private double[] effortSimulation;
 		
 		private double[][] sanpv;
@@ -140,6 +142,14 @@ public class WorkItem implements IWorkItem {
 
 		public void setAverageValue(double averageValue) {
 			this.averageValue = averageValue;
+		}
+
+		public double[] getAverageSimulation() {
+			return averageSimulation;
+		}
+
+		public void setAverageSimulation(double[] averageSimulation) {
+			this.averageSimulation = averageSimulation;
 		}
 
 }
