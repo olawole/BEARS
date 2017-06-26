@@ -9,111 +9,110 @@ import java.util.List;
 import java.util.Map;
 
 import cs.ucl.ac.uk.barp.project.Project;
-import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
+import cs.ucl.ac.uk.barp.project.utilities.StatUtil;
 import cs.ucl.ac.uk.barp.release.Release;
 import cs.ucl.ac.uk.barp.release.ReleasePlan;
 import cs.ucl.ac.uk.barp.workitem.WorkItem;
 
-
 public class RoadMap {
-	
+
 	public RoadMap(List<ReleasePlan> optimal, int releases) {
 		this.optimal = optimal;
 		noOfReleases = releases;
 	}
-	
 
 	List<ReleasePlan> optimal;
 	int noOfReleases;
 
-	
 	public Integer getKeyFromValue(HashMap<Integer, String> hm, String value) {
-	    for (Integer key : hm.keySet()) {
-	      if (hm.get(key).equals(value)) {
-	        return key;
-	      }
-	    }
-	    return null;
+		for (Integer key : hm.keySet()) {
+			if (hm.get(key).equals(value)) {
+				return key;
+			}
+		}
+		return null;
 	}
-	
-	public void writeDot(String filename){
+
+	public void writeDot(String filename) {
 		HashMap<Integer, String> rank = new HashMap<Integer, String>();
 		String all = "";
-		String lastNode = "";
 		String dotString = "digraph G { \n";
 		dotString += "\trankdir=LR\n";
 		dotString += "\troot[shape=point]\n";
 		int num = 0;
-	//	List<String> nodes = new ArrayList<String>();
-		for (ReleasePlan p : optimal){
-			if (++num > 20){
+		// List<String> nodes = new ArrayList<String>();
+		for (ReleasePlan p : optimal) {
+			String lastNode = "";
+			if (++num > 20) {
 				break;
 			}
 			HashMap<Integer, String> solution = planToString(p);
 			String label = "";
-			
-			//System.out.println(solution.toString());
+
+			// System.out.println(solution.toString());
 			Iterator<String> it = solution.values().iterator();
-			if (it.hasNext()){
-			String object = it.next();
-			label += object;
-			if (dotString.indexOf( "root -> \"" + label + "\"") < 0){
-				dotString += "\t\"" + label + "\"[shape = box]\n";
-				dotString += "\troot -> \"" + label + "\"[label=\"" + object + "\"]\n";
-				Integer key = getKeyFromValue(solution, object);
-				if (!all.contains("\"" + label + "\"")){
-					if (rank.containsKey(key)){
-						String old = rank.get(key);
-						rank.put(key, old + " \"" + label + "\"");
-					
-					}
-					else {
-						rank.put(key, "\"" + label + "\"");
-					}
-					all += "\"" + label + "\",";
-				}
-			}
-			
-			while (it.hasNext()){
-				String current = it.next();
-				label += "|\\n" + current;
-				if (dotString.indexOf( "\"" + label + "\"[shape = box, style=rounded]\n") < 0){
-					dotString += "\t\"" + label + "\"[shape = box, style=rounded]\n";
-					Integer key = getKeyFromValue(solution, current);
-					if (!all.contains("\"" + label + "\"")){
-						if (rank.containsKey(key)){
+			if (it.hasNext()) {
+				String object = it.next();
+				label += object;
+				if (dotString.indexOf("root -> \"" + label + "\"") < 0) {
+					dotString += "\t\"" + label + "\"[shape = box]\n";
+					dotString += "\troot -> \"" + label + "\"[label=\"" + object + "\"]\n";
+					Integer key = getKeyFromValue(solution, object);
+					if (!all.contains("\"" + label + "\"")) {
+						if (rank.containsKey(key)) {
 							String old = rank.get(key);
 							rank.put(key, old + " \"" + label + "\"");
-						}
-						else {
+
+						} else {
 							rank.put(key, "\"" + label + "\"");
 						}
 						all += "\"" + label + "\",";
 					}
 				}
-					 
-				String str = "\t\"" + object + "\"" + "->" + "\"" + label + "\"";
-				if (dotString.indexOf(str) < 0){
-					dotString += str + "[label=\"" + current + "\"]\n";
-				}
 
-				object = label;
-				lastNode = label;
+				while (it.hasNext()) {
+					String current = it.next();
+					label += "|\\n" + current;
+					if (dotString.indexOf("\"" + label + "\"[shape = box, style=rounded]\n") < 0) {
+						dotString += "\t\"" + label + "\"[shape = box, style=rounded]\n";
+						Integer key = getKeyFromValue(solution, current);
+						if (!all.contains("\"" + label + "\"")) {
+							if (rank.containsKey(key)) {
+								String old = rank.get(key);
+								rank.put(key, old + " \"" + label + "\"");
+							} else {
+								rank.put(key, "\"" + label + "\"");
+							}
+							all += "\"" + label + "\",";
+						}
+					}
+
+					String str = "\t\"" + object + "\"" + "->" + "\"" + label + "\"";
+					if (dotString.indexOf(str) < 0) {
+						dotString += str + "[label=\"" + current + "\"]\n";
+					}
+
+					object = label;
+					lastNode = label;
+				}
+				String str = "\"" + lastNode + "\"->\"ExpectedValue";
+				if (dotString.indexOf(str) < 0) {
+					Double value = StatUtil.round(p.getBusinessValue(), 2);
+					Double risk = StatUtil.round(p.getInvestmentRisk() * 100, 2);
+					String objNode = "ExpectedValue = £" + value + "\\nRisk = " + risk + "%";
+					dotString += "\t\"" + lastNode + "\"->\"" + objNode + "\"\n";
+				}
+				
 			}
-			}
-//			Double cost = p.getExpectedCost();
-//			Double value = p.getExpectedNPV();
-//			Double risk = p.getInvestmentRisk() * 100;
-			//lastNode.replaceAll("#", "");
-	//		dotString += "\t\"" + lastNode + "\"->\"" + label + "\"[label=\"Cost = " + cost + " | Value = " + value + "\"]\n";
 			
+
 		}
-		for (Integer k : rank.keySet()){
+		for (Integer k : rank.keySet()) {
 			dotString += "\t{ rank=same " + rank.get(k) + " }\n";
 		}
 		dotString += "}";
 		try {
-			FileWriter output = new FileWriter(filename+".dot");
+			FileWriter output = new FileWriter(filename + ".dot");
 			output.write(dotString);
 			output.close();
 		} catch (IOException e) {
@@ -121,15 +120,13 @@ public class RoadMap {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public String sort(String s){
+
+	public String sort(String s) {
 		String l = "";
-		for (String c : s.split("")){
-			if (c.equals(",") || c.equals("|")){
+		for (String c : s.split("")) {
+			if (c.equals(",") || c.equals("|")) {
 				continue;
-			}
-			else {
+			} else {
 				l += c;
 			}
 		}
@@ -138,22 +135,20 @@ public class RoadMap {
 		String sorted = String.valueOf(ar);
 		return sorted;
 	}
-	
-	public HashMap<Integer, HashMap<String, Integer>> freq(){
-		HashMap<Integer, HashMap<String, Integer>> featureFrequency = 
-				new HashMap<Integer, HashMap<String, Integer>>();
-		for(int i = 1; i <= noOfReleases; i++){
+
+	public HashMap<Integer, HashMap<String, Integer>> freq() {
+		HashMap<Integer, HashMap<String, Integer>> featureFrequency = new HashMap<Integer, HashMap<String, Integer>>();
+		for (int i = 1; i <= noOfReleases; i++) {
 			HashMap<String, Integer> freqPlan = new HashMap<String, Integer>();
-			for(ReleasePlan p : optimal){
+			for (ReleasePlan p : optimal) {
 				HashMap<Integer, String> plan = planToString(p);
-				if (plan.containsKey(i)){
+				if (plan.containsKey(i)) {
 					String features[] = plan.get(i).split(",");
-					for (String feature:features){
-						if (freqPlan.containsKey(feature)){
+					for (String feature : features) {
+						if (freqPlan.containsKey(feature)) {
 							int oldValue = freqPlan.get(feature);
 							freqPlan.put(feature, ++oldValue);
-						}
-						else {
+						} else {
 							freqPlan.put(feature, 1);
 						}
 					}
@@ -163,54 +158,52 @@ public class RoadMap {
 		}
 		return featureFrequency;
 	}
-	
-	public void freqToFile(Project project, String filename){
+
+	public void freqToFile(Project project, String filename) {
 		HashMap<Integer, HashMap<String, Integer>> releaseFrequency = freq();
 		int totalSolution = optimal.size();
 		String output = "";
-		for (int j = 1; j <= noOfReleases; j++){
+		for (int j = 1; j <= noOfReleases; j++) {
 			output += "\t" + j;
 		}
 		output += "\n";
-		for(String f : project.getWorkItemVector()){
+		for (String f : project.getWorkItemVector()) {
 			output += f + "\t";
-			for (int k = 1; k <= noOfReleases; k++){
-				if (releaseFrequency.containsKey(k)){
+			for (int k = 1; k <= noOfReleases; k++) {
+				if (releaseFrequency.containsKey(k)) {
 					HashMap<String, Integer> relfeq = releaseFrequency.get(k);
-					if (relfeq != null && relfeq.containsKey(f)){
-						int percent = (int)(relfeq.get(f) * 100 / totalSolution);
+					if (relfeq != null && relfeq.containsKey(f)) {
+						int percent = (int) (relfeq.get(f) * 100 / totalSolution);
 						output += percent + "\t";
-					}
-					else {
+					} else {
 						output += "0\t";
 					}
 				}
-				
+
 			}
 			output += "\n";
 		}
 		try {
-			FileWriter outputFile = new FileWriter(filename+".tsv");
+			FileWriter outputFile = new FileWriter(filename + ".tsv");
 			outputFile.write(output);
 			outputFile.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public HashMap<Integer, String> planToString(ReleasePlan plan){
+
+	public HashMap<Integer, String> planToString(ReleasePlan plan) {
 		HashMap<Integer, String> planString = new HashMap<Integer, String>();
-		for(Map.Entry<Integer, Release> entry : plan.getPlan().entrySet()){
-			if(entry.getValue().isEmpty())
+		for (Map.Entry<Integer, Release> entry : plan.getPlan().entrySet()) {
+			if (entry.getValue().isEmpty())
 				continue;
 			String s = "";
-			for(WorkItem wItem : entry.getValue().getwItems()){
-				s += s.equals("")? wItem.getItemId() : "," + wItem.getItemId();
+			for (WorkItem wItem : entry.getValue().getwItems()) {
+				s += s.equals("") ? wItem.getItemId() : "," + wItem.getItemId();
 			}
 			planString.put(entry.getKey(), s);
 		}
 		return planString;
 	}
-	
+
 }

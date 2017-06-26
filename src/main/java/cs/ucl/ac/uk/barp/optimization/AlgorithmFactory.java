@@ -16,6 +16,10 @@ import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
 
+/**
+ * @author olawoleoni
+ * A factory object to create type of optimisation algorithm
+ */
 public class AlgorithmFactory {
 
 	public static Algorithm<List<IntegerSolution>> getAlgorithm(String algorithmType, CrossoverOperator<IntegerSolution> crossover, MutationOperator<IntegerSolution> mutation,

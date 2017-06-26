@@ -59,6 +59,9 @@ public class OptimalSolutions {
 
 	private void addReleasePlan(IntegerSolution solution, Project projectId) {
 		ReleasePlan rPlan = new ReleasePlan(solution, projectId);
+		rPlan.sortWorkItemsByPriority();
+		List<WorkItem> workSequence = rPlan.getWorkSequence();
+		rPlan = rPlan.actualPlan(workSequence, projectId.getEffortCapacity());
 		rPlan.setBusinessValue(Math.abs(solution.getObjective(0)));
 		rPlan.setInvestmentRisk(solution.getObjective(1));
 		solutions.add(rPlan);

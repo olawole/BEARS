@@ -34,6 +34,7 @@ public class ProjectParser {
 			List<String> precursor = Arrays.asList(nextLine[3].split(","));
 			wItem.setPrecursors(precursor);
 			if (bValueDis instanceof PointDistribution){
+				wItem.setAverageEffort(effortDis.sample());
 				wItem.setPriority(bValueDis.sample() / effortDis.sample());
 			}
 			myProject.add(wItem);

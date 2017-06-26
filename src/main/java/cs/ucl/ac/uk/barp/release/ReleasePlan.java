@@ -26,6 +26,11 @@ public class ReleasePlan {
 		releases.put(releaseId, newRelease);
 	}
 	
+	/**
+	 * Copy constructor to generate iteration plan from a solution
+	 * @param solution
+	 * @param projectId
+	 */
 	public ReleasePlan (IntegerSolution solution, Project projectId){
 		releases = new HashMap<Integer, Release>();
 		String[] vector = projectId.getWorkItemVector();
@@ -140,7 +145,7 @@ public class ReleasePlan {
 		int currentIteration = 1;
 		double cumulativeCapacity = capacity[currentIteration - 1];
 		for(int i = 0; i < workSequence.size(); i++){
-			cumulativeEffort += workSequence.get(i).getEffort().sample();
+			cumulativeEffort += workSequence.get(i).getAverageEffort();
 			
 			while(cumulativeEffort > cumulativeCapacity && currentIteration <= noOfReleases ){
 				if (currentIteration == noOfReleases){

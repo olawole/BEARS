@@ -28,17 +28,22 @@ public class Main {
 	public Main() {
 		filename = "council1.csv";
 		noOfReleases = 3;
-		noOfInvestmentHorizon = 8;
-		capacity = new double[]{600,800,800};
+		noOfInvestmentHorizon = 10;
+		capacity = new double[]{600,500,500};
+//		capacity = new double[]{80, 70, 60, 50};
+
 		interestRate = 0.02;
 		distributionType = "Normal";
 		algorithmType = ConfigSetting.DEFAULT_APRROX_ALGORITHM;
 	}
 	
 	public static void main(String[] args) throws Exception{
+//		int sol = 0;
+//		do {
 		new Main();
 		String problemType = getProblemType();
 		Project project = ProjectParser.parseCSVToProject(filename, distributionType);
+		project.checkTransitiveDependency();
 		project.setEffortCapacity(capacity);
 		project.setInterestRate(interestRate);
 		project.setNumberOfInvestmentPeriods(noOfInvestmentHorizon);
@@ -53,8 +58,10 @@ public class Main {
 		new RoadMapView(optimal, noOfReleases, filename);
 		new BarChartView(optimal, noOfReleases);
 		optimal.setSolutions(solutions, project);
+//		sol = optimal.getSolutions().size();
 		InformationValueAnalyser.computeInformationValue(optimal, project.getWorkItems());	
 		optimal.printEvppi();
+//		} while (sol < 2);
 	}
 
 	private static String getProblemType() {

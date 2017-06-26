@@ -67,6 +67,9 @@ public class WorkItem implements IWorkItem {
 		
 		@Override
 		public void addPrecursor(String item){
+			if (item.equalsIgnoreCase(itemId)){
+				return;
+			}
 			if (!precursorids.contains(item)){
 				precursorids.add(item);
 			}

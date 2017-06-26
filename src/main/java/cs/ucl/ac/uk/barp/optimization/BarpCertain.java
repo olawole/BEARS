@@ -48,7 +48,7 @@ public class BarpCertain extends AbstractIntegerProblem {
 
 	@Override
 	public void evaluate(IntegerSolution solution) {
-		boolean isValid = isValid(solution);
+		boolean isValid = isValid(repairSolution(solution));
 		if(isValid){
 			double effort = 0;
 			double npv = 0;
@@ -102,15 +102,71 @@ public class BarpCertain extends AbstractIntegerProblem {
 					continue;
 				}
 				int precursorIndex = getIndex(wItemId);			
-				if (precursorIndex < 0 || (solution.getVariableValue(i) < solution.getVariableValue(precursorIndex))){
+				if ((precursorIndex > 0 && (solution.getVariableValue(i) < solution.getVariableValue(precursorIndex)))
+						|| solution.getVariableValue(precursorIndex) == 0){
 					return false;
 				}
-				else if ((solution.getVariableValue(i) == solution.getVariableValue(precursorIndex)) && solution.getVariableValue(i) != 0 ){
-						return false;
+				else if ((solution.getVariableValue(i) == solution.getVariableValue(precursorIndex))){
+					return false;
 				}
 			}
 		}
 		return true;
+	}
+	
+	private IntegerSolution repairSolution(IntegerSolution solution){
+		for (int i = 0; i < solution.getNumberOfVariables(); i++){
+			if (solution.getVariableValue(i) == 0){
+				continue;
+			}
+			String featureId = vector[i];
+			for (String wItemId : projectId.getWorkItems().get(featureId).getPrecursors()){
+				if (wItemId.equals("")){
+					continue;
+				}
+				int precursorIndex = getIndex(wItemId);	
+				if (solution.getVariableValue(precursorIndex) == 0){
+					if (i < precursorIndex){
+						if((solution.getVariableValue(i) - 1) > 0){
+							solution.setVariableValue(precursorIndex, solution.getVariableValue(i) - 1);
+						}
+						else {
+							solution.setVariableValue(i, 0);
+						}
+					}
+					else {
+						solution.setVariableValue(i, 0);
+					}
+						//solution.setVariableValue(precursorIndex, solution.getVariableValue(i) - 1);
+				}
+				else if (solution.getVariableValue(i) <= solution.getVariableValue(precursorIndex)){
+//					if ((solution.getVariableValue(precursorIndex) + 1) <= noOfReleases){
+//						solution.setVariableValue(i, solution.getVariableValue(precursorIndex) + 1);
+//					}
+					if (i < precursorIndex){
+						if((solution.getVariableValue(i) - 1) > 0){
+							solution.setVariableValue(precursorIndex, solution.getVariableValue(i) - 1);
+						}
+						else {
+							solution.setVariableValue(i, 0);
+						}
+					}
+					else {
+						if ((solution.getVariableValue(precursorIndex) + 1) <= noOfReleases){
+							solution.setVariableValue(i, solution.getVariableValue(precursorIndex) + 1);
+						}
+						else {
+							solution.setVariableValue(i, 0);
+						}
+					}
+					
+				}
+				else;
+			}
+		}
+		
+		return solution;
+		
 	}
 	
 	public int getIndex(String wItemId) {
