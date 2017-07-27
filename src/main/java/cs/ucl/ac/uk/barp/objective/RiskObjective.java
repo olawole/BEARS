@@ -1,13 +1,18 @@
 package cs.ucl.ac.uk.barp.objective;
 
-public class RiskObjective extends Objective {
+import cs.ucl.ac.uk.barp.project.Project;
+import cs.ucl.ac.uk.barp.release.ReleasePlan;
 
-	public RiskObjective() {
-		super("Investment Risk", true);
+public class RiskObjective extends AbstractObjective implements Objective {
+
+	public RiskObjective(String name, boolean isminimization){
+		this.name = name;
+		this.isMinimisation = isminimization;
 	}
-	
-	public double computeObjective(){
-		
+
+	@Override
+	public double computeObjeciveValue(Project project, ReleasePlan plan) {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 

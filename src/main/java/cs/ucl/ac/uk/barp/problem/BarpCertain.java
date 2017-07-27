@@ -1,4 +1,4 @@
-package cs.ucl.ac.uk.barp.optimization;
+package cs.ucl.ac.uk.barp.problem;
 
 import java.util.ArrayList;
 import java.util.List;

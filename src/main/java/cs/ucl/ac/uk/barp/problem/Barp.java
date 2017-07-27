@@ -1,4 +1,4 @@
-package cs.ucl.ac.uk.barp.optimization;
+package cs.ucl.ac.uk.barp.problem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +143,7 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 	 * @return
 	 */
 	public boolean isValid(IntegerSolution solution){
-		//System.out.println(encodedPlan);
+//		System.out.println(solution.toString());
 		for (int i = 0; i < solution.getNumberOfVariables(); i++){
 			if (solution.getVariableValue(i) == 0){
 				continue;
@@ -197,12 +197,8 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 					else {
 						solution.setVariableValue(i, 0);
 					}
-						//solution.setVariableValue(precursorIndex, solution.getVariableValue(i) - 1);
 				}
 				else if (solution.getVariableValue(i) <= solution.getVariableValue(precursorIndex)){
-//					if ((solution.getVariableValue(precursorIndex) + 1) <= noOfReleases){
-//						solution.setVariableValue(i, solution.getVariableValue(precursorIndex) + 1);
-//					}
 					if (i < precursorIndex){
 						if((solution.getVariableValue(i) - 1) > 0){
 							solution.setVariableValue(precursorIndex, solution.getVariableValue(i) - 1);

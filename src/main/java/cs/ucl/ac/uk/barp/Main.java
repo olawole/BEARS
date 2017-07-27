@@ -14,6 +14,7 @@ import cs.ucl.ac.uk.barp.release.OptimalSolutions;
 import cs.ucl.ac.uk.barp.release.view.BarChartView;
 import cs.ucl.ac.uk.barp.release.view.RoadMapView;
 import cs.ucl.ac.uk.barp.release.view.ScatterPlotView;
+import cs.ucl.ac.uk.barp.release.view.TableView;
 
 public class Main {
 	
@@ -26,10 +27,10 @@ public class Main {
 	static String algorithmType;
 	
 	public Main() {
-		filename = "council1.csv";
-		noOfReleases = 3;
+		filename = "council.csv";
+		noOfReleases = 4;
 		noOfInvestmentHorizon = 10;
-		capacity = new double[]{600,500,500};
+		capacity = new double[]{500,400,400, 300};
 //		capacity = new double[]{80, 70, 60, 50};
 
 		interestRate = 0.02;
@@ -38,8 +39,6 @@ public class Main {
 	}
 	
 	public static void main(String[] args) throws Exception{
-//		int sol = 0;
-//		do {
 		new Main();
 		String problemType = getProblemType();
 		Project project = ProjectParser.parseCSVToProject(filename, distributionType);
@@ -53,11 +52,14 @@ public class Main {
 		}
 		Optimization optimisation = new Optimization(project, problemType, algorithmType);
 		List<IntegerSolution> solutions = optimisation.run();
+		System.out.println(solutions.size());
 		OptimalSolutions optimal = new OptimalSolutions();
 		new ScatterPlotView(optimal);
 		new RoadMapView(optimal, noOfReleases, filename);
 		new BarChartView(optimal, noOfReleases);
+		new TableView(optimal, noOfReleases);
 		optimal.setSolutions(solutions, project);
+		System.out.println(optimal.getSolutions().size());
 //		sol = optimal.getSolutions().size();
 		InformationValueAnalyser.computeInformationValue(optimal, project.getWorkItems());	
 		optimal.printEvppi();

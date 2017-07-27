@@ -1,16 +1,19 @@
 package cs.ucl.ac.uk.barp.objective;
 
+import cs.ucl.ac.uk.barp.project.Project;
 import cs.ucl.ac.uk.barp.release.ReleasePlan;
 
-public class BusinessValueObjective extends Objective {
-
-	public BusinessValueObjective() {
-		super("Business Value", false);
-		// TODO Auto-generated constructor stub
+public class BusinessValueObjective extends AbstractObjective implements Objective {
+	
+	public BusinessValueObjective(String name, boolean isminimization) {
+		this.name = name;
+		this.isMinimisation = isminimization;
 	}
 	
-	public double computeObjective(ReleasePlan plan){
-		
+
+	@Override
+	public double computeObjeciveValue(Project project, ReleasePlan plan) {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 

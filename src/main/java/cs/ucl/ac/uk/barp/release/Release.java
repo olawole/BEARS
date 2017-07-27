@@ -46,6 +46,14 @@ public class Release {
         }
         wItems.add(wItem);
     }
+	
+	public String toString(){
+		String output = "";
+		for (WorkItem wItem : wItems){
+			output += wItem.getItemId() + ",";
+		}
+		return output;
+	}
 
 //	public double getCapacity() {
 //		return capacity;

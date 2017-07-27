@@ -1,5 +1,6 @@
 package cs.ucl.ac.uk.barp.release.view;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class BarChart extends ApplicationFrame {
 		this.noOfReleases = releases;
 		JFreeChart barChart = ChartFactory.createBarChart(ConfigSetting.BARCHART_SUBTITLE, "Release",
 				"Percentage Occurence", createDataset(), PlotOrientation.VERTICAL, true, true, false);
-
+		barChart.getPlot().setBackgroundPaint(Color.WHITE);
 		ChartPanel chartPanel = new ChartPanel(barChart);
 		chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
 		setContentPane(chartPanel);

@@ -43,9 +43,9 @@ public class RoadMap {
 		// List<String> nodes = new ArrayList<String>();
 		for (ReleasePlan p : optimal) {
 			String lastNode = "";
-			if (++num > 20) {
-				break;
-			}
+//			if (++num > 20) {
+//				break;
+//			}
 			HashMap<Integer, String> solution = planToString(p);
 			String label = "";
 

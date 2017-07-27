@@ -1,42 +1,12 @@
 package cs.ucl.ac.uk.barp.objective;
 
-public abstract class Objective implements IObjective {
-	
-	private String objectiveName;
-	private boolean minimisation;
-	private double objectiveValue;
-	public Objective(String name, boolean isMinimization) {
-		// TODO Auto-generated constructor stub
-		setObjectiveName(name);
-		minimisation = isMinimization;
-	}
+import cs.ucl.ac.uk.barp.project.Project;
+import cs.ucl.ac.uk.barp.release.ReleasePlan;
 
-	@Override
-	public boolean isMinimization() {
-		// TODO Auto-generated method stub
-		return minimisation;
-	}
-
-	@Override
-	public String getObjectiveName() {
-		// TODO Auto-generated method stub
-		return objectiveName;
-	}
-
-	@Override
-	public void setObjectiveName(String name) {
-		// TODO Auto-generated method stub
-		objectiveName = name;
-	}
-	
-	@Override
-	public double getObjectiveValue() {
-		return objectiveValue;
-	}
-	
-	@Override
-	public void setObjectiveValue(double objectiveValue) {
-		this.objectiveValue = objectiveValue;
-	}
-
+public interface Objective {
+	//double computeValue(IntegerSolution solution, Project projectId);
+	boolean isMinimization();
+	double getObjectiveValue();
+	void setObjectiveValue(double value);
+	double computeObjeciveValue(Project project, ReleasePlan plan);
 }

@@ -48,6 +48,7 @@ public class AlgorithmFactory {
 			return new SPEA2Builder<IntegerSolution>(problem, crossover, mutation)
 			        .setSelectionOperator(selection)
 			        .setPopulationSize(ConfigSetting.POPULATION_SIZE)
+			        .setMaxIterations(250)
 			        .build();
 		}
 		

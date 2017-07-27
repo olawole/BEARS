@@ -43,7 +43,7 @@ public class Optimization {
 	public List<IntegerSolution> run(){
 		AlgorithmRunner algRunner = new AlgorithmRunner.Executor(algorithm)
 				.execute();
-		System.out.print("Computation time: " + algRunner.getComputingTime());
+		System.out.println("Computation time: " + algRunner.getComputingTime());
 		return algorithm.getResult();	
 	}
 

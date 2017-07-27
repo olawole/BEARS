@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.uma.jmetal.solution.IntegerSolution;
 
+import cs.ucl.ac.uk.barp.objective.Objective;
 //import cs.ucl.ac.uk.barp.objective.Objective;
 import cs.ucl.ac.uk.barp.project.Project;
 import cs.ucl.ac.uk.barp.workitem.WorkItem;
@@ -14,6 +15,7 @@ import cs.ucl.ac.uk.barp.workitem.WorkItem;
 public class ReleasePlan {
 	
 	private HashMap<Integer, Release> releases;
+	private List<Objective> objectives;
 	private double businessValue;
 	private double investmentRisk;
 
@@ -177,5 +179,6 @@ public class ReleasePlan {
 		
 		return myPlan;
 	}
+	
 
 }

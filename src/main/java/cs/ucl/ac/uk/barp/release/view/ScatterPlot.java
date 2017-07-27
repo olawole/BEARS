@@ -2,6 +2,7 @@ package cs.ucl.ac.uk.barp.release.view;
 
 
 import java.awt.Color;
+import java.awt.Paint;
 import java.awt.RenderingHints;
 import java.util.List;
 
@@ -46,6 +47,8 @@ public class ScatterPlot extends ApplicationFrame {
     public JFreeChart createChart(XYDataset data){
     	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), "Investment Risk", "Net Present Value", data);
     	XYPlot plot = (XYPlot) chart.getPlot();
+    	plot.setBackgroundPaint(Color.WHITE);
+    	plot.setDomainGridlinesVisible(false);
     	XYDotRenderer renderer = new XYDotRenderer();
         renderer.setDotWidth(4);
         renderer.setDotHeight(4);
@@ -62,17 +65,6 @@ public class ScatterPlot extends ApplicationFrame {
     public XYDataset createDataset(){
     	float x,y;
     	XYSeriesCollection seriesCollection = new XYSeriesCollection();
-//        XYSeries lineData = new XYSeries("Dominated");
-//        for (ReleasePlan plan : allSolutions){
-//        	if (optimalSolutions.contains(plan)){
-//        		continue;
-//        	}
-//    		x = (float) plan.getInvestmentRisk();
-//    		y = (float) plan.netPresentValue;
-//    		lineData.add(x, y);
-//    	}
-        
-        // scatter plot
         XYSeries series = new XYSeries("Non-dominated");
         for (ReleasePlan plan : optimalSolutions){
     			x = (float) plan.getInvestmentRisk();

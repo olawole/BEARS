@@ -16,10 +16,10 @@ public class ConfigSetting {
 	//Algorithm based Configs
 	public static boolean USE_DEFAULT_PARAMETER_SETTINGS= true;
 	public static String APROXIMATE_ALGORITHM_LIST= "NSGAII,SPEA2,IBEA";
-	public static int NUMBER_OF_SIMULATION=100;
+	public static int NUMBER_OF_SIMULATION=5000;
 	public static double MUTATION_PROBABILITY = 0.05;
 	public static int THREADS=1;
-	public static int MAX_EVALUATIONS=2500;
+	public static int MAX_EVALUATIONS=25000;
 	//public static int ALGORITHM_RUNS=3;
 	public static String DEFAULT_APRROX_ALGORITHM= "MOCELL";
 	public static int POPULATION_SIZE=100;

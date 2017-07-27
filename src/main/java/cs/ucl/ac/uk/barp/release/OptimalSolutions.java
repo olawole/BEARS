@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.uma.jmetal.solution.IntegerSolution;
 
@@ -15,6 +16,7 @@ import cs.ucl.ac.uk.barp.workitem.WorkItem;
 public class OptimalSolutions {
 
 	private List<ReleasePlan> solutions;
+	private List<String> uniqueSolutions;
 	private List<View> views;
 	HashMap<String, Double> evppi;
 
@@ -22,10 +24,12 @@ public class OptimalSolutions {
 		solutions = new ArrayList<ReleasePlan>();
 		views = new ArrayList<View>();
 		evppi = new HashMap<String, Double>();
+		uniqueSolutions = new ArrayList<String>();
 	}
 
 	public void setSolutions(List<IntegerSolution> optimalSol, Project projectId) {
 		optimalSol.forEach(solution -> {
+			//System.out.println(solution.toString());
 			addReleasePlan(solution, projectId);
 		});
 		removeDuplicate();
@@ -62,9 +66,13 @@ public class OptimalSolutions {
 		rPlan.sortWorkItemsByPriority();
 		List<WorkItem> workSequence = rPlan.getWorkSequence();
 		rPlan = rPlan.actualPlan(workSequence, projectId.getEffortCapacity());
-		rPlan.setBusinessValue(Math.abs(solution.getObjective(0)));
-		rPlan.setInvestmentRisk(solution.getObjective(1));
-		solutions.add(rPlan);
+		String planString = planToString(rPlan);
+		if (!uniqueSolutions.contains(planString)){
+			rPlan.setBusinessValue(Math.abs(solution.getObjective(0)));
+			rPlan.setInvestmentRisk(solution.getObjective(1));
+			solutions.add(rPlan);
+			uniqueSolutions.add(planString);
+		}	
 	}
 
 	public List<ReleasePlan> getSolutions() {
@@ -176,6 +184,18 @@ public class OptimalSolutions {
 		evppi.forEach((key,value)->{
 			System.out.println(key + " = " + value);
 		});
+	}
+	
+	public String planToString(ReleasePlan plan){
+		String s = "";
+		for (Map.Entry<Integer, Release> entry : plan.getPlan().entrySet()) {
+			if (entry.getValue().isEmpty())
+				continue;
+			for (WorkItem wItem : entry.getValue().getwItems()) {
+				s += s.equals("") ? wItem.getItemId() : "," + wItem.getItemId();
+			}
+		}
+		return s;
 	}
 
 }
