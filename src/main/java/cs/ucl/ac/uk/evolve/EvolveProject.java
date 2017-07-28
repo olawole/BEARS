@@ -1,7 +1,6 @@
 package cs.ucl.ac.uk.evolve;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class EvolveProject {
@@ -9,13 +8,12 @@ public class EvolveProject {
 	int noOfReleases;
 	int noOfFeatures;
 	int noOfStakeholders;
-	int noOfObjectives;
 	
-	String featureIds[];
+	List<String> featureIds;
 	
-	Feature[] features;
+	List<Feature> features;
 	
-	Stakeholder[] stakeholders;
+	List<Stakeholder> stakeholders;
 	
 	double[] capacity;
 	
@@ -25,25 +23,20 @@ public class EvolveProject {
 	
 
 	public EvolveProject() {
-		featureIds = new String[noOfFeatures];
-		features = new Feature[noOfFeatures];
-	//	values = new int[noOfFeatures][noOfStakeholders];
-		
-		capacity = new double[noOfReleases];
-		
-		for (int i = 0; i < noOfFeatures;i++){
-			featureIds[i] = features[i].getFeatureId();
-	//		values[i] = features[i].getValue();
-	//		priority[i] = features[i].getPriority();
-	//		effort[i] = features[i].getEffort();
-		}
-		// TODO Auto-generated constructor stub
+	//	this.capacity = capacity;
+		noOfReleases = capacity.length;
+		noOfFeatures = 0;
+		featureIds = new ArrayList<String>();
+		features = new ArrayList<Feature>();
 	}
 	
 	public void addFeature(Feature feature){
-		if (!Arrays.asList(featureIds).contains(feature.getFeatureId())){
-			Arrays.asList(featureIds).add(feature.getFeatureId());
+		if (!featureIds.contains(feature.getFeatureId())){
+			featureIds.add(feature.getFeatureId());
+			features.add(feature);
 		}
 	}
+	
+	
 
 }

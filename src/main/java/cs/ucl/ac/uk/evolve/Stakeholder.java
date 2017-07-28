@@ -1,18 +1,14 @@
 package cs.ucl.ac.uk.evolve;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Stakeholder {
 	private String stakeholderId;
 	private double importance;
-	private List<Double> featuresValueVector;
-	private List<String> urgencyVector;
+	
 
-	public Stakeholder(String id) {
+	public Stakeholder(String id, double importance) {
 		stakeholderId = id;
-		featuresValueVector = new ArrayList<Double>();
-		urgencyVector = new ArrayList<String>();
+		this.importance = importance;
 	}
 
 	public double getImportance() {
@@ -23,13 +19,7 @@ public class Stakeholder {
 		this.importance = importance;
 	}
 
-	public List<Double> getFeaturesValueVector() {
-		return featuresValueVector;
-	}
-
-	public void setFeaturesValueVector(List<Double> featuresValueVector) {
-		this.featuresValueVector = featuresValueVector;
-	}
+	
 
 	public String getStakeholderId() {
 		return stakeholderId;
@@ -38,21 +28,13 @@ public class Stakeholder {
 	public void setStakeholderId(String stakeholderId) {
 		this.stakeholderId = stakeholderId;
 	}
-
-	public List<String> getUrgencyVector() {
-		return urgencyVector;
-	}
-
-	public void setUrgencyVector(List<String> urgencyVector) {
-		this.urgencyVector = urgencyVector;
-	}
 	
-	public void addValue(int featIndex, double value){
-		featuresValueVector.add(value);
-	}
-	
-	public void addUrgency(int featIndex, String urgencyTuple){
-		urgencyVector.add(urgencyTuple);
-	}
+//	public void addValue(int featIndex, double value){
+//		featuresValueVector.add(value);
+//	}
+//	
+//	public void addUrgency(int featIndex, String urgencyTuple){
+//		urgencyVector.add(urgencyTuple);
+//	}
 
 }

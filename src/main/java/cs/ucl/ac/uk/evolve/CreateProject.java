@@ -11,27 +11,79 @@ import com.opencsv.CSVReader;
 public class CreateProject {
 
 	public CreateProject(String filePath) {
+		
+	}
+	
+	public EvolveProject readFeatures(String filePath){
+		String nextLine[];
+		try {
+			EvolveProject project = new EvolveProject();
+			CSVReader reader = new CSVReader(new FileReader(filePath));
+			reader.readNext();
+			while((nextLine = reader.readNext()) != null){
+				String featureId = nextLine[0];
+				double effort = Double.parseDouble(nextLine[1]);
+				Feature feature = new Feature(featureId);
+				feature.setEffort(effort);
+				project.addFeature(feature);
+			}
+			reader.close();
+			return project;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
+	public void readStakeholderValue(EvolveProject project, String filePath){
+		String nextLine[];
+		try {
+			CSVReader reader = new CSVReader(new FileReader(filePath));
+			List<Stakeholder> stake = new ArrayList<Stakeholder>();
+			String[] head = reader.readNext();
+			for (int j = 1; j < head.length; j++){
+				stake.add(new Stakeholder(head[j], 1));
+			}
+			while((nextLine = reader.readNext()) != null){
+				String featureId = nextLine[0];
+				List<Double> stakeValues = new ArrayList<Double>();
+				for (int i = 1; i < nextLine.length; i++){
+					stakeValues.add(Double.parseDouble(nextLine[i]));
+				}
+				int index = project.featureIds.indexOf(featureId);
+				if (index >= 0){
+					project.features.get(index).setFeaturesValueVector(stakeValues);
+				}
+			}
+			reader.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void readUrgency(EvolveProject project, String filePath){
 		String nextLine[];
 		try {
 			CSVReader reader = new CSVReader(new FileReader(filePath));
 			reader.readNext();
-			List<Stakeholder> stakeH = new ArrayList<Stakeholder>();
-			int counter = 0;
 			while((nextLine = reader.readNext()) != null){
-				counter++;
-				int numberOfStakeholders = (nextLine.length - 2) / 2;
 				String featureId = nextLine[0];
-				double effort = Double.parseDouble(nextLine[1]);
-				for (int i = 1; i <= numberOfStakeholders; i++){
-					Stakeholder s = new Stakeholder("A"+i);
-					s.addValue(counter - 1, Double.parseDouble(nextLine[i*2]));
-					s.addUrgency(counter - 1, nextLine[i*2+1]);
-					stakeH.add(s);
+				List<String> urgency = new ArrayList<String>();
+				for (int i = 1; i < nextLine.length; i++){
+					urgency.add(nextLine[i]);
 				}
-				Feature f = new Feature(featureId);
-				f.setEffort(effort);
+				int index = project.featureIds.indexOf(featureId);
+				if (index >= 0){
+					project.features.get(index).setUrgencyVector(urgency);
+				}
 			}
-			
 			reader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

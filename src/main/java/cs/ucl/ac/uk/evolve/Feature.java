@@ -1,5 +1,7 @@
 package cs.ucl.ac.uk.evolve;
 
+import java.util.List;
+
 public class Feature {
 	
 	private String featureId;
@@ -8,7 +10,9 @@ public class Feature {
 	
 	private int[] value;
 	
-	private int[] priority;
+	private List<Double> featuresValueVector;
+	
+	private List<String> urgencyVector;
 
 	public Feature(String id) {
 		featureId = id;
@@ -22,14 +26,21 @@ public class Feature {
 		this.value = value;
 	}
 
-	public int[] getPriority() {
-		return priority;
+	public List<Double> getFeaturesValueVector() {
+		return featuresValueVector;
 	}
 
-	public void setPriority(int[] priority) {
-		this.priority = priority;
+	public void setFeaturesValueVector(List<Double> featuresValueVector) {
+		this.featuresValueVector = featuresValueVector;
+	}
+	
+	public List<String> getUrgencyVector() {
+		return urgencyVector;
 	}
 
+	public void setUrgencyVector(List<String> urgencyVector) {
+		this.urgencyVector = urgencyVector;
+	}
 	public String getFeatureId() {
 		return featureId;
 	}
