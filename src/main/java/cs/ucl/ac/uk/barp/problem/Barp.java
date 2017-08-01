@@ -110,7 +110,7 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 				effort[j] = sumEffort;
 			}
 			solution.setObjective(0, -StatUtil.mean(npv));
-			solution.setObjective(1, StatUtil.round(StatUtil.stdev(npv) / solution.getObjective(0), 4));
+			solution.setObjective(1, Math.abs(StatUtil.round(StatUtil.stdev(npv) / solution.getObjective(0), 4)));
 			solution.setObjective(2, StatUtil.mean(lateness));
 		} // if solution is invalid, assign bad fitness
 		else {
