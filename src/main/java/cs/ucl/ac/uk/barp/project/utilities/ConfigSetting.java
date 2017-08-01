@@ -1,11 +1,5 @@
 package cs.ucl.ac.uk.barp.project.utilities;
 
-import org.apache.commons.math3.random.JDKRandomGenerator;
-
-/**
- * @author INTEGRALSABIOLA
- *
- */
 public class ConfigSetting {
 
 	//Graphviz
@@ -30,6 +24,5 @@ public class ConfigSetting {
 	public static String BARCHART_SUBTITLE="In what release is a feature more likely?";
 	public static String DOT_DIRECTORY = "/Users/olawoleoni/Documents/workspace/BARP-New/dotFolder/";
 	public static String OUTPUT_DIRECTORY= "/Users/INTEGRALSABIOLA/Downloads/Thesis/";
-	public static JDKRandomGenerator randomGenerator = new JDKRandomGenerator(1100);
 	//public static String ROOTDIRECTORY= "/Users/INTEGRALSABIOLA/Documents/JavaProject/RADAR";	
 }
