@@ -1,5 +1,7 @@
 package cs.ucl.ac.uk.evolve;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Feature {
@@ -7,15 +9,18 @@ public class Feature {
 	private String featureId;
 	
 	private double effort;
-	
+		
 	private int[] value;
 	
-	private List<Double> featuresValueVector;
+	private List<Integer> featuresValueVector;
 	
-	private List<String> urgencyVector;
+	private List<Integer> urgencyVector;
+	
+	private List<String> precursors;
 
 	public Feature(String id) {
 		featureId = id;
+		precursors = new ArrayList<String>();
 	}
 
 	public int[] getValue() {
@@ -26,19 +31,19 @@ public class Feature {
 		this.value = value;
 	}
 
-	public List<Double> getFeaturesValueVector() {
+	public List<Integer> getFeaturesValueVector() {
 		return featuresValueVector;
 	}
 
-	public void setFeaturesValueVector(List<Double> featuresValueVector) {
+	public void setFeaturesValueVector(List<Integer> featuresValueVector) {
 		this.featuresValueVector = featuresValueVector;
 	}
 	
-	public List<String> getUrgencyVector() {
+	public List<Integer> getUrgencyVector() {
 		return urgencyVector;
 	}
 
-	public void setUrgencyVector(List<String> urgencyVector) {
+	public void setUrgencyVector(List<Integer> urgencyVector) {
 		this.urgencyVector = urgencyVector;
 	}
 	public String getFeatureId() {
@@ -55,6 +60,25 @@ public class Feature {
 
 	public void setEffort(double effort) {
 		this.effort = effort;
+	}
+
+	public List<String> getPrecursors() {
+		return Collections.unmodifiableList(precursors);
+	}
+	
+	private void addPrecursor(String item){
+		if (item.equalsIgnoreCase(featureId)){
+			return;
+		}
+		if (!precursors.contains(item)){
+			precursors.add(item);
+		}
+	}
+
+	public void setPrecursors(List<String> precursors) {
+		precursors.forEach(feature->{
+			addPrecursor(feature);
+		});
 	}
 
 }

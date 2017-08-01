@@ -1,10 +1,12 @@
 package cs.ucl.ac.uk.evolve;
 
+import java.util.List;
+
 public class Release {
 	
 	private int releaseImportance;
 	private int releaseId;
-	private Feature[] featuresInRelease;
+	private List<Feature> featuresInRelease;
 	
 	public Release() {
 		// TODO Auto-generated constructor stub
@@ -18,11 +20,11 @@ public class Release {
 		this.releaseImportance = releaseImportance;
 	}
 
-	public Feature[] getFeaturesInRelease() {
+	public List<Feature> getFeaturesInRelease() {
 		return featuresInRelease;
 	}
 
-	public void setFeaturesInRelease(Feature[] featuresInRelease) {
+	public void setFeaturesInRelease(List<Feature> featuresInRelease) {
 		this.featuresInRelease = featuresInRelease;
 	}
 
@@ -33,5 +35,13 @@ public class Release {
 	public void setReleaseId(int releaseId) {
 		this.releaseId = releaseId;
 	}
+	
+	public  void addItemToRelease(Feature feature) {
+        if (featuresInRelease.contains(feature.getFeatureId())) {
+            throw new IllegalArgumentException("This Work Item already exists in the release "
+                    + feature.getFeatureId());
+        }
+        featuresInRelease.add(feature);
+    }
 
 }

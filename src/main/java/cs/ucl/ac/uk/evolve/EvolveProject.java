@@ -9,26 +9,35 @@ public class EvolveProject {
 	int noOfFeatures;
 	int noOfStakeholders;
 	
-	List<String> featureIds;
+	private List<String> featureIds;
 	
-	List<Feature> features;
+	private List<Feature> features;
 	
 	List<Stakeholder> stakeholders;
 	
-	double[] capacity;
+	public double[] capacity;
 	
-	double[][] valueMatrix;
+	public int[][] valueMatrix;
 	
-	double[][] urgencyMatrix;
+	public int[][] urgencyMatrix;
+	
+	public double effortMatrix[];
+	
+	public double stakeImp[];
+	
+	public double releaseImp[];
 	
 
 	public EvolveProject() {
 	//	this.capacity = capacity;
-		noOfReleases = capacity.length;
+	//	noOfReleases = capacity.length;
 		noOfFeatures = 0;
 		featureIds = new ArrayList<String>();
 		features = new ArrayList<Feature>();
+		stakeholders = new ArrayList<Stakeholder>();
 	}
+	
+	//public EvolveProject(double[] releaseImp, )
 	
 	public void addFeature(Feature feature){
 		if (!featureIds.contains(feature.getFeatureId())){
@@ -36,6 +45,61 @@ public class EvolveProject {
 			features.add(feature);
 		}
 	}
+	
+	public void setStakeImportance(){
+		stakeImp = new double[stakeholders.size()];
+		for (int i = 0; i < noOfStakeholders; i++){
+			stakeImp[i] = stakeholders.get(i).getImportance();
+		}
+	}
+	
+	public void setParameterMatrix(){
+		noOfFeatures = features.size();
+		noOfReleases = capacity.length;
+		valueMatrix = new int[noOfFeatures][noOfStakeholders];
+		effortMatrix = new double[noOfFeatures];
+		urgencyMatrix = new int[noOfFeatures][noOfStakeholders * noOfReleases];
+		for (int i = 0; i < noOfFeatures; i++){
+			effortMatrix[i] = features.get(i).getEffort();
+			for (int j = 0; j < noOfStakeholders; j++){
+				valueMatrix[i][j] = features.get(i).getFeaturesValueVector().get(j);
+			}
+			int entries = noOfStakeholders * noOfReleases;
+			for (int j = 0; j < entries; j++){
+				urgencyMatrix[i][j] = features.get(i).getUrgencyVector().get(j);
+			}
+				
+		}
+		
+	}
+
+	public List<String> getFeatureIds() {
+		return featureIds;
+	}
+
+	public void setFeatureIds(List<String> featureIds) {
+		this.featureIds = featureIds;
+	}
+
+	public List<Feature> getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(List<Feature> features) {
+		this.features = features;
+	}
+	
+	public Feature getFeature(String id){
+		int index = featureIds.indexOf(id);
+		if (index < 0)
+			return null;
+		return features.get(index);
+	}
+	
+	
+	
+	
+	
 	
 	
 

@@ -48,4 +48,14 @@ public class StatUtil {
 		}
 		return mydata.getSum();
 	}
+	
+	public static int sum(Integer[] data){
+		DescriptiveStatistics mydata = new DescriptiveStatistics();
+		int size = data.length;
+		
+		for (int i = 0; i < size; i++){
+			mydata.addValue(data[i]);
+		}
+		return (int) mydata.getSum();
+	}
 }

@@ -4,27 +4,31 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.opencsv.CSVReader;
 
-public class CreateProject {
+import cs.ucl.ac.uk.barp.project.utilities.StatUtil;
 
-	public CreateProject(String filePath) {
+public class EvolveProjectUtil {
+
+	public EvolveProjectUtil(String filePath) {
 		
 	}
 	
-	public EvolveProject readFeatures(String filePath){
+	public static EvolveProject readFeatures(EvolveProject project, String filePath){
 		String nextLine[];
 		try {
-			EvolveProject project = new EvolveProject();
 			CSVReader reader = new CSVReader(new FileReader(filePath));
 			reader.readNext();
 			while((nextLine = reader.readNext()) != null){
 				String featureId = nextLine[0];
 				double effort = Double.parseDouble(nextLine[1]);
+				List<String> precursor = Arrays.asList(nextLine[2].split(","));
 				Feature feature = new Feature(featureId);
 				feature.setEffort(effort);
+				feature.setPrecursors(precursor);
 				project.addFeature(feature);
 			}
 			reader.close();
@@ -32,65 +36,79 @@ public class CreateProject {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 		
 	}
 	
-	public void readStakeholderValue(EvolveProject project, String filePath){
+	public static void readStakeholderValue(EvolveProject project, String filePath, double[] importance){
 		String nextLine[];
 		try {
 			CSVReader reader = new CSVReader(new FileReader(filePath));
 			List<Stakeholder> stake = new ArrayList<Stakeholder>();
 			String[] head = reader.readNext();
 			for (int j = 1; j < head.length; j++){
-				stake.add(new Stakeholder(head[j], 1));
+				stake.add(new Stakeholder(head[j], importance[j-1]));
 			}
+			project.stakeholders = stake;
+			project.noOfStakeholders = stake.size();
 			while((nextLine = reader.readNext()) != null){
 				String featureId = nextLine[0];
-				List<Double> stakeValues = new ArrayList<Double>();
+				List<Integer> stakeValues = new ArrayList<Integer>();
 				for (int i = 1; i < nextLine.length; i++){
-					stakeValues.add(Double.parseDouble(nextLine[i]));
+					stakeValues.add(Integer.parseInt(nextLine[i]));
 				}
-				int index = project.featureIds.indexOf(featureId);
+				int index = project.getFeatureIds().indexOf(featureId);
 				if (index >= 0){
-					project.features.get(index).setFeaturesValueVector(stakeValues);
+					project.getFeatures().get(index).setFeaturesValueVector(stakeValues);
 				}
 			}
 			reader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void readUrgency(EvolveProject project, String filePath){
+	public static void readUrgency(EvolveProject project, String filePath){
 		String nextLine[];
 		try {
 			CSVReader reader = new CSVReader(new FileReader(filePath));
 			reader.readNext();
 			while((nextLine = reader.readNext()) != null){
 				String featureId = nextLine[0];
-				List<String> urgency = new ArrayList<String>();
+				List<Integer> urgency = new ArrayList<Integer>();
 				for (int i = 1; i < nextLine.length; i++){
-					urgency.add(nextLine[i]);
+					Integer[] val = parseInteger(nextLine[i].split(","));
+					if(StatUtil.sum(val) != 9){
+						reader.close();
+						throw new Exception("The sum of urgency values must be equal to 9");
+					}
+					urgency.addAll(Arrays.asList(val));
 				}
-				int index = project.featureIds.indexOf(featureId);
+				int index = project.getFeatureIds().indexOf(featureId);
 				if (index >= 0){
-					project.features.get(index).setUrgencyVector(urgency);
+					project.getFeatures().get(index).setUrgencyVector(urgency);
 				}
 			}
 			reader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static Integer[] parseInteger(String[] stringValue){
+		Integer[] values = new Integer[stringValue.length];
+		for(int i = 0; i < values.length; i++){
+			values[i] = Integer.parseInt(stringValue[i]);
+		}
+		return values;
 	}
 
 }
