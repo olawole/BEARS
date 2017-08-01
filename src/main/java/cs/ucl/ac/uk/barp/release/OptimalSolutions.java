@@ -70,6 +70,7 @@ public class OptimalSolutions {
 		if (!uniqueSolutions.contains(planString)){
 			rPlan.setBusinessValue(Math.abs(solution.getObjective(0)));
 			rPlan.setInvestmentRisk(solution.getObjective(1));
+			rPlan.setLatenessRisk(solution.getObjective(2));
 			solutions.add(rPlan);
 			uniqueSolutions.add(planString);
 		}	

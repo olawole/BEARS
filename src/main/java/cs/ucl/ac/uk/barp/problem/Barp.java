@@ -1,6 +1,7 @@
 package cs.ucl.ac.uk.barp.problem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.uma.jmetal.problem.ConstrainedProblem;
@@ -50,7 +51,7 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 		vector = project.getWorkItemVector();
 		noOfReleases = project.getNumberOfIterations();
 		projectId = project;
-		setNumberOfObjectives(2);
+		setNumberOfObjectives(3);
 		setNumberOfConstraints(1);
 		setNumberOfVariables(vector.length);
 		setName("Barp");
@@ -81,15 +82,19 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 		if(isValid){
 			double[] effort = new double[ConfigSetting.NUMBER_OF_SIMULATION];
 			double[] npv = new double[ConfigSetting.NUMBER_OF_SIMULATION];
+			double[] lateness = new double[ConfigSetting.NUMBER_OF_SIMULATION];
 			//iteration plan represents the allocation of work items to releases
 			ReleasePlan iterationPlan = new ReleasePlan(solution, projectId);
 			//sort work items in releases by their priority
 			iterationPlan.sortWorkItemsByPriority();
 			List<WorkItem> workSequence = iterationPlan.getWorkSequence();
+			ReleasePlan actualPlan = iterationPlan.actualPlan(workSequence, projectId.getEffortCapacity());
+			HashMap<String, Integer> actualFeatureReleaseMap = actualPlan.featureReleaseMap();
 			for(int j = 0; j < ConfigSetting.NUMBER_OF_SIMULATION; j++){
 				double sumEffort = 0;
 				double sanpv = 0;
 				ReleasePlan rPlan = iterationPlan.actualPlan(j, workSequence, capacity);
+				HashMap<String, Integer> scenarioFeatureReleaseMap = rPlan.featureReleaseMap();
 				for (int i = 1; i <= noOfReleases; i++){
 					Release release = rPlan.getRelease(i);
 					if(release != null){
@@ -100,41 +105,45 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 						}
 					}
 				}
+				lateness[j] = computeLatenessProbability(actualFeatureReleaseMap, scenarioFeatureReleaseMap);
 				npv[j] = sanpv;
 				effort[j] = sumEffort;
 			}
-			expectedValue(solution, effort, npv);
+			solution.setObjective(0, -StatUtil.mean(npv));
+			solution.setObjective(1, StatUtil.mean(effort));
+			solution.setObjective(2, StatUtil.mean(lateness));
 		} // if solution is invalid, assign bad fitness
 		else {
 			solution.setObjective(0, 0);
 			solution.setObjective(1, 1);
+			solution.setObjective(2, 1);
 			this.effort = 0;
 		}	
 		
 	}
-
-	/**
-	 * Compute expected value of the objectives
-	 * @param solution
-	 * @param effort
-	 * @param npv
-	 */
-	private void expectedValue(IntegerSolution solution, double[] effort, double[] npv) {
-		double enpv = StatUtil.mean(npv);
-		double eEffort = StatUtil.mean(effort);
-		double invRisk = StatUtil.round(StatUtil.stdev(npv) / enpv, 4);
-//		double sumCapacity = StatUtil.sum(capacity); //
-//		if (eEffort > sumCapacity){
-//			solution.setObjective(0, 0);
-//			solution.setObjective(1, 1);
+//
+//	/**
+//	 * Compute expected value of the objectives
+//	 * @param solution
+//	 * @param effort
+//	 * @param npv
+//	 */
+//	private void expectedValue(IntegerSolution solution, double[] effort, double[] npv) {
+//		double enpv = StatUtil.mean(npv);
+//		double eEffort = StatUtil.mean(effort);
+//		double invRisk = StatUtil.round(StatUtil.stdev(npv) / enpv, 4);
+////		double sumCapacity = StatUtil.sum(capacity); //
+////		if (eEffort > sumCapacity){
+////			solution.setObjective(0, 0);
+////			solution.setObjective(1, 1);
+////			this.effort = eEffort;
+////		}
+////		else {
+//			solution.setObjective(0, -enpv);
+//			solution.setObjective(1, invRisk);
 //			this.effort = eEffort;
-//		}
-//		else {
-			solution.setObjective(0, -enpv);
-			solution.setObjective(1, invRisk);
-			this.effort = eEffort;
-//		}
-	}
+////		}
+//	}
 	
 	
 	/**
@@ -245,6 +254,21 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 		}
 		numberOfViolatedConstraints.setAttribute(solution, noOfViolation);
 		overallConstraintViolationDegree.setAttribute(solution, threshold);
+		
+	}
+	
+	private double computeLatenessProbability(HashMap<String, Integer> actualP, HashMap<String, Integer> scenarioP){
+		double latenessProbability;
+		double diff = 0;
+		for (String item : actualP.keySet()){
+			Integer actualRelease = actualP.get(item);
+			Integer scenarioRelease = scenarioP.get(item);
+			if(scenarioRelease != null && actualRelease < scenarioRelease){
+				diff += scenarioRelease - actualRelease;
+			}
+		}
+		latenessProbability = diff / actualP.size();
+		return latenessProbability;
 		
 	}
 	

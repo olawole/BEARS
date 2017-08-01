@@ -15,9 +15,10 @@ import cs.ucl.ac.uk.barp.workitem.WorkItem;
 public class ReleasePlan {
 	
 	private HashMap<Integer, Release> releases;
-	private List<Objective> objectives;
+	//private List<Objective> objectives;
 	private double businessValue;
 	private double investmentRisk;
+	private double latenessRisk;
 
 	public ReleasePlan() {
 		// TODO Auto-generated constructor stub
@@ -178,6 +179,24 @@ public class ReleasePlan {
 		}
 		
 		return myPlan;
+	}
+	
+	public HashMap<String, Integer> featureReleaseMap(){
+		HashMap<String, Integer> result = new HashMap<String, Integer>();
+		releases.forEach((releaseId, release) ->{
+			release.getwItems().forEach(wItem->{
+				result.put(wItem.getItemId(), releaseId);
+			});
+		});
+		return result;	
+	}
+
+	public double getLatenessRisk() {
+		return latenessRisk;
+	}
+
+	public void setLatenessRisk(double latenessRisk) {
+		this.latenessRisk = latenessRisk;
 	}
 	
 

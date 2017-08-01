@@ -24,7 +24,7 @@ public class TableGenerator {
 	
 	public void generateLatexTable(){
 		String latexString = OPEN_TAG;
-		String columnStructure = "{|c|c|c|";
+		String columnStructure = "{|c|c|c|c|";
 		for (int i = 0; i < noReleases; i++){
 			columnStructure += "c|";
 		}
@@ -34,7 +34,7 @@ public class TableGenerator {
 		for (int i = 0; i < noReleases; i++){
 			heading += "Release " + (i+1) + COL_SEP;
 		}
-		heading += "EV('000\\pounds)" + COL_SEP + "Risk(\\%)";
+		heading += "EV('000\\pounds)" + COL_SEP + "Risk(\\%)" + COL_SEP + "LatenessProb";
 		latexString += heading + "\\\\ \n";
 		latexString += HORIZONTAL_LINE;
 		int counter = 0;
@@ -46,7 +46,8 @@ public class TableGenerator {
 				}				
 			}
 			row += StatUtil.round(plan.getBusinessValue(), 2) + COL_SEP + 
-					StatUtil.round(plan.getInvestmentRisk()*100, 2);
+					StatUtil.round(plan.getInvestmentRisk()*100, 2) + COL_SEP +
+					StatUtil.round(plan.getLatenessRisk(), 3);
 			latexString += row + "\\\\ \n";
 			latexString += HORIZONTAL_LINE;
 		}
