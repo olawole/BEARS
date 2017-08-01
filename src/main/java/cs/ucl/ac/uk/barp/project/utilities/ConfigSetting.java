@@ -19,7 +19,7 @@ public class ConfigSetting {
 	public static int NUMBER_OF_SIMULATION=5000;
 	public static double MUTATION_PROBABILITY = 0.05;
 	public static int THREADS=1;
-	public static int MAX_EVALUATIONS=250000;
+	public static int MAX_EVALUATIONS=25000;
 	//public static int ALGORITHM_RUNS=3;
 	public static String DEFAULT_APRROX_ALGORITHM= "MOCELL";
 	public static int POPULATION_SIZE=100;

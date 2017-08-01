@@ -43,7 +43,10 @@ public class TableGenerator {
 			for (int i = 1; i <= noReleases; i++){
 				if (plan.getPlan().get(i) != null){
 					row += plan.getPlan().get(i).toString() + COL_SEP;
-				}				
+				}
+				else {
+					row += "" + COL_SEP;
+				}
 			}
 			row += StatUtil.round(plan.getBusinessValue(), 2) + COL_SEP + 
 					StatUtil.round(plan.getInvestmentRisk()*100, 2) + COL_SEP +
