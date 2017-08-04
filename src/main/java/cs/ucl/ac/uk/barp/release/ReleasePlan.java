@@ -198,6 +198,18 @@ public class ReleasePlan {
 	public void setLatenessRisk(double latenessRisk) {
 		this.latenessRisk = latenessRisk;
 	}
+
+	public String planToString(){
+		String s = "";
+		for (Map.Entry<Integer, Release> entry : getPlan().entrySet()) {
+			if (entry.getValue().isEmpty())
+				continue;
+			for (WorkItem wItem : entry.getValue().getwItems()) {
+				s += s.equals("") ? wItem.getItemId() : "," + wItem.getItemId();
+			}
+		}
+		return s;
+	}
 	
 
 }

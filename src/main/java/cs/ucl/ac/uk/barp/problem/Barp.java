@@ -41,6 +41,8 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 	 * Number of release to plan
 	 */
 	int noOfReleases;
+	
+	double[] releaseBudget;
 	Project projectId;
 	private static final long serialVersionUID = 1L;
 	OverallConstraintViolation<IntegerSolution> overallConstraintViolationDegree;
@@ -50,6 +52,7 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 		capacity = project.getEffortCapacity();
 		vector = project.getWorkItemVector();
 		noOfReleases = project.getNumberOfIterations();
+		releaseBudget = project.getBudgetPerRelease();
 		projectId = project;
 		setNumberOfObjectives(3);
 		setNumberOfConstraints(1);
@@ -83,6 +86,7 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 			double[] effort = new double[ConfigSetting.NUMBER_OF_SIMULATION];
 			double[] npv = new double[ConfigSetting.NUMBER_OF_SIMULATION];
 			double[] lateness = new double[ConfigSetting.NUMBER_OF_SIMULATION];
+			double cumulativeValuePoints = 0;
 			//iteration plan represents the allocation of work items to releases
 			ReleasePlan iterationPlan = new ReleasePlan(solution, projectId);
 			//sort work items in releases by their priority
@@ -99,18 +103,24 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 					Release release = rPlan.getRelease(i);
 					if(release != null){
 						for (WorkItem wi : release.getwItems()){
+							if (cumulativeValuePoints == 0){
+								cumulativeValuePoints += wi.getValuePoint();
+							}
 							sumEffort += wi.getEffortSimulation()[j];
 							if(wi.getValue() != null)
-								sanpv += wi.getSanpv()[j][i];
+								sanpv += wi.getSanpv()[j][i-1];
 						}
+						sanpv -= releaseBudget[i-1];
 					}
 				}
 				lateness[j] = computeLatenessProbability(actualFeatureReleaseMap, scenarioFeatureReleaseMap);
 				npv[j] = sanpv;
 				effort[j] = sumEffort;
 			}
-			solution.setObjective(0, -StatUtil.mean(npv));
-			solution.setObjective(1, Math.abs(StatUtil.round(StatUtil.stdev(npv) / solution.getObjective(0), 4)));
+			double enpv = StatUtil.mean(npv);
+			double invRisk = Math.abs(StatUtil.round(StatUtil.stdev(npv) / enpv, 4));
+			solution.setObjective(0, -enpv);
+			solution.setObjective(1, invRisk);
 			solution.setObjective(2, StatUtil.mean(lateness));
 		} // if solution is invalid, assign bad fitness
 		else {
@@ -121,29 +131,6 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 		}	
 		
 	}
-//
-//	/**
-//	 * Compute expected value of the objectives
-//	 * @param solution
-//	 * @param effort
-//	 * @param npv
-//	 */
-//	private void expectedValue(IntegerSolution solution, double[] effort, double[] npv) {
-//		double enpv = StatUtil.mean(npv);
-//		double eEffort = StatUtil.mean(effort);
-//		double invRisk = StatUtil.round(StatUtil.stdev(npv) / enpv, 4);
-////		double sumCapacity = StatUtil.sum(capacity); //
-////		if (eEffort > sumCapacity){
-////			solution.setObjective(0, 0);
-////			solution.setObjective(1, 1);
-////			this.effort = eEffort;
-////		}
-////		else {
-//			solution.setObjective(0, -enpv);
-//			solution.setObjective(1, invRisk);
-//			this.effort = eEffort;
-////		}
-//	}
 	
 	
 	/**

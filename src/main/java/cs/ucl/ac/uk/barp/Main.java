@@ -12,6 +12,7 @@ import cs.ucl.ac.uk.barp.project.ProjectParser;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
 import cs.ucl.ac.uk.barp.release.OptimalSolutions;
 import cs.ucl.ac.uk.barp.release.view.BarChartView;
+import cs.ucl.ac.uk.barp.release.view.CashAnalysisView;
 import cs.ucl.ac.uk.barp.release.view.RoadMapView;
 import cs.ucl.ac.uk.barp.release.view.ScatterPlotView;
 import cs.ucl.ac.uk.barp.release.view.TableView;
@@ -22,6 +23,7 @@ public class Main {
 	static int noOfReleases;
 	static int noOfInvestmentHorizon;
 	static double capacity[];
+	static double budget[];
 	static double interestRate;
 	static String distributionType;
 	static String algorithmType;
@@ -30,6 +32,7 @@ public class Main {
 		filename = "council.csv";
 		noOfReleases = 4;
 		noOfInvestmentHorizon = 10;
+		budget = new double[]{400, 300, 250, 200};
 		capacity = new double[]{500,400,400, 300};
 //		capacity = new double[]{80, 70, 60, 50};
 
@@ -47,6 +50,7 @@ public class Main {
 		project.setInterestRate(interestRate);
 		project.setNumberOfInvestmentPeriods(noOfInvestmentHorizon);
 		project.setNumberOfIterations(noOfReleases);
+		project.setBudgetPerRelease(budget);
 		if (problemType.equalsIgnoreCase("Barp")){
 			MCSimulator.simulate(project.getWorkItems(), noOfInvestmentHorizon, interestRate);
 		}
@@ -58,6 +62,7 @@ public class Main {
 		new RoadMapView(optimal, noOfReleases, filename);
 		new BarChartView(optimal, noOfReleases);
 		new TableView(optimal, noOfReleases);
+		new CashAnalysisView(optimal, project.getNumberOfInvestmentPeriods(), project.getBudgetPerRelease(), project.getInterestRate());
 		optimal.setSolutions(solutions, project);
 		System.out.println(optimal.getSolutions().size());
 //		sol = optimal.getSolutions().size();

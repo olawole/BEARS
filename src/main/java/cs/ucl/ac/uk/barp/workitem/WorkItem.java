@@ -20,6 +20,8 @@ public class WorkItem implements IWorkItem {
 		
 		private Distribution effort;
 		
+		private double valuePoint;
+		
 		private double priority;
 		
 		private double[][] valueSimulation;
@@ -29,6 +31,8 @@ public class WorkItem implements IWorkItem {
 		private double[] effortSimulation;
 		
 		private double[][] sanpv;
+		
+		private double[] averagePeriodValue;
 		
 		private double averageEffort;
 		
@@ -153,6 +157,22 @@ public class WorkItem implements IWorkItem {
 
 		public void setAverageSimulation(double[] averageSimulation) {
 			this.averageSimulation = averageSimulation;
+		}
+
+		public double getValuePoint() {
+			return valuePoint;
+		}
+
+		public void setValuePoint(double valuePoint) {
+			this.valuePoint = valuePoint;
+		}
+
+		public double[] getAveragePeriodValue() {
+			return averagePeriodValue;
+		}
+
+		public void setAveragePeriodValue(double[] averageSanpv) {
+			this.averagePeriodValue = averageSanpv;
 		}
 
 }

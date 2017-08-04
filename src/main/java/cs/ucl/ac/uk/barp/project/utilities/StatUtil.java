@@ -24,7 +24,6 @@ public class StatUtil {
 		for (int i = 0; i < size; i++){
 			mydata.addValue(data[i]);
 		}
-		
 		return mydata.getMean();
 	}
 	

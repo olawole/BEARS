@@ -29,6 +29,15 @@ public class MCSimulator {
 					avgValueSim[j] = Math.abs(StatUtil.mean(valuesim[j]));
 					effortSim[j] = Math.abs(effort.sample());
 				}
+				double[] avgPeriod = new double[period];
+				for(int k = 0; k < period; k++){
+					double avg[] = new double[valuesim.length];
+					for (int m = 0; m < avg.length; m++){
+						avg[m] = valuesim[m][k];
+					}
+					avgPeriod[k] = StatUtil.mean(avg);
+				}
+				wItem.setAveragePeriodValue(avgPeriod);
 				
 				wItem.setValueSimulation(valuesim);
 				wItem.setAverageSimulation(avgValueSim);

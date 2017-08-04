@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.uma.jmetal.solution.IntegerSolution;
 
@@ -66,7 +65,7 @@ public class OptimalSolutions {
 		rPlan.sortWorkItemsByPriority();
 		List<WorkItem> workSequence = rPlan.getWorkSequence();
 		rPlan = rPlan.actualPlan(workSequence, projectId.getEffortCapacity());
-		String planString = planToString(rPlan);
+		String planString = rPlan.planToString();
 		if (!uniqueSolutions.contains(planString)){
 			rPlan.setBusinessValue(Math.abs(solution.getObjective(0)));
 			rPlan.setInvestmentRisk(solution.getObjective(1));
@@ -185,18 +184,6 @@ public class OptimalSolutions {
 		evppi.forEach((key,value)->{
 			System.out.println(key + " = " + value);
 		});
-	}
-	
-	public String planToString(ReleasePlan plan){
-		String s = "";
-		for (Map.Entry<Integer, Release> entry : plan.getPlan().entrySet()) {
-			if (entry.getValue().isEmpty())
-				continue;
-			for (WorkItem wItem : entry.getValue().getwItems()) {
-				s += s.equals("") ? wItem.getItemId() : "," + wItem.getItemId();
-			}
-		}
-		return s;
 	}
 
 }

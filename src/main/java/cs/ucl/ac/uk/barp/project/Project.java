@@ -11,9 +11,11 @@ import cs.ucl.ac.uk.exception.CyclicDependencyException;
 public class Project implements IProject {
 	private HashMap<String, WorkItem> workItems;
 	private int numberOfIterations;
+	private int numberOfInvestmentHorizons;
 	private double interestRate;
 	private String[] workItemVector;
 	private double[] effortCapacity;
+	private double[] budgetPerRelease;
 	Set<String> terminationSet;
 
 	public Project() {
@@ -58,12 +60,12 @@ public class Project implements IProject {
 
 	@Override
 	public int getNumberOfInvestmentPeriods() {
-		return 0;
+		return numberOfInvestmentHorizons;
 	}
 
 	@Override
 	public void setNumberOfInvestmentPeriods(int numberOfInvestmentPeriods) {
-		
+		this.numberOfInvestmentHorizons = numberOfInvestmentPeriods;
 	}
 
 	@Override
@@ -158,6 +160,14 @@ public class Project implements IProject {
 			}
 			
 		});
+	}
+
+	public double[] getBudgetPerRelease() {
+		return budgetPerRelease;
+	}
+
+	public void setBudgetPerRelease(double[] budgetPerRelease) {
+		this.budgetPerRelease = budgetPerRelease;
 	}
 
 }
