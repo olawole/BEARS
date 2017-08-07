@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.uma.jmetal.solution.IntegerSolution;
 
-import cs.ucl.ac.uk.barp.objective.Objective;
 //import cs.ucl.ac.uk.barp.objective.Objective;
 import cs.ucl.ac.uk.barp.project.Project;
 import cs.ucl.ac.uk.barp.workitem.WorkItem;
@@ -21,7 +20,6 @@ public class ReleasePlan {
 	private double latenessRisk;
 
 	public ReleasePlan() {
-		// TODO Auto-generated constructor stub
 		releases = new HashMap<Integer, Release>();
 	}
 	
@@ -49,6 +47,9 @@ public class ReleasePlan {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void sortWorkItemsByPriority(){
 		for(Map.Entry<Integer, Release> entry : releases.entrySet()){
 			Release release = entry.getValue();
@@ -59,6 +60,9 @@ public class ReleasePlan {
 		}
 	}
 	
+	/**
+	 * @return
+	 */
 	public List<WorkItem> getWorkSequence() {
 		List<WorkItem> workSequence = new ArrayList<WorkItem>();
 		for(Map.Entry<Integer, Release> entry : releases.entrySet()){
@@ -70,6 +74,12 @@ public class ReleasePlan {
 		return workSequence;
 	}
 	
+	/**
+	 * @param scenario
+	 * @param workSequence
+	 * @param capacity
+	 * @return
+	 */
 	public ReleasePlan actualPlan(int scenario, List<WorkItem> workSequence, double[] capacity){
 		ReleasePlan myPlan = new ReleasePlan();
 		int noOfReleases = capacity.length;
@@ -109,38 +119,64 @@ public class ReleasePlan {
 		return myPlan;
 	}
 
+	/**
+	 * @param currentIteration
+	 * @return
+	 */
 	public Release getRelease(int currentIteration) {
-		// TODO Auto-generated method stub
 		return this.releases.get(currentIteration);
 	}
 
+	/**
+	 * @param currentIteration
+	 * @return
+	 */
 	private boolean containsKey(int currentIteration) {
-		// TODO Auto-generated method stub
 		return this.releases.containsKey(currentIteration);
 	}
 
+	/**
+	 * @return
+	 */
 	public double getInvestmentRisk() {
 		return investmentRisk;
 	}
 
+	/**
+	 * @param investmentRisk
+	 */
 	public void setInvestmentRisk(double investmentRisk) {
 		this.investmentRisk = investmentRisk;
 	}
 
+	/**
+	 * @return
+	 */
 	public double getBusinessValue() {
 		return businessValue;
 	}
 
+	/**
+	 * @param businessValue
+	 */
 	public void setBusinessValue(double businessValue) {
 		this.businessValue = businessValue;
 	}
 	
+	/**
+	 * @return
+	 */
 	public HashMap<Integer, Release> getPlan(){
 		return releases;
 	}
 	
 	
 	// Used for planning with a point estimate
+	/**
+	 * @param workSequence
+	 * @param capacity
+	 * @return
+	 */
 	public ReleasePlan actualPlan(List<WorkItem> workSequence, double[] capacity) {
 		ReleasePlan myPlan = new ReleasePlan();
 		int noOfReleases = capacity.length;
@@ -181,6 +217,9 @@ public class ReleasePlan {
 		return myPlan;
 	}
 	
+	/**
+	 * @return
+	 */
 	public HashMap<String, Integer> featureReleaseMap(){
 		HashMap<String, Integer> result = new HashMap<String, Integer>();
 		releases.forEach((releaseId, release) ->{
@@ -191,14 +230,23 @@ public class ReleasePlan {
 		return result;	
 	}
 
+	/**
+	 * @return
+	 */
 	public double getLatenessRisk() {
 		return latenessRisk;
 	}
 
+	/**
+	 * @param latenessRisk
+	 */
 	public void setLatenessRisk(double latenessRisk) {
 		this.latenessRisk = latenessRisk;
 	}
 
+	/**
+	 * @return
+	 */
 	public String planToString(){
 		String s = "";
 		for (Map.Entry<Integer, Release> entry : getPlan().entrySet()) {

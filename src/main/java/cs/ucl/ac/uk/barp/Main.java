@@ -29,12 +29,12 @@ public class Main {
 	static String algorithmType;
 	
 	public Main() {
-		filename = "council.csv";
+		filename = "usample.csv";
 		noOfReleases = 4;
 		noOfInvestmentHorizon = 10;
-		budget = new double[]{400, 300, 250, 200};
-		capacity = new double[]{500,400,400, 300};
-//		capacity = new double[]{80, 70, 60, 50};
+		budget = new double[]{100, 80, 70, 70};
+//		capacity = new double[]{500,400,400, 300};
+		capacity = new double[]{80, 70, 60, 50};
 
 		interestRate = 0.02;
 		distributionType = "Normal";

@@ -3,22 +3,14 @@ package cs.ucl.ac.uk.barp.release.view;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.IntStream;
-
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartMouseEvent;
-import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
-import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
-import org.jfree.ui.TextAnchor;
 
 @SuppressWarnings("serial")
 public class AnalysisCurve extends ApplicationFrame {

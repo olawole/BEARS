@@ -39,7 +39,6 @@ public class CashAnalysisView extends View {
 			RefineryUtilities.centerFrameOnScreen(curve);
 			curve.setVisible(true);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 //		double[] value = analysisTable(solutions.getSolutions().get(0));
@@ -51,7 +50,6 @@ public class CashAnalysisView extends View {
 //			RefineryUtilities.centerFrameOnScreen(curve);
 //			curve.setVisible(true);
 //		} catch (Exception e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 	}
