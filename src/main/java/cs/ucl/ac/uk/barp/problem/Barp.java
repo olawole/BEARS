@@ -249,8 +249,11 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 		double diff = 0;
 		for (String item : actualP.keySet()){
 			Integer actualRelease = actualP.get(item);
-			Integer scenarioRelease = scenarioP.get(item);
-			if(scenarioRelease != null && actualRelease < scenarioRelease){
+			Integer scenarioRelease = (scenarioP.get(item) != null) ? scenarioP.get(item) : 0;
+			if(scenarioRelease == 0){
+				diff += actualRelease;
+			}
+			if(actualRelease < scenarioRelease){
 				diff += scenarioRelease - actualRelease;
 			}
 		}
