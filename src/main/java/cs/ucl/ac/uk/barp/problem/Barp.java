@@ -245,6 +245,9 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 	}
 	
 	private double computeLatenessProbability(HashMap<String, Integer> actualP, HashMap<String, Integer> scenarioP){
+		if (actualP.size() == 0){
+			return 0;
+		}
 		double latenessProbability;
 		double diff = 0;
 		for (String item : actualP.keySet()){
