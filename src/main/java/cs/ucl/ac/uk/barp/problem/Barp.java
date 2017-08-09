@@ -80,6 +80,7 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 	 */
 	@Override
 	public void evaluate(IntegerSolution solution) {
+		//long start = System.currentTimeMillis();
 		//check repair a solution and check for its validity
 		boolean isValid = isValid(repairSolution(solution));
 		if(isValid){
@@ -128,7 +129,9 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 			solution.setObjective(1, 1);
 			solution.setObjective(2, 1);
 			this.effort = 0;
-		}	
+		}
+		//long stop = System.currentTimeMillis();
+		//System.out.println(stop - start);
 		
 	}
 	
