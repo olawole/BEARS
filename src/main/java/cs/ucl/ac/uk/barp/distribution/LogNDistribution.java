@@ -20,13 +20,16 @@ public class LogNDistribution extends LogNormalDistribution implements Distribut
 	@Override
 	public double sample() {
 		// TODO Auto-generated method stub
-		return this.sample();
+		return super.sample();
 	}
 
 	@Override
 	public double[] sample(int N) {
-		// TODO Auto-generated method stub
-		return this.sample(N);
+		double[] result = new double[N];
+		for (int i = 0; i < N; i++){
+			result[i] = sample();
+		}
+		return result;
 	}
 
 	public double getStandardDeviation() {

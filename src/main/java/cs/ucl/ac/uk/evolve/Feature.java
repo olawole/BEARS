@@ -10,11 +10,13 @@ public class Feature {
 	
 	private double effort;
 		
-	private int[] value;
+//	private int[] value;
+	
+	private int value;
 	
 	private List<Integer> featuresValueVector;
 	
-	private List<Integer> urgencyVector;
+//	private List<Integer> urgencyVector;
 	
 	private List<String> precursors;
 
@@ -23,11 +25,19 @@ public class Feature {
 		precursors = new ArrayList<String>();
 	}
 
-	public int[] getValue() {
+//	public int[] getValue() {
+//		return value;
+//	}
+	
+	public int getValue() {
 		return value;
 	}
 
-	public void setValue(int[] value) {
+//	public void setValue(int[] value) {
+//		this.value = value;
+//	}
+	
+	public void setValue(int value) {
 		this.value = value;
 	}
 
@@ -39,13 +49,13 @@ public class Feature {
 		this.featuresValueVector = featuresValueVector;
 	}
 	
-	public List<Integer> getUrgencyVector() {
-		return urgencyVector;
-	}
-
-	public void setUrgencyVector(List<Integer> urgencyVector) {
-		this.urgencyVector = urgencyVector;
-	}
+//	public List<Integer> getUrgencyVector() {
+//		return urgencyVector;
+//	}
+//
+//	public void setUrgencyVector(List<Integer> urgencyVector) {
+//		this.urgencyVector = urgencyVector;
+//	}
 	public String getFeatureId() {
 		return featureId;
 	}

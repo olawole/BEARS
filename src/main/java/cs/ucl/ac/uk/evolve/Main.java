@@ -38,17 +38,17 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		double capacity[] = new double[]{300,300,300};
+		double capacity[] = new double[]{500,400,400};
 		double releaseImp[] = new double[]{0.5, 0.3, 0.2};
 		double stakeImp[] = new double[]{0.4, 0.3,0.3};
-		new Main("evolve/effort.csv", "evolve/value.csv", "evolve/urgency.csv");
+		new Main("evolve/councileffort.csv", "evolve/councilvalue.csv", "evolve/councilurgency.csv");
 		EvolveProject project = new EvolveProject();
 		EvolveProjectUtil.readFeatures(project, featurePath);
 		EvolveProjectUtil.readStakeholderValue(project, valuePath, stakeImp);
-		EvolveProjectUtil.readUrgency(project, urgencyPath);
+//		EvolveProjectUtil.readUrgency(project, urgencyPath);
 		project.capacity = capacity;
 		project.releaseImp = releaseImp;
-		project.setStakeImportance();
+//		project.setStakeImportance();
 		project.setParameterMatrix();
 		Problem<IntegerSolution> problem = new MORP(project);
 		CrossoverOperator<IntegerSolution> crossover = new IntegerSBXCrossover(ConfigSetting.CROSSOVER_PROBABILITY, ConfigSetting.CROSSOVER_DISTRIBUTION_INDEX);
@@ -71,6 +71,11 @@ public class Main {
 
 		    List<IntegerSolution> population = algorithm.getResult() ;
 		    long computingTime = algorithmRunner.getComputingTime() ;
+		    
+		    Pareto pareto = new Pareto();
+		    pareto.setSolutions(population, project);
+		    TableView table = new TableView(pareto, project.noOfReleases);
+		    table.update();
 
 		    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 

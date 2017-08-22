@@ -17,7 +17,7 @@ public class ReleasePlan {
 	//private List<Objective> objectives;
 	private double businessValue;
 	private double investmentRisk;
-	private double latenessRisk;
+	private double expectedPunctuality;
 
 	public ReleasePlan() {
 		releases = new HashMap<Integer, Release>();
@@ -233,15 +233,15 @@ public class ReleasePlan {
 	/**
 	 * @return
 	 */
-	public double getLatenessRisk() {
-		return latenessRisk;
+	public double getExpectedPunctuality() {
+		return expectedPunctuality;
 	}
 
 	/**
 	 * @param latenessRisk
 	 */
-	public void setLatenessRisk(double latenessRisk) {
-		this.latenessRisk = latenessRisk;
+	public void setExpectedPunctuality(double punctuality) {
+		this.expectedPunctuality = punctuality;
 	}
 
 	/**
@@ -255,6 +255,7 @@ public class ReleasePlan {
 			for (WorkItem wItem : entry.getValue().getwItems()) {
 				s += s.equals("") ? wItem.getItemId() : "," + wItem.getItemId();
 			}
+			s += "->";
 		}
 		return s;
 	}

@@ -32,7 +32,7 @@ public class OptimalSolutions {
 			addReleasePlan(solution, projectId);
 		});
 		removeDuplicate();
-		findParetoOptimal();
+		//findParetoOptimal();
 	}
 	
 	public void removeDuplicate(){
@@ -68,8 +68,8 @@ public class OptimalSolutions {
 		String planString = rPlan.planToString();
 		if (!uniqueSolutions.contains(planString)){
 			rPlan.setBusinessValue(Math.abs(solution.getObjective(0)));
-			rPlan.setInvestmentRisk(solution.getObjective(1));
-			rPlan.setLatenessRisk(solution.getObjective(2));
+			//rPlan.setInvestmentRisk(solution.getObjective(1));
+			rPlan.setExpectedPunctuality((1 - solution.getObjective(1)) * 100);
 			solutions.add(rPlan);
 			uniqueSolutions.add(planString);
 		}	
@@ -103,7 +103,7 @@ public class OptimalSolutions {
 	public boolean all(ReleasePlan plan1, ReleasePlan plan2) {
 		boolean value = false;
 		if (plan1.getBusinessValue() >= plan2.getBusinessValue()
-				&& plan1.getInvestmentRisk() <= plan2.getInvestmentRisk()) {
+				&& plan1.getExpectedPunctuality() <= plan2.getExpectedPunctuality()) {
 			value = true;
 		}
 		return value;
@@ -112,7 +112,7 @@ public class OptimalSolutions {
 	public boolean any(ReleasePlan plan1, ReleasePlan plan2) {
 		boolean value = false;
 		if (plan1.getBusinessValue() > plan2.getBusinessValue()
-				|| plan1.getInvestmentRisk() < plan2.getInvestmentRisk()) {
+				|| plan1.getExpectedPunctuality() <= plan2.getExpectedPunctuality()) {
 			value = true;
 		}
 		return value;
@@ -131,7 +131,7 @@ public class OptimalSolutions {
 	public boolean isEqual(ReleasePlan plan1, ReleasePlan plan2){
 		boolean equal = false;
 		if (plan1.getBusinessValue() == plan2.getBusinessValue()
-				&& plan1.getInvestmentRisk() == plan2.getInvestmentRisk()) {
+				&& plan1.getExpectedPunctuality() <= plan2.getExpectedPunctuality()) {
 			equal = true;
 		}
 		return equal;

@@ -96,10 +96,13 @@ public class DistributionFactory {
 	 * @throws Exception
 	 */
 	private static Distribution makeLogNormalDistribution(Double[] value) throws Exception {
+		if (value[0] == 0){
+			return null;
+		}
 		if (value.length == 2){
-			double lower = value[0];
-			double upper = value[1];
-			return new LogNDistribution(lower, upper);
+			double mean = value[0];
+			double sd = value[1];
+			return new LogNDistribution(mean, sd);
 		}
 		else {
 			throw new Exception("The number of parameters provided for log normal distribution must be equal to 2");

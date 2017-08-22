@@ -1,4 +1,4 @@
-package cs.ucl.ac.uk.barp.release.view;
+package cs.ucl.ac.uk.evolve;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,21 +10,21 @@ import cs.ucl.ac.uk.barp.release.ReleasePlan;
 public class TableGenerator {
 	
 	int noReleases;
-	List<ReleasePlan> rPlans;
+	List<Plan> rPlans;
 	static final String OPEN_TAG = "\\begin{tabular}";
 	static final String CLOSE_TAG = "\\end{tabular}";
 	static final String HORIZONTAL_LINE = "\t\\hline\n";
 	static final String COL_SEP = " & ";
 	static final String COMMA_SEP = " , ";
 
-	public TableGenerator(List<ReleasePlan> plans, int numberOfReleases) {
+	public TableGenerator(List<Plan> plans, int numberOfReleases) {
 		noReleases = numberOfReleases;
 		rPlans = plans;
 	}
 	
 	public void generateLatexTable(){
 		String latexString = OPEN_TAG;
-		String columnStructure = "{|c|c|c|c|";
+		String columnStructure = "{|c|c|c|";
 		for (int i = 0; i < noReleases; i++){
 			columnStructure += "c|";
 		}
@@ -34,11 +34,11 @@ public class TableGenerator {
 		for (int i = 0; i < noReleases; i++){
 			heading += "Release " + (i+1) + COL_SEP;
 		}
-		heading += "EV('000\\pounds)" + COL_SEP + "Risk(\\%)" + COL_SEP + "LatenessProb";
+		heading += "Satisfaction" + COL_SEP + "Effort";
 		latexString += heading + "\\\\ \n";
 		latexString += HORIZONTAL_LINE;
 		int counter = 0;
-		for (ReleasePlan plan : rPlans){
+		for (Plan plan : rPlans){
 			String row = ++counter + COL_SEP;
 			for (int i = 1; i <= noReleases; i++){
 				if (plan.getPlan().get(i) != null){
@@ -48,9 +48,8 @@ public class TableGenerator {
 					row += "" + COL_SEP;
 				}
 			}
-			row += StatUtil.round(plan.getBusinessValue(), 2) + COL_SEP + 
-					StatUtil.round(plan.getInvestmentRisk()*100, 2) + COL_SEP +
-					StatUtil.round(plan.getExpectedPunctuality(), 3);
+			row += StatUtil.round(plan.getSatisfaction(), 2) + COL_SEP + 
+					StatUtil.round(plan.getEffort(), 2);
 			latexString += row + "\\\\ \n";
 			latexString += HORIZONTAL_LINE;
 		}
@@ -72,17 +71,17 @@ public class TableGenerator {
 		for (int i = 0; i < noReleases; i++){
 			heading += "Release " + (i+1) + COMMA_SEP;
 		}
-		heading += "EV('000£)" + COMMA_SEP + "Risk(%)";
+		heading += "Satisfaction" + COMMA_SEP + "Effort";
 		csvString += heading + "\n";
 		int counter = 0;
-		for (ReleasePlan plan : rPlans){
+		for (Plan plan : rPlans){
 			String row = ++counter + COMMA_SEP;
 			for (int i = 1; i <= plan.getPlan().size(); i++){
 				String s = plan.getPlan().get(i).toString();
 				row += "\""+ s.replace(",", "->")+ "\"" + COMMA_SEP;
 			}
-			row += StatUtil.round(plan.getBusinessValue(), 2) + COMMA_SEP + 
-					StatUtil.round(plan.getInvestmentRisk()*100, 2);
+			row += StatUtil.round(plan.getSatisfaction(), 2) + COMMA_SEP + 
+					StatUtil.round(plan.getEffort(), 2);
 			csvString += row + "\n";
 		}
 		try {

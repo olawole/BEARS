@@ -1,5 +1,6 @@
 package cs.ucl.ac.uk.evolve;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Release {
@@ -9,6 +10,7 @@ public class Release {
 	private List<Feature> featuresInRelease;
 	
 	public Release() {
+		featuresInRelease = new ArrayList<Feature>();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -18,6 +20,10 @@ public class Release {
 
 	public void setReleaseImportance(int releaseImportance) {
 		this.releaseImportance = releaseImportance;
+	}
+	
+	public boolean isEmpty(){
+		return featuresInRelease.isEmpty();
 	}
 
 	public List<Feature> getFeaturesInRelease() {
@@ -43,5 +49,13 @@ public class Release {
         }
         featuresInRelease.add(feature);
     }
+	
+	public String toString(){
+		String s = "";
+		for (Feature feature : featuresInRelease){
+			s += s.equals("") ? feature.getFeatureId() : "," + feature.getFeatureId();
+		}
+		return s;
+	}
 
 }

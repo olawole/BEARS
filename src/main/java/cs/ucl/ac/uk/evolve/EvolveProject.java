@@ -13,17 +13,19 @@ public class EvolveProject {
 	
 	private List<Feature> features;
 	
-	List<Stakeholder> stakeholders;
+//	List<Stakeholder> stakeholders;
 	
 	public double[] capacity;
 	
-	public int[][] valueMatrix;
+	public int[] valueMatrix;
 	
-	public int[][] urgencyMatrix;
+//	public int[][] valueMatrix;
+	
+//	public int[][] urgencyMatrix;
 	
 	public double effortMatrix[];
 	
-	public double stakeImp[];
+//	public double stakeImp[];
 	
 	public double releaseImp[];
 	
@@ -34,7 +36,7 @@ public class EvolveProject {
 		noOfFeatures = 0;
 		featureIds = new ArrayList<String>();
 		features = new ArrayList<Feature>();
-		stakeholders = new ArrayList<Stakeholder>();
+//		stakeholders = new ArrayList<Stakeholder>();
 	}
 	
 	//public EvolveProject(double[] releaseImp, )
@@ -46,28 +48,29 @@ public class EvolveProject {
 		}
 	}
 	
-	public void setStakeImportance(){
-		stakeImp = new double[stakeholders.size()];
-		for (int i = 0; i < noOfStakeholders; i++){
-			stakeImp[i] = stakeholders.get(i).getImportance();
-		}
-	}
+//	public void setStakeImportance(){
+//		stakeImp = new double[stakeholders.size()];
+//		for (int i = 0; i < noOfStakeholders; i++){
+//			stakeImp[i] = stakeholders.get(i).getImportance();
+//		}
+//	}
 	
 	public void setParameterMatrix(){
 		noOfFeatures = features.size();
 		noOfReleases = capacity.length;
-		valueMatrix = new int[noOfFeatures][noOfStakeholders];
+		valueMatrix = new int[noOfFeatures];
 		effortMatrix = new double[noOfFeatures];
-		urgencyMatrix = new int[noOfFeatures][noOfStakeholders * noOfReleases];
+//		urgencyMatrix = new int[noOfFeatures][noOfStakeholders * noOfReleases];
 		for (int i = 0; i < noOfFeatures; i++){
 			effortMatrix[i] = features.get(i).getEffort();
-			for (int j = 0; j < noOfStakeholders; j++){
-				valueMatrix[i][j] = features.get(i).getFeaturesValueVector().get(j);
-			}
-			int entries = noOfStakeholders * noOfReleases;
-			for (int j = 0; j < entries; j++){
-				urgencyMatrix[i][j] = features.get(i).getUrgencyVector().get(j);
-			}
+			valueMatrix[i] = features.get(i).getValue();
+//			for (int j = 0; j < noOfStakeholders; j++){
+//				valueMatrix[i][j] = features.get(i).getFeaturesValueVector().get(j);
+//			}
+//			int entries = noOfStakeholders * noOfReleases;
+//			for (int j = 0; j < entries; j++){
+//				urgencyMatrix[i][j] = features.get(i).getUrgencyVector().get(j);
+//			}
 				
 		}
 		

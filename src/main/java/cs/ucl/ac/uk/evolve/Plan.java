@@ -2,6 +2,8 @@ package cs.ucl.ac.uk.evolve;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.uma.jmetal.solution.IntegerSolution;
 
 //import cs.ucl.ac.uk.barp.objective.Objective;
@@ -15,7 +17,6 @@ public class Plan {
 	private double effort;
 
 	public Plan() {
-		// TODO Auto-generated constructor stub
 		releases = new HashMap<Integer, Release>();
 	}
 	
@@ -48,12 +49,10 @@ public class Plan {
 	
 
 	public Release getRelease(int currentIteration) {
-		// TODO Auto-generated method stub
 		return this.releases.get(currentIteration);
 	}
 
-	private boolean containsKey(int currentIteration) {
-		// TODO Auto-generated method stub
+	public boolean containsKey(int currentIteration) {
 		return this.releases.containsKey(currentIteration);
 	}
 	
@@ -75,6 +74,19 @@ public class Plan {
 
 	public void setEffort(double effort) {
 		this.effort = effort;
+	}
+	
+	public String planToString(){
+		String s = "";
+		for (Map.Entry<Integer, Release> entry : getPlan().entrySet()) {
+			if (entry.getValue().isEmpty())
+				continue;
+			for (Feature feature : entry.getValue().getFeaturesInRelease()) {
+				s += s.equals("") ? feature.getFeatureId() : "," + feature.getFeatureId();
+			}
+			s += "->";
+		}
+		return s;
 	}
 	
 

@@ -2,7 +2,6 @@ package cs.ucl.ac.uk.evolve;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import org.uma.jmetal.solution.IntegerSolution;
 

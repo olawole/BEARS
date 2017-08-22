@@ -48,6 +48,16 @@ public class StatUtil {
 		return mydata.getSum();
 	}
 	
+	public static double max(double[] data){
+		DescriptiveStatistics mydata = new DescriptiveStatistics();
+		double size = data.length;
+		
+		for (int i = 0; i < size; i++){
+			mydata.addValue(data[i]);
+		}
+		return mydata.getMax();
+	}
+	
 	public static int sum(Integer[] data){
 		DescriptiveStatistics mydata = new DescriptiveStatistics();
 		int size = data.length;
