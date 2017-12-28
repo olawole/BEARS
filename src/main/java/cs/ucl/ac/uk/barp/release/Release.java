@@ -50,7 +50,7 @@ public class Release {
 	public String toString(){
 		String output = "";
 		for (WorkItem wItem : wItems){
-			output += wItem.getItemId() + ",";
+			output += (output == "") ? wItem.getItemId() : "," + wItem.getItemId();
 		}
 		return output;
 	}

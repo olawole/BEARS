@@ -32,9 +32,9 @@ public class AnalysisCurve extends ApplicationFrame {
         final XYSeriesCollection data = new XYSeriesCollection(series);
         
         final JFreeChart chart = ChartFactory.createXYLineChart(
-        		"Cash Flow Analysis",
-            "Period", 
-            "Value", 
+        		"",
+            "Investment Period", 
+            "Net Present Value (Thousand Pounds)", 
             data,
             PlotOrientation.VERTICAL,
             true,
@@ -80,9 +80,9 @@ public class AnalysisCurve extends ApplicationFrame {
 		
         
         final JFreeChart chart = ChartFactory.createXYLineChart(
-        		"Cash Flow Analysis",
+        		"",
             "Investment Period", 
-            "Value", 
+            "Net Present Value (Thousand Pounds)", 
             datap,
             PlotOrientation.VERTICAL,
             true,

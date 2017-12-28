@@ -20,7 +20,7 @@ public class WorkItem implements IWorkItem {
 		
 		private Distribution effort;
 		
-		private double valuePoint;
+		private int valuePoint;
 		
 		private double priority;
 		
@@ -159,11 +159,11 @@ public class WorkItem implements IWorkItem {
 			this.averageSimulation = averageSimulation;
 		}
 
-		public double getValuePoint() {
+		public int getValuePoint() {
 			return valuePoint;
 		}
 
-		public void setValuePoint(double valuePoint) {
+		public void setValuePoint(int valuePoint) {
 			this.valuePoint = valuePoint;
 		}
 

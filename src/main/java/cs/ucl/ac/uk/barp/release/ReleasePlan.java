@@ -18,6 +18,7 @@ public class ReleasePlan {
 	private double businessValue;
 	private double investmentRisk;
 	private double expectedPunctuality;
+	private double satisfaction;
 
 	public ReleasePlan() {
 		releases = new HashMap<Integer, Release>();
@@ -252,12 +253,26 @@ public class ReleasePlan {
 		for (Map.Entry<Integer, Release> entry : getPlan().entrySet()) {
 			if (entry.getValue().isEmpty())
 				continue;
+			int size = entry.getValue().getwItems().size();
+			int counter = 0;
 			for (WorkItem wItem : entry.getValue().getwItems()) {
-				s += s.equals("") ? wItem.getItemId() : "," + wItem.getItemId();
+				s += (counter == 0) ? "(" : ",";
+//				s += s.equals("") ? wItem.getItemId() : "," + wItem.getItemId();
+				s += wItem.getItemId();
+				s += (counter == size - 1)? ")":"";
+				counter++;
 			}
-			s += "->";
+			s += "->"+ entry.getKey() + " ";
 		}
 		return s;
+	}
+
+	public double getSatisfaction() {
+		return satisfaction;
+	}
+
+	public void setSatisfaction(double satisfaction) {
+		this.satisfaction = satisfaction;
 	}
 	
 

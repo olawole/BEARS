@@ -98,8 +98,8 @@ public class RoadMap {
 				String str = "\"" + lastNode + "\"->\"ExpectedValue";
 				if (dotString.indexOf(str) < 0) {
 					Double value = StatUtil.round(p.getBusinessValue(), 2);
-					Double risk = StatUtil.round(p.getInvestmentRisk() * 100, 2);
-					String objNode = "ExpectedValue = £" + value + "\\nRisk = " + risk + "%";
+					Double puctuality = StatUtil.round(p.getExpectedPunctuality(), 2);
+					String objNode = "ExpectedValue = £" + value + "\\nPunctuality = " + puctuality + "%";
 					dotString += "\t\"" + lastNode + "\"->\"" + objNode + "\"\n";
 				}
 				

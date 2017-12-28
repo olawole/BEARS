@@ -33,27 +33,27 @@ public class Scatter extends ApplicationFrame {
 	//List<ReleasePlan> allSolutions;
 	List<ReleasePlan> optimalSolutions;
 	List<ReleasePlan> evolveSolutions;
-	List<ReleasePlan> dominatedSolutions;
+//	List<ReleasePlan> dominatedSolutions;
 
     /**
      * Creates a new fast scatter plot demo.
      *
      * @param title  the frame title.
      */
-    public Scatter(final String title, List<ReleasePlan> optimal, List<ReleasePlan> evolve, List<ReleasePlan> dominated) {
+    public Scatter(final String title, List<ReleasePlan> optimal, List<ReleasePlan> evolve) {
         super(title);
         //allSolutions = all;
         optimalSolutions = optimal;
         evolveSolutions = evolve;
-        dominatedSolutions = dominated;
+//        dominatedSolutions = dominated;
 
     }
     
     public JFreeChart createChart(XYDataset data){
     	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), "Expected Punctuality", "Expected Net Present Value", data);
     	Shape cross = ShapeUtilities.createDiagonalCross(3, 1);
-    	Shape plus = ShapeUtilities.createDiagonalCross(1, 1);
-    	Shape triangle = ShapeUtilities.createDownTriangle(3);
+    	Shape diamond = ShapeUtilities.createDiamond(3);
+    	Shape triangle = ShapeUtilities.createDownTriangle(2);
     	XYPlot plot = (XYPlot) chart.getPlot();
     	plot.setBackgroundPaint(Color.WHITE);
     	plot.setDomainGridlinesVisible(false);
@@ -61,12 +61,12 @@ public class Scatter extends ApplicationFrame {
     	XYItemRenderer renderer = plot.getRenderer();
 //        renderer.setDotWidth(10);
 //        renderer.setDotHeight(10);
-        renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesPaint(1, Color.BLUE);
+        renderer.setSeriesPaint(0, Color.GREEN);
+        renderer.setSeriesPaint(1, Color.RED);
         renderer.setSeriesPaint(2, Color.BLACK);
         renderer.setSeriesShape(0, cross);
-        renderer.setSeriesShape(1, triangle);
-        renderer.setSeriesShape(2, plus);
+        renderer.setSeriesShape(2, triangle);
+        renderer.setSeriesShape(1, diamond);
         plot.setRenderer(renderer);
     	plot.setDomainCrosshairVisible(true);
         plot.setRangeCrosshairVisible(true);
@@ -78,29 +78,29 @@ public class Scatter extends ApplicationFrame {
     public XYDataset createDataset(){
     	float x,y;
     	XYSeriesCollection seriesCollection = new XYSeriesCollection();
-        XYSeries series = new XYSeries("BEARS Optimal");
+        XYSeries series = new XYSeries("BEARS Fixed optimal");
         for (ReleasePlan plan : optimalSolutions){
     			x = (float) plan.getExpectedPunctuality();
     			y = (float) plan.getBusinessValue();
     			series.add(x, y);
     	}
         
-        XYSeries series1 = new XYSeries("EVOLVE Optimal");
+        XYSeries series1 = new XYSeries("Flexible optimal");
         for (ReleasePlan plan : evolveSolutions){
         	x = (float) plan.getExpectedPunctuality();
 			y = (float) plan.getBusinessValue();
 			series1.add(x, y);
     	}
         
-//        XYSeries series2 = new XYSeries("BEARS Dominated Solutions");
+//        XYSeries series2 = new XYSeries("EVOLVE optimal (ReleasePlanner)");
 //        for (ReleasePlan plan : dominatedSolutions){
 //        	x = (float) plan.getExpectedPunctuality();
 //			y = (float) plan.getBusinessValue();
 //			series2.add(x, y);
 //    	}
         seriesCollection.addSeries(series);
-       // seriesCollection.addSeries(series2);
         seriesCollection.addSeries(series1);
+        //seriesCollection.addSeries(series2);
         
         return seriesCollection;
     }

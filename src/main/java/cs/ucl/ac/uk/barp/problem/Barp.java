@@ -15,6 +15,7 @@ import cs.ucl.ac.uk.barp.project.utilities.StatUtil;
 import cs.ucl.ac.uk.barp.release.Release;
 import cs.ucl.ac.uk.barp.release.ReleasePlan;
 import cs.ucl.ac.uk.barp.workitem.WorkItem;
+import cs.ucl.ac.uk.barp.Example;
 import cs.ucl.ac.uk.barp.project.Project;
 
 
@@ -54,7 +55,7 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 		noOfReleases = project.getNumberOfIterations();
 		releaseBudget = project.getBudgetPerRelease();
 		projectId = project;
-		setNumberOfObjectives(3);
+		setNumberOfObjectives(2);
 		setNumberOfConstraints(1);
 		setNumberOfVariables(vector.length);
 		setName("Barp");
@@ -83,11 +84,12 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 		//long start = System.currentTimeMillis();
 		//check repair a solution and check for its validity
 		boolean isValid = isValid(repairSolution(solution));
+		//boolean isValid = isValid(solution);
 		if(isValid){
 			double[] effort = new double[ConfigSetting.NUMBER_OF_SIMULATION];
 			double[] npv = new double[ConfigSetting.NUMBER_OF_SIMULATION];
 			double[] lateness = new double[ConfigSetting.NUMBER_OF_SIMULATION];
-			double cumulativeValuePoints = 0;
+			//double cumulativeValuePoints = 0;
 			//iteration plan represents the allocation of work items to releases
 			ReleasePlan iterationPlan = new ReleasePlan(solution, projectId);
 			//sort work items in releases by their priority
@@ -104,9 +106,6 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 					Release release = rPlan.getRelease(i);
 					if(release != null){
 						for (WorkItem wi : release.getwItems()){
-							if (cumulativeValuePoints == 0){
-								cumulativeValuePoints += wi.getValuePoint();
-							}
 							sumEffort += wi.getEffortSimulation()[j];
 							if(wi.getValue() != null)
 								sanpv += wi.getSanpv()[j][i-1];
@@ -119,15 +118,16 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 				effort[j] = sumEffort;
 			}
 			double enpv = StatUtil.mean(npv);
-			double invRisk = Math.abs(StatUtil.round(StatUtil.stdev(npv) / enpv, 4));
+//			double invRisk = Math.abs(StatUtil.round(StatUtil.stdev(npv) / enpv, 4));
+			double expLateness = StatUtil.mean(lateness);
 			solution.setObjective(0, -enpv);
-			solution.setObjective(1, invRisk);
-			solution.setObjective(2, StatUtil.mean(lateness));
+//			solution.setObjective(1, invRisk);
+			solution.setObjective(1, expLateness);
 		} // if solution is invalid, assign bad fitness
 		else {
 			solution.setObjective(0, 0);
 			solution.setObjective(1, 1);
-			solution.setObjective(2, 1);
+//			solution.setObjective(2, 1);
 			this.effort = 0;
 		}
 		//long stop = System.currentTimeMillis();
@@ -242,6 +242,12 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 			++noOfViolation;
 			threshold += sumCapacity - this.effort;
 		}
+//		if (noOfViolation == 0){
+//			ReleasePlan p = new ReleasePlan();
+//			p.setBusinessValue(-solution.getObjective(0));
+//			p.setExpectedPunctuality((1 - solution.getObjective(1)) * 100);
+//			Example.allPlan.add(p);
+//		}
 		numberOfViolatedConstraints.setAttribute(solution, noOfViolation);
 		overallConstraintViolationDegree.setAttribute(solution, threshold);
 		
@@ -264,8 +270,7 @@ public class Barp extends AbstractIntegerProblem implements ConstrainedProblem<I
 			}
 		}
 		latenessProbability = diff / actualP.size();
-		return latenessProbability;
-		
+		return latenessProbability;	
 	}
 	
 }

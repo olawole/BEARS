@@ -2,7 +2,7 @@ package cs.ucl.ac.uk.barp.release.view;
 
 import java.io.File;
 
-import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
+//import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
 import cs.ucl.ac.uk.barp.release.OptimalSolutions;
 
 public class RoadMapView extends View {
@@ -13,7 +13,8 @@ public class RoadMapView extends View {
 		this.solutions = solutions;
 		this.solutions.attachView(this);
 		this.noOfRelease = noRelease;
-		this.dotFilePath = ConfigSetting.DOT_DIRECTORY+path;
+//		this.dotFilePath = ConfigSetting.DOT_DIRECTORY+path;
+		this.dotFilePath = path;
 	}
 
 	@Override

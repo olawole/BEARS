@@ -45,7 +45,7 @@ public class ScatterPlot extends ApplicationFrame {
     }
     
     public JFreeChart createChart(XYDataset data){
-    	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), "Expected Punctuality", "Net Present Value", data);
+    	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), "Expected Punctuality", "Net Present Value (Thousand Pounds)", data);
     	XYPlot plot = (XYPlot) chart.getPlot();
     	plot.setBackgroundPaint(Color.WHITE);
     	plot.setDomainGridlinesVisible(false);
@@ -65,7 +65,7 @@ public class ScatterPlot extends ApplicationFrame {
     public XYDataset createDataset(){
     	float x,y;
     	XYSeriesCollection seriesCollection = new XYSeriesCollection();
-        XYSeries series = new XYSeries("Non-dominated");
+        XYSeries series = new XYSeries("Candidate Release Plans");
         for (ReleasePlan plan : optimalSolutions){
     			x = (float) plan.getExpectedPunctuality();
     			y = (float) plan.getBusinessValue();

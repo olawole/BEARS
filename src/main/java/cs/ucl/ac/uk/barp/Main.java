@@ -29,15 +29,15 @@ public class Main {
 	static String algorithmType;
 	
 	public Main() {
-		filename = "usample.csv";
-		noOfReleases = 4;
-		noOfInvestmentHorizon = 10;
-		budget = new double[]{100, 80, 70, 70};
-//		capacity = new double[]{500,400,400, 300};
-		capacity = new double[]{80, 70, 60, 50};
+		filename = "councilNew.csv";
+		noOfReleases = 3;
+		noOfInvestmentHorizon = 12;
+		budget = new double[]{500, 350, 200};
+		capacity = new double[]{200,200,200};
+//		capacity = new double[]{80, 70, 60};//, 50};
 
 		interestRate = 0.02;
-		distributionType = "Normal";
+		distributionType = "LogNormal";
 		algorithmType = ConfigSetting.DEFAULT_APRROX_ALGORITHM;
 	}
 	
@@ -65,10 +65,8 @@ public class Main {
 		new CashAnalysisView(optimal, project.getNumberOfInvestmentPeriods(), project.getBudgetPerRelease(), project.getInterestRate());
 		optimal.setSolutions(solutions, project);
 		System.out.println(optimal.getSolutions().size());
-//		sol = optimal.getSolutions().size();
 		InformationValueAnalyser.computeInformationValue(optimal, project.getWorkItems());	
 		optimal.printEvppi();
-//		} while (sol < 2);
 	}
 
 	private static String getProblemType() {

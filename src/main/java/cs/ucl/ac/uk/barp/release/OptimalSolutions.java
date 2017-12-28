@@ -32,7 +32,7 @@ public class OptimalSolutions {
 			addReleasePlan(solution, projectId);
 		});
 		removeDuplicate();
-		//findParetoOptimal();
+		findParetoOptimal();
 	}
 	
 	public void removeDuplicate(){
@@ -103,7 +103,7 @@ public class OptimalSolutions {
 	public boolean all(ReleasePlan plan1, ReleasePlan plan2) {
 		boolean value = false;
 		if (plan1.getBusinessValue() >= plan2.getBusinessValue()
-				&& plan1.getExpectedPunctuality() <= plan2.getExpectedPunctuality()) {
+				&& plan1.getExpectedPunctuality() >= plan2.getExpectedPunctuality()) {
 			value = true;
 		}
 		return value;
@@ -112,7 +112,7 @@ public class OptimalSolutions {
 	public boolean any(ReleasePlan plan1, ReleasePlan plan2) {
 		boolean value = false;
 		if (plan1.getBusinessValue() > plan2.getBusinessValue()
-				|| plan1.getExpectedPunctuality() <= plan2.getExpectedPunctuality()) {
+				|| plan1.getExpectedPunctuality() >= plan2.getExpectedPunctuality()) {
 			value = true;
 		}
 		return value;
@@ -131,7 +131,7 @@ public class OptimalSolutions {
 	public boolean isEqual(ReleasePlan plan1, ReleasePlan plan2){
 		boolean equal = false;
 		if (plan1.getBusinessValue() == plan2.getBusinessValue()
-				&& plan1.getExpectedPunctuality() <= plan2.getExpectedPunctuality()) {
+				&& plan1.getExpectedPunctuality() == plan2.getExpectedPunctuality()) {
 			equal = true;
 		}
 		return equal;

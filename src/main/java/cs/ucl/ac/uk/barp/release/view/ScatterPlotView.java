@@ -12,7 +12,7 @@ public class ScatterPlotView extends View {
 
 	@Override
 	public void update() {
-		scatter = new ScatterPlot("Scatter plot of optimal solutions", solutions.getSolutions());
+		scatter = new ScatterPlot("", solutions.getSolutions());
 		scatter.drawPlot();
 	}
 
