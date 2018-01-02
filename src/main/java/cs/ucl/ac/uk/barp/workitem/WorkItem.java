@@ -10,7 +10,7 @@ import cs.ucl.ac.uk.barp.distribution.Distribution;
  * 
  * @author olawoleoni
  */
-public class WorkItem implements IWorkItem {
+public class WorkItem {
 
 		private String itemId;
 		
@@ -45,31 +45,26 @@ public class WorkItem implements IWorkItem {
 			setValue(value);
 		}
 
-		@Override
 		public String getItemId() {
 			return itemId;
 		}
 
 		
-		@Override
 		public void setItemId(String itemId) {
 			this.itemId = itemId;
 		}
 
 		
-		@Override
 		public List<String> getPrecursors() {
 			return Collections.unmodifiableList(precursorids);
 		}
 
 		
-		@Override
 		public void setPrecursors(List<String> precursors) {
 			this.precursorids = precursors;
 		}
 		
 		
-		@Override
 		public void addPrecursor(String item){
 			if (item.equalsIgnoreCase(itemId)){
 				return;
@@ -80,25 +75,21 @@ public class WorkItem implements IWorkItem {
 		}
 
 		
-		@Override
 		public Distribution getValue() {
 			return value;
 		}
 
 		
-		@Override
 		public void setValue(Distribution value) {
 			this.value = value;
 		}
 
 		
-		@Override
 		public Distribution getEffort() {
 			return effort;
 		}
 
 		
-		@Override
 		public void setEffort(Distribution effort) {
 			this.effort = effort;
 		}

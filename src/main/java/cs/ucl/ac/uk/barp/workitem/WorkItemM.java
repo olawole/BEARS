@@ -7,14 +7,10 @@ import java.util.List;
 import cs.ucl.ac.uk.barp.distribution.Distribution;
 import cs.ucl.ac.uk.elicitation.Expert;
 
-public class WorkItemM implements IWorkItem {
+public class WorkItemM {
 	private String itemId;
 	
 	private List<String> precursorids;
-	
-	private List<Expert> expertEstimates;
-	
-	private List<Distribution> value;
 	
 	private Distribution effort;
 	
@@ -36,34 +32,29 @@ public class WorkItemM implements IWorkItem {
 		setItemId(id);
 		setPrecursors(new ArrayList<String>());
 		setEffort(effort);
-		this.value = value;;
+		;
 	}
 
-	@Override
 	public String getItemId() {
 		return itemId;
 	}
 
 	
-	@Override
 	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}
 
 	
-	@Override
 	public List<String> getPrecursors() {
 		return Collections.unmodifiableList(precursorids);
 	}
 
 	
-	@Override
 	public void setPrecursors(List<String> precursors) {
 		this.precursorids = precursors;
 	}
 	
 	
-	@Override
 	public void addPrecursor(String item){
 		if (!precursorids.contains(item)){
 			precursorids.add(item);
@@ -71,25 +62,21 @@ public class WorkItemM implements IWorkItem {
 	}
 
 	
-	@Override
 	public Distribution getValue() {
 		return null;
 	}
 
 	
-	@Override
 	public void setValue(Distribution value) {
 		//this.value = value;
 	}
 
 	
-	@Override
 	public Distribution getEffort() {
 		return effort;
 	}
 
 	
-	@Override
 	public void setEffort(Distribution effort) {
 		this.effort = effort;
 	}

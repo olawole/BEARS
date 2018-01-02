@@ -8,7 +8,7 @@ import cs.ucl.ac.uk.barp.workitem.WorkItem;
 import cs.ucl.ac.uk.exception.TransitiveDependencyException;
 import cs.ucl.ac.uk.exception.CyclicDependencyException;
 
-public class Project implements IProject {
+public class Project {
 	private HashMap<String, WorkItem> workItems;
 	private int numberOfIterations;
 	private int numberOfInvestmentHorizons;
@@ -22,7 +22,6 @@ public class Project implements IProject {
 		workItems = new HashMap<String, WorkItem>();
 	}
 
-	@Override
 	public void add(WorkItem wItem) {
 		if (workItems.containsKey(wItem.getItemId())) {
             throw new IllegalArgumentException("This Work Item already exists in the project: "
@@ -31,12 +30,10 @@ public class Project implements IProject {
         workItems.put(wItem.getItemId(), wItem);		
 	}
 
-	@Override
 	public HashMap<String, WorkItem> getWorkItems() {
 		return workItems;
 	}
 
-	@Override
 	public void setWorkItems(HashMap<String, WorkItem> workItems) {
 		if (workItems == null){
 			throw new IllegalArgumentException("Null Work item set");
@@ -44,12 +41,10 @@ public class Project implements IProject {
 		this.workItems = workItems;
 	}
 
-	@Override
 	public int getNumberOfIterations() {
 		return numberOfIterations;
 	}
 
-	@Override
 	public void setNumberOfIterations(int numberOfIterations) {
 		if (numberOfIterations < 0){
 			throw new IllegalArgumentException("Number of iteration must be positive");
@@ -58,23 +53,19 @@ public class Project implements IProject {
 		
 	}
 
-	@Override
 	public int getNumberOfInvestmentPeriods() {
 		return numberOfInvestmentHorizons;
 	}
 
-	@Override
 	public void setNumberOfInvestmentPeriods(int numberOfInvestmentPeriods) {
 		this.numberOfInvestmentHorizons = numberOfInvestmentPeriods;
 	}
 
-	@Override
 	public double getInterestRate() {
 		// TODO Auto-generated method stub
 		return interestRate;
 	}
 
-	@Override
 	public void setInterestRate(double interestRate) {
 		this.interestRate = interestRate;
 		

@@ -5,6 +5,7 @@ import java.util.List;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.mocell.MOCellBuilder;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
+import org.uma.jmetal.algorithm.multiobjective.nsgaiii.NSGAIIIBuilder;
 import org.uma.jmetal.algorithm.multiobjective.randomsearch.RandomSearchBuilder;
 import org.uma.jmetal.algorithm.multiobjective.spea2.SPEA2Builder;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -21,42 +22,53 @@ import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
  * A factory object to create type of optimisation algorithm
  */
 public class AlgorithmFactory {
-
-	public static Algorithm<List<IntegerSolution>> getAlgorithm(String algorithmType, CrossoverOperator<IntegerSolution> crossover, MutationOperator<IntegerSolution> mutation,
+	
+	public static Algorithm<List<IntegerSolution>> getAlgorithm(AlgorithmType algorithmType, CrossoverOperator<IntegerSolution> crossover, MutationOperator<IntegerSolution> mutation,
 				SelectionOperator<List<IntegerSolution>, IntegerSolution> selection, Problem<IntegerSolution> problem){
 		if (algorithmType == null){
 			return null;
 		}
-		if (algorithmType.equalsIgnoreCase("NSGAII")){
-			return new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation)
+		Algorithm<List<IntegerSolution>> algorithm = null;
+		switch (algorithmType) {
+		case NSGAII:
+			algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation)
 					.setSelectionOperator(selection)
 					.setMaxEvaluations(ConfigSetting.MAX_EVALUATIONS)
 					.setPopulationSize(ConfigSetting.POPULATION_SIZE)
 					.build();
-		}
-		
-		if (algorithmType.equalsIgnoreCase("MOCELL")){
-			return new MOCellBuilder<IntegerSolution>(problem, crossover, mutation)
+			break;
+		case MOCELL:
+			algorithm = new MOCellBuilder<IntegerSolution>(problem, crossover, mutation)
 			        .setSelectionOperator(selection)
 			        .setMaxEvaluations(ConfigSetting.MAX_EVALUATIONS)
 			        .setPopulationSize(ConfigSetting.POPULATION_SIZE)
 			        .setArchive(new CrowdingDistanceArchive<IntegerSolution>(100))
 			        .build() ;
-		}
-		
-		if (algorithmType.equalsIgnoreCase("SPEA2")){
-			return new SPEA2Builder<IntegerSolution>(problem, crossover, mutation)
+			break;
+		case SPEA: 
+			algorithm = new SPEA2Builder<IntegerSolution>(problem, crossover, mutation)
 			        .setSelectionOperator(selection)
 			        .setPopulationSize(ConfigSetting.POPULATION_SIZE)
 			        .setMaxIterations(250)
 			        .build();
-		}
-		
-		if (algorithmType.equalsIgnoreCase("Random")){
+		case NSGAIII:
+			algorithm = new NSGAIIIBuilder<IntegerSolution>(problem)
+			.setCrossoverOperator(crossover)
+			.setMutationOperator(mutation)
+			.setMaxIterations(250)
+			.setSelectionOperator(selection)
+			.setPopulationSize(ConfigSetting.POPULATION_SIZE)
+			.build();
+			break;
+		case SMPSO:
+			break;
+		case RANDOM:
 			return new RandomSearchBuilder<IntegerSolution>(problem)
 			        .build();
+		default:
+			break;
 		}
-		return null;
+		return algorithm;
 			
 	}
 
