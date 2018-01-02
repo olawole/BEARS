@@ -25,19 +25,19 @@ import org.uma.jmetal.solution.impl.DefaultIntegerSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.archive.impl.CrowdingDistanceArchive;
 
+import cs.ucl.ac.uk.barp.model.Project;
+import cs.ucl.ac.uk.barp.model.Release;
+import cs.ucl.ac.uk.barp.model.ReleasePlan;
+import cs.ucl.ac.uk.barp.model.WorkItem;
 import cs.ucl.ac.uk.barp.optimization.MCSimulator;
 import cs.ucl.ac.uk.barp.optimization.Optimization;
 import cs.ucl.ac.uk.barp.problem.Barp;
 import cs.ucl.ac.uk.barp.problem.MORP;
-import cs.ucl.ac.uk.barp.project.Project;
 import cs.ucl.ac.uk.barp.project.ProjectParser;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
 import cs.ucl.ac.uk.barp.project.utilities.StatUtil;
 import cs.ucl.ac.uk.barp.release.OptimalSolutions;
-import cs.ucl.ac.uk.barp.release.Release;
-import cs.ucl.ac.uk.barp.release.ReleasePlan;
 import cs.ucl.ac.uk.barp.release.view.Scatter;
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
 import cs.ucl.ac.uk.evolve.EvolveProject;
 import cs.ucl.ac.uk.evolve.Feature;
 

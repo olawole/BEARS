@@ -1,10 +1,8 @@
-package cs.ucl.ac.uk.barp.release;
+package cs.ucl.ac.uk.barp.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
 public class Release {
 	
 	private List<WorkItem> wItems;

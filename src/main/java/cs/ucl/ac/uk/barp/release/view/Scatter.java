@@ -19,7 +19,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.util.ShapeUtilities;
 
-import cs.ucl.ac.uk.barp.release.ReleasePlan;
+import cs.ucl.ac.uk.barp.model.ReleasePlan;
 
 
 /**

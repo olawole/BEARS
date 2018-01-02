@@ -11,7 +11,8 @@ import com.opencsv.CSVReader;
 import cs.ucl.ac.uk.barp.distribution.Distribution;
 import cs.ucl.ac.uk.barp.distribution.DistributionFactory;
 import cs.ucl.ac.uk.barp.distribution.PointDistribution;
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
+import cs.ucl.ac.uk.barp.model.Project;
+import cs.ucl.ac.uk.barp.model.WorkItem;
 
 public class ProjectParser {
 

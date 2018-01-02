@@ -2,9 +2,9 @@ package cs.ucl.ac.uk.barp.optimization;
 
 import java.util.HashMap;
 
+import cs.ucl.ac.uk.barp.model.WorkItem;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
 import cs.ucl.ac.uk.barp.release.OptimalSolutions;
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
 
 public class InformationValueAnalyser {
 	/**

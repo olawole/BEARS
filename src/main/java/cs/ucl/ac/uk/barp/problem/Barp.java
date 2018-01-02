@@ -12,11 +12,11 @@ import org.uma.jmetal.util.solutionattribute.impl.OverallConstraintViolation;
 
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
 import cs.ucl.ac.uk.barp.project.utilities.StatUtil;
-import cs.ucl.ac.uk.barp.release.Release;
-import cs.ucl.ac.uk.barp.release.ReleasePlan;
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
 import cs.ucl.ac.uk.barp.Example;
-import cs.ucl.ac.uk.barp.project.Project;
+import cs.ucl.ac.uk.barp.model.Project;
+import cs.ucl.ac.uk.barp.model.Release;
+import cs.ucl.ac.uk.barp.model.ReleasePlan;
+import cs.ucl.ac.uk.barp.model.WorkItem;
 
 
 /**

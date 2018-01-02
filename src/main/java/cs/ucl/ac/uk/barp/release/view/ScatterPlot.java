@@ -18,7 +18,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 
-import cs.ucl.ac.uk.barp.release.ReleasePlan;
+import cs.ucl.ac.uk.barp.model.ReleasePlan;
 
 
 /**

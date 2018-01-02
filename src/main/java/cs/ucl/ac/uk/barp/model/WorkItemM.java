@@ -1,11 +1,10 @@
-package cs.ucl.ac.uk.barp.workitem;
+package cs.ucl.ac.uk.barp.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import cs.ucl.ac.uk.barp.distribution.Distribution;
-import cs.ucl.ac.uk.elicitation.Expert;
 
 public class WorkItemM {
 	private String itemId;

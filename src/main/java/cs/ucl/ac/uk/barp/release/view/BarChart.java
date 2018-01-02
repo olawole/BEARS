@@ -12,10 +12,11 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
+
+import cs.ucl.ac.uk.barp.model.Release;
+import cs.ucl.ac.uk.barp.model.ReleasePlan;
+import cs.ucl.ac.uk.barp.model.WorkItem;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
-import cs.ucl.ac.uk.barp.release.Release;
-import cs.ucl.ac.uk.barp.release.ReleasePlan;
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
 
 @SuppressWarnings("serial")
 public class BarChart extends ApplicationFrame {

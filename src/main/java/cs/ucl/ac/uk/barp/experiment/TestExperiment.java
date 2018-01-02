@@ -41,9 +41,9 @@ import org.uma.jmetal.util.experiment.component.GenerateWilcoxonTestTablesWithR;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
+import cs.ucl.ac.uk.barp.model.Project;
 import cs.ucl.ac.uk.barp.optimization.MCSimulator;
 import cs.ucl.ac.uk.barp.problem.Barp;
-import cs.ucl.ac.uk.barp.project.Project;
 import cs.ucl.ac.uk.barp.project.ProjectParser;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package cs.ucl.ac.uk.elicitation;
+package cs.ucl.ac.uk.barp.model;
 
 public class Expert {
 	

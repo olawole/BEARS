@@ -8,11 +8,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import cs.ucl.ac.uk.barp.project.Project;
+import cs.ucl.ac.uk.barp.model.Project;
+import cs.ucl.ac.uk.barp.model.Release;
+import cs.ucl.ac.uk.barp.model.ReleasePlan;
+import cs.ucl.ac.uk.barp.model.WorkItem;
 import cs.ucl.ac.uk.barp.project.utilities.StatUtil;
-import cs.ucl.ac.uk.barp.release.Release;
-import cs.ucl.ac.uk.barp.release.ReleasePlan;
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
 
 public class RoadMap {
 

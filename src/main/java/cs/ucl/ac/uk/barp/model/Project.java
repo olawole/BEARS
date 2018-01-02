@@ -1,10 +1,9 @@
-package cs.ucl.ac.uk.barp.project;
+package cs.ucl.ac.uk.barp.model;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
 import cs.ucl.ac.uk.exception.TransitiveDependencyException;
 import cs.ucl.ac.uk.exception.CyclicDependencyException;
 

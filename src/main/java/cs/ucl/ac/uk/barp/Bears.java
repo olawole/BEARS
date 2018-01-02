@@ -22,23 +22,23 @@ import org.uma.jmetal.util.AlgorithmRunner;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
+import cs.ucl.ac.uk.barp.model.Project;
+import cs.ucl.ac.uk.barp.model.Release;
+import cs.ucl.ac.uk.barp.model.ReleasePlan;
+import cs.ucl.ac.uk.barp.model.WorkItem;
 import cs.ucl.ac.uk.barp.optimization.InformationValueAnalyser;
 import cs.ucl.ac.uk.barp.optimization.MCSimulator;
 import cs.ucl.ac.uk.barp.optimization.Optimization;
 import cs.ucl.ac.uk.barp.problem.MORP;
-import cs.ucl.ac.uk.barp.project.Project;
 import cs.ucl.ac.uk.barp.project.ProjectParser;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
 import cs.ucl.ac.uk.barp.project.utilities.StatUtil;
 import cs.ucl.ac.uk.barp.release.OptimalSolutions;
-import cs.ucl.ac.uk.barp.release.Release;
-import cs.ucl.ac.uk.barp.release.ReleasePlan;
 import cs.ucl.ac.uk.barp.release.view.BarChartView;
 import cs.ucl.ac.uk.barp.release.view.RoadMapView;
 import cs.ucl.ac.uk.barp.release.view.Scatter;
 import cs.ucl.ac.uk.barp.release.view.ScatterPlotView;
 import cs.ucl.ac.uk.barp.release.view.TableView;
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
 import cs.ucl.ac.uk.evolve.EvolveProject;
 import cs.ucl.ac.uk.evolve.Feature;
 public class Bears {

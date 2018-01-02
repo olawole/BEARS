@@ -1,4 +1,4 @@
-package cs.ucl.ac.uk.barp.release;
+package cs.ucl.ac.uk.barp.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.uma.jmetal.solution.IntegerSolution;
-
-//import cs.ucl.ac.uk.barp.objective.Objective;
-import cs.ucl.ac.uk.barp.project.Project;
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
 
 public class ReleasePlan {
 	

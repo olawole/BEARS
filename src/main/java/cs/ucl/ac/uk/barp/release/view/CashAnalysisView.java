@@ -6,9 +6,9 @@ import java.util.stream.IntStream;
 
 import org.jfree.ui.RefineryUtilities;
 
+import cs.ucl.ac.uk.barp.model.ReleasePlan;
+import cs.ucl.ac.uk.barp.model.WorkItem;
 import cs.ucl.ac.uk.barp.release.OptimalSolutions;
-import cs.ucl.ac.uk.barp.release.ReleasePlan;
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
 
 public class CashAnalysisView extends View {
 	

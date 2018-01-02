@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.uma.jmetal.solution.IntegerSolution;
 
+import cs.ucl.ac.uk.barp.model.Project;
 import cs.ucl.ac.uk.barp.optimization.InformationValueAnalyser;
 import cs.ucl.ac.uk.barp.optimization.MCSimulator;
 import cs.ucl.ac.uk.barp.optimization.Optimization;
-import cs.ucl.ac.uk.barp.project.Project;
 import cs.ucl.ac.uk.barp.project.ProjectParser;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
 import cs.ucl.ac.uk.barp.release.OptimalSolutions;

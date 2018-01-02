@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import cs.ucl.ac.uk.barp.distribution.Distribution;
-import cs.ucl.ac.uk.barp.workitem.WorkItem;
+import cs.ucl.ac.uk.barp.model.WorkItem;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
 import cs.ucl.ac.uk.barp.project.utilities.StatUtil;
 

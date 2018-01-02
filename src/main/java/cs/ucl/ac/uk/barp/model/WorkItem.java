@@ -1,4 +1,4 @@
-package cs.ucl.ac.uk.barp.workitem;
+package cs.ucl.ac.uk.barp.model;
 
 import java.util.ArrayList;
 import java.util.Collections;

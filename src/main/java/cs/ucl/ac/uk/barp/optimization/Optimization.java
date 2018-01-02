@@ -13,7 +13,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 
-import cs.ucl.ac.uk.barp.project.Project;
+import cs.ucl.ac.uk.barp.model.Project;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
 
 public class Optimization {

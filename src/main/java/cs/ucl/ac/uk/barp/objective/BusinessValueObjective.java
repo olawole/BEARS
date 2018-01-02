@@ -1,7 +1,7 @@
 package cs.ucl.ac.uk.barp.objective;
 
-import cs.ucl.ac.uk.barp.project.Project;
-import cs.ucl.ac.uk.barp.release.ReleasePlan;
+import cs.ucl.ac.uk.barp.model.Project;
+import cs.ucl.ac.uk.barp.model.ReleasePlan;
 
 public class BusinessValueObjective extends AbstractObjective implements Objective {
 	
