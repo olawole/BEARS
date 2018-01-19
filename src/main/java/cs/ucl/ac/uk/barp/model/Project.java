@@ -151,6 +151,12 @@ public class Project {
 			
 		});
 	}
+	
+	public void printStrands(){
+		workItems.forEach((k,v) -> {
+			System.out.println("Strand " + getAllPrecursors(k).toString() + "->" + k);
+		});
+	}
 
 	public double[] getBudgetPerRelease() {
 		return budgetPerRelease;

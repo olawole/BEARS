@@ -43,8 +43,8 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import cs.ucl.ac.uk.barp.model.Project;
 import cs.ucl.ac.uk.barp.optimization.MCSimulator;
-import cs.ucl.ac.uk.barp.problem.Barp;
-import cs.ucl.ac.uk.barp.project.ProjectParser;
+import cs.ucl.ac.uk.barp.problem.BEARS;
+import cs.ucl.ac.uk.barp.project.utilities.ProjectParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -117,8 +117,8 @@ public class TestExperiment {
 				proj_single = init(filename[i], capacity2);
 				proj_multi = init(filename[i], capacity5);
 			}
-			problemList.add(new ExperimentProblem<>(new Barp(proj_single), filename[i]+"Single"));
-			problemList.add(new ExperimentProblem<>(new Barp(proj_multi), filename[i]+"Multi"));
+			problemList.add(new ExperimentProblem<>(new BEARS(proj_single), filename[i]+"Single"));
+			problemList.add(new ExperimentProblem<>(new BEARS(proj_multi), filename[i]+"Multi"));
 		}
 
 		List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = configureAlgorithmList(

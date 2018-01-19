@@ -55,7 +55,7 @@ public class Optimization {
 	}
 	
 	public AlgorithmType getAlgorithmType(String type){
-		switch (type) {
+		switch (type.toUpperCase()) {
 		case "NSGAII":
 			return AlgorithmType.NSGAII;
 		case "NSGAIII":

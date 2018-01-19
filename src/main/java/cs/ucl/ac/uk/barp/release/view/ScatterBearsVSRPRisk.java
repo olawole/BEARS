@@ -27,7 +27,7 @@ import cs.ucl.ac.uk.barp.model.ReleasePlan;
  *
  */
 @SuppressWarnings("serial")
-public class Scatter extends ApplicationFrame {
+public class ScatterBearsVSRPRisk extends ApplicationFrame {
 
 
 	//List<ReleasePlan> allSolutions;
@@ -41,7 +41,7 @@ public class Scatter extends ApplicationFrame {
      *
      * @param title  the frame title.
      */
-    public Scatter(final String title, List<ReleasePlan> optimal, List<ReleasePlan> evolve,
+    public ScatterBearsVSRPRisk(final String title, List<ReleasePlan> optimal, List<ReleasePlan> evolve,
     		List<ReleasePlan> srprisk) {
         super(title);
         //allSolutions = all;
@@ -52,13 +52,13 @@ public class Scatter extends ApplicationFrame {
 
     }
     
-    public Scatter(String title, List<ReleasePlan> solutions, List<ReleasePlan> evolvePlan) {
+    public ScatterBearsVSRPRisk(String title, List<ReleasePlan> solutions, List<ReleasePlan> evolvePlan) {
     	super(title);
 		// TODO Auto-generated constructor stub
 	}
 
 	public JFreeChart createChart(XYDataset data){
-    	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), "Expected Punctuality", "Expected Net Present Value ('000 £)", data);
+    	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), "Probability Plan exceed effort", "Business value (Value point)", data);
     	Shape cross = ShapeUtilities.createDiagonalCross(3, 1);
     	Shape diamond = ShapeUtilities.createDiamond(3);
     	Shape triangle = ShapeUtilities.createDownTriangle(2);
@@ -88,22 +88,22 @@ public class Scatter extends ApplicationFrame {
     	XYSeriesCollection seriesCollection = new XYSeriesCollection();
         XYSeries series = new XYSeries("BEARS RP");
         for (ReleasePlan plan : optimalSolutions){
-    			x = (float) plan.getExpectedPunctuality();
-    			y = (float) plan.getBusinessValue();
+    			x = (float) plan.getExceedProbability();
+    			y = (float) plan.getSatisfaction();
     			series.add(x, y);
     	}
         
         XYSeries series1 = new XYSeries("EVOLVE");
         for (ReleasePlan plan : evolveSolutions){
-        	x = (float) plan.getExpectedPunctuality();
-			y = (float) plan.getBusinessValue();
+        	x = (float) plan.getExceedProbability();
+			y = (float) plan.getSatisfaction();
 			series1.add(x, y);
     	}
         
         XYSeries series2 = new XYSeries("SRPRisk");
         for (ReleasePlan plan : srpSolutions){
-        	x = (float) plan.getExpectedPunctuality();
-			y = (float) plan.getBusinessValue();
+        	x = (float) plan.getExceedProbability();
+			y = (float) plan.getSatisfaction();
 			series2.add(x, y);
     	}
         

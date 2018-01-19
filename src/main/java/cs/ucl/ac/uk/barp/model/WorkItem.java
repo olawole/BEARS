@@ -20,6 +20,10 @@ public class WorkItem {
 		
 		private Distribution effort;
 		
+		private int earliestRelease;
+		
+		private int latestRelease;
+		
 		private int valuePoint;
 		
 		private double priority;
@@ -164,6 +168,34 @@ public class WorkItem {
 
 		public void setAveragePeriodValue(double[] averageSanpv) {
 			this.averagePeriodValue = averageSanpv;
+		}
+
+		/**
+		 * @return the earliestRelease
+		 */
+		public int getEarliestRelease() {
+			return earliestRelease;
+		}
+
+		/**
+		 * @param earliestRelease the earliestRelease to set
+		 */
+		public void setEarliestRelease(int earliestRelease) {
+			this.earliestRelease = earliestRelease;
+		}
+
+		/**
+		 * @return the latestRelease
+		 */
+		public int getLatestRelease() {
+			return latestRelease;
+		}
+
+		/**
+		 * @param latestRelease the latestRelease to set
+		 */
+		public void setLatestRelease(int latestRelease) {
+			this.latestRelease = latestRelease;
 		}
 
 }

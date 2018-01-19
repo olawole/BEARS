@@ -51,6 +51,7 @@ public class AlgorithmFactory {
 			        .setPopulationSize(ConfigSetting.POPULATION_SIZE)
 			        .setMaxIterations(250)
 			        .build();
+			break;
 		case NSGAIII:
 			algorithm = new NSGAIIIBuilder<IntegerSolution>(problem)
 			.setCrossoverOperator(crossover)

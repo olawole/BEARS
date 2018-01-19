@@ -10,11 +10,11 @@ import org.uma.jmetal.solution.IntegerSolution;
 public class ReleasePlan {
 	
 	private HashMap<Integer, Release> releases;
-	//private List<Objective> objectives;
 	private double businessValue;
 	private double investmentRisk;
 	private double expectedPunctuality;
 	private double satisfaction;
+	private double exceedProbability;
 
 	public ReleasePlan() {
 		releases = new HashMap<Integer, Release>();
@@ -147,21 +147,21 @@ public class ReleasePlan {
 	}
 
 	/**
-	 * @return
+	 * @return businessValue
 	 */
 	public double getBusinessValue() {
 		return businessValue;
 	}
 
 	/**
-	 * @param businessValue
+	 * @param
 	 */
 	public void setBusinessValue(double businessValue) {
 		this.businessValue = businessValue;
 	}
 	
 	/**
-	 * @return
+	 * @return releases
 	 */
 	public HashMap<Integer, Release> getPlan(){
 		return releases;
@@ -215,7 +215,9 @@ public class ReleasePlan {
 	}
 	
 	/**
-	 * @return
+	 * 
+	 * method to map each feature to its release period in the plan
+	 * @return result
 	 */
 	public HashMap<String, Integer> featureReleaseMap(){
 		HashMap<String, Integer> result = new HashMap<String, Integer>();
@@ -269,6 +271,20 @@ public class ReleasePlan {
 
 	public void setSatisfaction(double satisfaction) {
 		this.satisfaction = satisfaction;
+	}
+
+	/**
+	 * @return the exceedProbability
+	 */
+	public double getExceedProbability() {
+		return exceedProbability;
+	}
+
+	/**
+	 * @param exceedProbability the exceedProbability to set
+	 */
+	public void setExceedProbability(double exceedProbability) {
+		this.exceedProbability = exceedProbability;
 	}
 	
 

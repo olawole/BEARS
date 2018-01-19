@@ -4,7 +4,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.IntegerSolution;
 
 import cs.ucl.ac.uk.barp.model.Project;
-import cs.ucl.ac.uk.barp.problem.Barp;
+import cs.ucl.ac.uk.barp.problem.BEARS;
 import cs.ucl.ac.uk.barp.problem.BarpCertain;
 
 public class ProblemFactory {
@@ -14,7 +14,7 @@ public class ProblemFactory {
 			return null;
 		}
 		if (problemType.equalsIgnoreCase("Barp")){
-			return new Barp(project);
+			return new BEARS(project);
 		}
 		if (problemType.equalsIgnoreCase("BarpCertain")){
 			return new BarpCertain(project);

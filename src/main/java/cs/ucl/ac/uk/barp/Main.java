@@ -8,8 +8,9 @@ import cs.ucl.ac.uk.barp.model.Project;
 import cs.ucl.ac.uk.barp.optimization.InformationValueAnalyser;
 import cs.ucl.ac.uk.barp.optimization.MCSimulator;
 import cs.ucl.ac.uk.barp.optimization.Optimization;
-import cs.ucl.ac.uk.barp.project.ProjectParser;
+import cs.ucl.ac.uk.barp.problem.BEARS;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
+import cs.ucl.ac.uk.barp.project.utilities.ProjectParser;
 import cs.ucl.ac.uk.barp.release.OptimalSolutions;
 import cs.ucl.ac.uk.barp.release.view.BarChartView;
 import cs.ucl.ac.uk.barp.release.view.CashAnalysisView;
@@ -29,11 +30,11 @@ public class Main {
 	static String algorithmType;
 	
 	public Main() {
-		filename = "councilNew.csv";
+		filename = "councilNew2.csv";
 		noOfReleases = 3;
 		noOfInvestmentHorizon = 12;
 		budget = new double[]{500, 350, 200};
-		capacity = new double[]{200,200,200};
+		capacity = new double[]{500,400,400};
 //		capacity = new double[]{80, 70, 60};//, 50};
 
 		interestRate = 0.02;
@@ -51,6 +52,7 @@ public class Main {
 		project.setNumberOfInvestmentPeriods(noOfInvestmentHorizon);
 		project.setNumberOfIterations(noOfReleases);
 		project.setBudgetPerRelease(budget);
+		//project.printStrands();
 		if (problemType.equalsIgnoreCase("Barp")){
 			MCSimulator.simulate(project.getWorkItems(), noOfInvestmentHorizon, interestRate);
 		}
@@ -67,6 +69,7 @@ public class Main {
 		System.out.println(optimal.getSolutions().size());
 		InformationValueAnalyser.computeInformationValue(optimal, project.getWorkItems());	
 		optimal.printEvppi();
+		System.out.println("Unique Solutions = " + BEARS.buffer.size());
 	}
 
 	private static String getProblemType() {

@@ -15,8 +15,8 @@ public class ConfigSetting {
 	public static int THREADS=1;
 	public static int MAX_EVALUATIONS=25000;
 	//public static int ALGORITHM_RUNS=3;
-	public static String DEFAULT_APRROX_ALGORITHM= "nsgaii";
-	public static int POPULATION_SIZE=12;
+	public static String DEFAULT_APRROX_ALGORITHM= "mocell";
+	public static int POPULATION_SIZE=100;
 	public static double CROSSOVER_PROBABILITY=0.9;
 	public static double CROSSOVER_DISTRIBUTION_INDEX=20;
 	public static double MUTATION_DISTRIBUTION_INDEX=20;

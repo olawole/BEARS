@@ -31,10 +31,10 @@ import cs.ucl.ac.uk.barp.model.ReleasePlan;
 import cs.ucl.ac.uk.barp.model.WorkItem;
 import cs.ucl.ac.uk.barp.optimization.MCSimulator;
 import cs.ucl.ac.uk.barp.optimization.Optimization;
-import cs.ucl.ac.uk.barp.problem.Barp;
+import cs.ucl.ac.uk.barp.problem.BEARS;
 import cs.ucl.ac.uk.barp.problem.MORP;
-import cs.ucl.ac.uk.barp.project.ProjectParser;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
+import cs.ucl.ac.uk.barp.project.utilities.ProjectParser;
 import cs.ucl.ac.uk.barp.project.utilities.StatUtil;
 import cs.ucl.ac.uk.barp.release.OptimalSolutions;
 import cs.ucl.ac.uk.barp.release.view.Scatter;
@@ -315,7 +315,7 @@ public class Example {
 		int[][] seed = new int[][]{{2,2,3,0,0,3,1,0,1,2,4,1,0,3,4,1,1,2}, 
 			{2,2,3,0,4,3,1,3,1,2,4,1,3,3,2,1,1,2}};
 		List<IntegerSolution> solutions = new ArrayList<IntegerSolution>();
-		Barp problem = new Barp(project);
+		BEARS problem = new BEARS(project);
 		for (int i = 0; i < 2; i++){
 			IntegerSolution solution = new DefaultIntegerSolution(problem);
 			for (int j = 0; j < seed[i].length; j++){
