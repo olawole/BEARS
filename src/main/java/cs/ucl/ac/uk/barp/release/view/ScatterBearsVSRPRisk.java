@@ -58,7 +58,7 @@ public class ScatterBearsVSRPRisk extends ApplicationFrame {
 	}
 
 	public JFreeChart createChart(XYDataset data){
-    	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), "Probability Plan exceed effort", "Business value (Value point)", data);
+    	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), "Probability of Satisfying all effort constraints", "Business value (Value point)", data);
     	Shape cross = ShapeUtilities.createDiagonalCross(3, 1);
     	Shape diamond = ShapeUtilities.createDiamond(3);
     	Shape triangle = ShapeUtilities.createDownTriangle(2);

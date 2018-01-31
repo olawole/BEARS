@@ -19,10 +19,8 @@ Create application alert,P,0,10,15,25,30,2.7,0.548,,K,25,30,35,40,50,3.551,0.192
 View planning applications,Q,0,15,22,30,45,3.063,0.467,,L,40,60,70,80,100,4.241,0.202
 Contest parking fines,R,0,8,14,22,30,2.581,0.623,,M,30,35,45,60,80,3.827,0.317
 set up council tax direct debit,S,0,5,10,18,25,2.231,0.775,,N,50,65,75,85,110,4.306,0.191
-,,,,,,,,,,O,20,30,35,45,50,3.568,0.251
-,,,,,,,,,,P,20,25,35,40,50,3.498,0.294
-Sign up and login,,,,,,,,,,Q,25,30,35,37,40,3.522,0.133
-Interface to Residents Repository,,,,,,,,,,R,40,50,55,65,70,4.019,0.163
-Payment Processor,,,,,,,,,,S,20,23,25,30,35,3.306,0.17
-Interface to Rubbish Collection System,,,,,,,,,,,,,,,,,
-Interface to Council Housing Repository,,,,,,,,,,,,,,,,,
+Sign up and login,,,,,,,,,,O,20,30,35,45,50,3.568,0.251
+Interface to Residents Repository,,,,,,,,,,P,20,25,35,40,50,3.498,0.294
+Payment Processor,,,,,,,,,,Q,25,30,35,37,40,3.522,0.133
+Interface to Rubbish Collection System,,,,,,,,,,R,40,50,55,65,70,4.019,0.163
+Interface to Council Housing Repository,,,,,,,,,,S,20,23,25,30,35,3.306,0.17

@@ -61,7 +61,7 @@ public class BearsEvolveSRPRisk {
 		noOfReleases = 3;
 		noOfInvestmentHorizon = 10;
 		budget = new double[]{500, 350, 300};
-		capacity = new double[]{300,300,300};
+		capacity = new double[]{500,400,300};
 		//budget = new double[] { 200, 200, 200 };// , 70};
 		//capacity = new double[] { 500, 400, 400 };// , 300};
 		// capacity = new double[]{80, 70, 60};//, 50};
