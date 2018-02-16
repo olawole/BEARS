@@ -2,8 +2,8 @@ package cs.ucl.ac.uk.barp.release.view;
 
 
 import java.awt.Color;
-import java.awt.Paint;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.util.List;
 
 import javax.swing.WindowConstants;
@@ -12,11 +12,12 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYDotRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
+import org.jfree.util.ShapeUtilities;
 
 import cs.ucl.ac.uk.barp.model.ReleasePlan;
 
@@ -26,43 +27,35 @@ import cs.ucl.ac.uk.barp.model.ReleasePlan;
  *
  */
 @SuppressWarnings("serial")
-public class ScatterPlot extends ApplicationFrame {
+public class ScatterRigidVSRPRiskSRPObjective extends ApplicationFrame {
 
-
-	//List<ReleasePlan> allSolutions;
-	List<ReleasePlan> optimalSolutions;
-	String xAxisLabel;
+	List<ReleasePlan> bears1Solutions;
+	List<ReleasePlan> srpSolutions;
 
     /**
      * Creates a new fast scatter plot demo.
      *
      * @param title  the frame title.
      */
-    public ScatterPlot(final String title, List<ReleasePlan> optimal) {
+    public ScatterRigidVSRPRiskSRPObjective(final String title, List<ReleasePlan> optimal, List<ReleasePlan> srpPlans) {
         super(title);
-        //allSolutions = all;
-        optimalSolutions = optimal;
+        bears1Solutions = optimal;
+        srpSolutions = srpPlans;
 
     }
-    
-    public ScatterPlot(final String title, List<ReleasePlan> optimal, String xAxis) {
-        super(title);
-        //allSolutions = all;
-        optimalSolutions = optimal;
-        xAxisLabel = xAxis;
 
-    }
-    
-    public JFreeChart createChart(XYDataset data){
-    	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), xAxisLabel, "Net Present Value (Thousand Pounds)", data);
+	public JFreeChart createChart(XYDataset data){
+    	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), "Probability Plan delivered with budget", "Business Value", data);
+    	Shape cross = ShapeUtilities.createDiagonalCross(3, 1);
+    	Shape diamond = ShapeUtilities.createDiamond(3);
     	XYPlot plot = (XYPlot) chart.getPlot();
     	plot.setBackgroundPaint(Color.WHITE);
     	plot.setDomainGridlinesVisible(false);
-    	XYDotRenderer renderer = new XYDotRenderer();
-        renderer.setDotWidth(4);
-        renderer.setDotHeight(4);
-        renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesPaint(1, Color.BLACK);
+    	XYItemRenderer renderer = plot.getRenderer();
+        renderer.setSeriesPaint(0, Color.GREEN);
+        renderer.setSeriesPaint(1, Color.RED);
+        renderer.setSeriesShape(0, cross);
+        renderer.setSeriesShape(1, diamond);
         plot.setRenderer(renderer);
     	plot.setDomainCrosshairVisible(true);
         plot.setRangeCrosshairVisible(true);
@@ -74,15 +67,21 @@ public class ScatterPlot extends ApplicationFrame {
     public XYDataset createDataset(){
     	float x,y;
     	XYSeriesCollection seriesCollection = new XYSeriesCollection();
-        XYSeries series = new XYSeries("Candidate Release Plans");
-        for (ReleasePlan plan : optimalSolutions){
-    			x = (float) plan.getExpectedPunctuality();
-    			y = (float) plan.getBusinessValue();
+        XYSeries series = new XYSeries("BEARS RIGID");
+        for (ReleasePlan plan : bears1Solutions){
+        		x = (float) plan.getExceedProbability();
+    			y = (float) plan.getSatisfaction();
     			series.add(x, y);
     	}
-        
+        XYSeries series1 = new XYSeries("SRPRisk");
+        for (ReleasePlan plan : srpSolutions){
+        	x = (float) plan.getExceedProbability();
+			y = (float) plan.getSatisfaction();
+			series1.add(x, y);
+    	}
         seriesCollection.addSeries(series);
-        //seriesCollection.addSeries(lineData);
+        seriesCollection.addSeries(series1);
+        //seriesCollection.addSeries(series2);
         
         return seriesCollection;
     }

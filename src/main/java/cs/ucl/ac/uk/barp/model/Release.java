@@ -52,6 +52,8 @@ public class Release {
 		}
 		return output;
 	}
+	
+	
 
 //	public double getCapacity() {
 //		return capacity;

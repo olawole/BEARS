@@ -98,7 +98,7 @@ public class SRPRisk extends AbstractIntegerProblem implements ConstrainedProble
 				totalSatisfaction += satisfaction;
 			}
 
-			double riskProb = computeRisk(sumEffort);
+			double riskProb = computeRisk();
 			averageEffort = new double[noOfReleases];
 			for(int j = 0; j < noOfReleases; j++){
 				averageEffort[j] = StatUtil.mean(effortNeededPerRelease[j]);
@@ -129,17 +129,35 @@ public class SRPRisk extends AbstractIntegerProblem implements ConstrainedProble
 	// return riskProbability;
 	// }
 
-	private double computeRisk(double[] effortNeededByPlan) {
+//	private double computeRisk(double[] effortNeededByPlan) {
+//		double riskProbability;
+//		double sumCapacity = StatUtil.sum(effortCapacity);
+//		double N = effortNeededByPlan.length;
+//		double noEffortExceedCapacity = 0;
+//		for (int j = 0; j < N; j++) {
+//			if (effortNeededByPlan[j] > sumCapacity) {
+//				noEffortExceedCapacity++;
+//			}
+//		}
+//		riskProbability = noEffortExceedCapacity / N;
+//
+//		return riskProbability;
+//	}
+	
+	private double computeRisk() {
 		double riskProbability;
-		double sumCapacity = StatUtil.sum(effortCapacity);
-		double N = effortNeededByPlan.length;
+		double N = effort.length;
 		double noEffortExceedCapacity = 0;
 		for (int j = 0; j < N; j++) {
-			if (effortNeededByPlan[j] > sumCapacity) {
-				noEffortExceedCapacity++;
+			for (int i = 0; i < noOfReleases; i++){
+				if (effortNeededPerRelease[i][j] > effortCapacity[i]) {
+					noEffortExceedCapacity++;
+					//break;
+				}
 			}
+			
 		}
-		riskProbability = noEffortExceedCapacity / N;
+		riskProbability = noEffortExceedCapacity / (noOfReleases * N);
 
 		return riskProbability;
 	}
@@ -161,18 +179,18 @@ public class SRPRisk extends AbstractIntegerProblem implements ConstrainedProble
 
 	@Override
 	public void evaluateConstraints(IntegerSolution solution) {
-		int noOfViolation = 0;
-		double total = 0.0;
-		for (int k = 0; k < noOfReleases; k++) {
-			double constraint2 = effortCapacity[k] - averageEffort[k];
-			if (constraint2 < 0) {
-				noOfViolation++;
-				total += constraint2;
-
-			}
-		}
-		numberOfViolatedConstraints.setAttribute(solution, noOfViolation);
-		overallConstraintViolationDegree.setAttribute(solution, total);
+//		int noOfViolation = 0;
+//		double total = 0.0;
+//		for (int k = 0; k < noOfReleases; k++) {
+//			double constraint2 = effortCapacity[k] - averageEffort[k];
+//			if (constraint2 < 0) {
+//				noOfViolation++;
+//				total += constraint2;
+//
+//			}
+//		}
+//		numberOfViolatedConstraints.setAttribute(solution, noOfViolation);
+//		overallConstraintViolationDegree.setAttribute(solution, total);
 	}
 
 	/**

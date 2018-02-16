@@ -49,7 +49,7 @@ public class TableGenerator {
 				}
 			}
 			row += StatUtil.round(plan.getBusinessValue(), 2) + COL_SEP + 
-					StatUtil.round(plan.getInvestmentRisk()*100, 2) + COL_SEP +
+					StatUtil.round(plan.getRiskMeasure()*100, 2) + COL_SEP +
 					StatUtil.round(plan.getExpectedPunctuality(), 3);
 			latexString += row + "\\\\ \n";
 			latexString += HORIZONTAL_LINE;
@@ -82,7 +82,7 @@ public class TableGenerator {
 				row += "\""+ s.replace(",", "->")+ "\"" + COMMA_SEP;
 			}
 			row += StatUtil.round(plan.getBusinessValue(), 2) + COMMA_SEP + 
-					StatUtil.round(plan.getInvestmentRisk()*100, 2);
+					StatUtil.round(plan.getRiskMeasure()*100, 2);
 			csvString += row + "\n";
 		}
 		try {

@@ -54,7 +54,7 @@ public class Pareto {
 //		String planString = planToString(rPlan);
 		if (!solutions.contains(rPlan)){
 			rPlan.setSatisfaction(Math.abs(solution.getObjective(0)));
-			rPlan.setEffort(StatUtil.sum(projectId.capacity) - solution.getObjective(1));
+			//rPlan.setEffort(StatUtil.sum(projectId.capacity) - solution.getObjective(1));
 			solutions.add(rPlan);
 //			uniqueSolutions.add(planString);
 		}	

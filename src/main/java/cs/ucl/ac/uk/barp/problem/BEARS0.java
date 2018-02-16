@@ -14,13 +14,11 @@ import cs.ucl.ac.uk.evolve.EvolveProject;
 
 
 @SuppressWarnings("serial")
-public class MORP extends AbstractIntegerProblem implements ConstrainedProblem<IntegerSolution>{
+public class BEARS0 extends AbstractIntegerProblem implements ConstrainedProblem<IntegerSolution>{
 	int noOfFeatures;
 	
 	int noOfReleases;
-	
-	double[] releaseImportance;
-	
+		
 	int[] values;
 	
 	double[] effort; //effort per feature in hours - given
@@ -39,23 +37,22 @@ public class MORP extends AbstractIntegerProblem implements ConstrainedProblem<I
 	
 	public OverallConstraintViolation<IntegerSolution> overallConstraintViolationDegree;
 	public NumberOfViolatedConstraints<IntegerSolution> numberOfViolatedConstraints;
+
+	private double interestRate;
 	
-	public MORP(EvolveProject project){
+	public BEARS0(EvolveProject project){
 		this.project = project;
 		this.values = project.valueMatrix;
-//		this.urgency = project.urgencyMatrix;
 		this.effort = project.effortMatrix;
-		this.releaseImportance = project.releaseImp;
-		this.noOfReleases = project.capacity.length;
 		this.effortCapacity = project.capacity;
-//		this.stakeholderWeight = project.stakeImp;
-//		noOfStakeholders = stakeholderWeight.length;
+		this.noOfReleases = effortCapacity.length;
+		this.interestRate = 0.02;
 		noOfFeatures = effort.length;
 		
 		setNumberOfVariables(noOfFeatures);
 		setNumberOfConstraints(noOfReleases);
 	    setNumberOfObjectives(1);
-	    setName("EVOLVERP");
+	    setName("BEARS0");
 	    
 	    overallConstraintViolationDegree = new OverallConstraintViolation<IntegerSolution>();
 	    numberOfViolatedConstraints = new NumberOfViolatedConstraints<IntegerSolution>();
@@ -78,23 +75,23 @@ public class MORP extends AbstractIntegerProblem implements ConstrainedProblem<I
 	public void evaluate(IntegerSolution solution) {
 		boolean isValid = isValid(repairSolution(solution));
 		if (isValid){
-			double totalSatisfaction = 0.0;
+			double netPresentValue = 0.0;
 			double sumEffort = 0.0;
 			effortNeededPerRelease = new double[noOfReleases];
 			
 			for (int k = 1; k <= noOfReleases; k++){
-				double satisfaction = 0;
+				double value = 0;
 				double effort = 0;
 				for (int i = 0; i < noOfFeatures; i++){
 					int xi = solution.getVariableValue(i);
 					if (k == xi){
-						satisfaction += WAS(i,k-1);
+						value += discountValue(i,k);
 						effort += this.effort[i];
 						sumEffort += this.effort[i];
 					}
 				}
 				effortNeededPerRelease[k-1] = effort;
-				totalSatisfaction += satisfaction;
+				netPresentValue += value;
 			}
 			
 			double utilization = StatUtil.sum(effortCapacity) - sumEffort;
@@ -103,7 +100,7 @@ public class MORP extends AbstractIntegerProblem implements ConstrainedProblem<I
 				//solution.setObjective(1, 1000000);
 			}
 			else {
-				solution.setObjective(0, -totalSatisfaction);
+				solution.setObjective(0, -netPresentValue);
 				//solution.setObjective(1, utilization);
 			}	
 		}
@@ -115,18 +112,10 @@ public class MORP extends AbstractIntegerProblem implements ConstrainedProblem<I
 		
 	}
 	
-	public double WAS(int featureIndex, int releaseId){
-		double was;
-		was = releaseImportance[releaseId] * values[featureIndex];
-		return was;
-//		double sum = 0.0;
-//		int i = featureIndex; int k = releaseId;
-//		for(int p = 0; p < noOfStakeholders; p++){
-//			sum += stakeholderWeight[p] * values[i][p] * urgency[i][noOfStakeholders * p + k];
-//		}
-//		was = releaseImportance[k] * sum;
-		
-//		return was;
+	public double discountValue(int featureIndex, int releaseId){
+		double discountedValue;
+		discountedValue =  values[featureIndex] / Math.pow((1 + interestRate), releaseId);
+		return discountedValue;
 	}
 
 	@Override

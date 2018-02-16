@@ -11,7 +11,7 @@ public class ReleasePlan {
 	
 	private HashMap<Integer, Release> releases;
 	private double businessValue;
-	private double investmentRisk;
+	private double riskMeasure;
 	private double expectedPunctuality;
 	private double satisfaction;
 	private double exceedProbability;
@@ -135,15 +135,15 @@ public class ReleasePlan {
 	/**
 	 * @return
 	 */
-	public double getInvestmentRisk() {
-		return investmentRisk;
+	public double getRiskMeasure() {
+		return riskMeasure;
 	}
 
 	/**
-	 * @param investmentRisk
+	 * @param riskValue
 	 */
-	public void setInvestmentRisk(double investmentRisk) {
-		this.investmentRisk = investmentRisk;
+	public void setRiskMeasure(double riskValue) {
+		this.riskMeasure = riskValue;
 	}
 
 	/**
@@ -286,6 +286,16 @@ public class ReleasePlan {
 	public void setExceedProbability(double exceedProbability) {
 		this.exceedProbability = exceedProbability;
 	}
+
+	public HashMap<Integer, Release> getReleases() {
+		return releases;
+	}
+
+	public void setReleases(HashMap<Integer, Release> releases) {
+		this.releases = releases;
+	}
+	
+	
 	
 
 }

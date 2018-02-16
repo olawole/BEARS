@@ -2,8 +2,8 @@ package cs.ucl.ac.uk.barp.release.view;
 
 
 import java.awt.Color;
-import java.awt.Paint;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.util.List;
 
 import javax.swing.WindowConstants;
@@ -12,11 +12,12 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYDotRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
+import org.jfree.util.ShapeUtilities;
 
 import cs.ucl.ac.uk.barp.model.ReleasePlan;
 
@@ -26,43 +27,43 @@ import cs.ucl.ac.uk.barp.model.ReleasePlan;
  *
  */
 @SuppressWarnings("serial")
-public class ScatterPlot extends ApplicationFrame {
+public class ScatterBears0Evolve extends ApplicationFrame {
 
 
 	//List<ReleasePlan> allSolutions;
-	List<ReleasePlan> optimalSolutions;
-	String xAxisLabel;
+	List<ReleasePlan> bears0Solutions;
+	List<ReleasePlan> evolveSolutions;
+//	List<ReleasePlan> dominatedSolutions;
 
     /**
      * Creates a new fast scatter plot demo.
      *
      * @param title  the frame title.
      */
-    public ScatterPlot(final String title, List<ReleasePlan> optimal) {
+    public ScatterBears0Evolve(final String title, List<ReleasePlan> optimal, List<ReleasePlan> evolve) {
         super(title);
         //allSolutions = all;
-        optimalSolutions = optimal;
+        bears0Solutions = optimal;
+        evolveSolutions = evolve;
+//        dominatedSolutions = dominated;
 
     }
-    
-    public ScatterPlot(final String title, List<ReleasePlan> optimal, String xAxis) {
-        super(title);
-        //allSolutions = all;
-        optimalSolutions = optimal;
-        xAxisLabel = xAxis;
 
-    }
-    
-    public JFreeChart createChart(XYDataset data){
-    	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), xAxisLabel, "Net Present Value (Thousand Pounds)", data);
+	public JFreeChart createChart(XYDataset data){
+    	JFreeChart chart = ChartFactory.createScatterPlot(getTitle(), "Total Effort Required", "Business Value ('000 £)", data);
+    	Shape cross = ShapeUtilities.createDiagonalCross(3, 1);
+    	Shape diamond = ShapeUtilities.createDiamond(3);
     	XYPlot plot = (XYPlot) chart.getPlot();
     	plot.setBackgroundPaint(Color.WHITE);
     	plot.setDomainGridlinesVisible(false);
-    	XYDotRenderer renderer = new XYDotRenderer();
-        renderer.setDotWidth(4);
-        renderer.setDotHeight(4);
-        renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesPaint(1, Color.BLACK);
+    	//XYDotRenderer renderer = new XYDotRenderer();
+    	XYItemRenderer renderer = plot.getRenderer();
+//        renderer.setDotWidth(10);
+//        renderer.setDotHeight(10);
+        renderer.setSeriesPaint(0, Color.GREEN);
+        renderer.setSeriesPaint(1, Color.RED);
+        renderer.setSeriesShape(0, cross);
+        renderer.setSeriesShape(1, diamond);
         plot.setRenderer(renderer);
     	plot.setDomainCrosshairVisible(true);
         plot.setRangeCrosshairVisible(true);
@@ -74,15 +75,34 @@ public class ScatterPlot extends ApplicationFrame {
     public XYDataset createDataset(){
     	float x,y;
     	XYSeriesCollection seriesCollection = new XYSeriesCollection();
-        XYSeries series = new XYSeries("Candidate Release Plans");
-        for (ReleasePlan plan : optimalSolutions){
-    			x = (float) plan.getExpectedPunctuality();
+        XYSeries series = new XYSeries("BEARS RP");
+        int counter = 0;
+        for (ReleasePlan plan : bears0Solutions){
+        	if (++counter > 10)
+        		break;
+    			x = (float) plan.getRiskMeasure();
     			y = (float) plan.getBusinessValue();
     			series.add(x, y);
     	}
+        counter = 0;
+        XYSeries series1 = new XYSeries("EVOLVE II");
+        for (ReleasePlan plan : evolveSolutions){
+        	if (++counter > 10)
+        		break;
+        	x = (float) plan.getRiskMeasure();
+			y = (float) plan.getBusinessValue();
+			series1.add(x, y);
+    	}
         
+//        XYSeries series2 = new XYSeries("EVOLVE optimal (ReleasePlanner)");
+//        for (ReleasePlan plan : dominatedSolutions){
+//        	x = (float) plan.getExpectedPunctuality();
+//			y = (float) plan.getBusinessValue();
+//			series2.add(x, y);
+//    	}
         seriesCollection.addSeries(series);
-        //seriesCollection.addSeries(lineData);
+        seriesCollection.addSeries(series1);
+        //seriesCollection.addSeries(series2);
         
         return seriesCollection;
     }
