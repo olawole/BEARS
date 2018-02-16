@@ -46,14 +46,24 @@ public class BearsEvolveExperiment {
 			Project project = entry.getValue();
 			for (int i = 1; i <= noOfReleases.length; i++) {
 				List<ReleasePlan> allPlans = new ArrayList<>();
-				for (int k = 0; k < INDEPENDENT_RUNS; k++) {
+				List<Double> evolveRuntimes = new ArrayList<Double>();
+				List<Double> bearsRuntimes = new ArrayList<Double>();
+				for (int k = 0; k < INDEPENDENT_RUNS; k++) {					
 					project.setEffortCapacity(experiment.setEffortCapacity(i));
 					project.setBudgetPerRelease(experiment.setBudgetCapacity(i));
 					project.setNumberOfIterations(i);
 					EvolveProject evolveProject = ObjectiveValueUtil.convertProjectToEvolve(project, true);
 					Optimization optimisation = new Optimization(project, "Barp", "NSGAII");
+					Long startTime = System.currentTimeMillis();
 					List<IntegerSolution> evolveSolutions = ObjectiveValueUtil.runEvolve(evolveProject);
+					Long endTime = System.currentTimeMillis();
+					Double evolveRuntime = (endTime - startTime) / 1000.0;
+					evolveRuntimes.add(evolveRuntime);
+					startTime = System.currentTimeMillis();
 					List<IntegerSolution> bearsSolutions = optimisation.run();
+					endTime = System.currentTimeMillis();
+					Double bearsRuntime = (endTime - startTime) / 1000.0;
+					bearsRuntimes.add(bearsRuntime);
 					List<ReleasePlan> evolvePlan = ObjectiveValueUtil.computeBearsInObjectives(evolveSolutions,
 							project);
 					List<ReleasePlan> bearsPlan = ObjectiveValueUtil.computeBearsInObjectives(bearsSolutions, project);
@@ -65,6 +75,8 @@ public class BearsEvolveExperiment {
 					allPlans.addAll(evolvePlan);
 					allPlans.addAll(bearsPlan);
 				}
+				experiment.writeRuntimes(BEARSPATH + "/" + name + "_" + i, bearsRuntimes);
+				experiment.writeRuntimes(EVOLVEPATH + "/" + name + "_" + i, evolveRuntimes);
 				//allPlans = ParetoOptimalUtil.removeDuplicate(allPlans);
 				allPlans = ParetoOptimalUtil.findParetoOptimal(allPlans);
 				experiment.writeReferencePareto(name + "_" + i, allPlans);
@@ -72,6 +84,22 @@ public class BearsEvolveExperiment {
 			}
 		}
 
+	}
+
+	private void writeRuntimes(String Path, List<Double> bearsRuntimes) {
+		try {
+			FileWriter output = new FileWriter(Path + "/runtime.tsv");
+			for (Double runtime : bearsRuntimes){
+				output.write(runtime.toString());
+				output.write("\n");
+			}
+			output.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
