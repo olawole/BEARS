@@ -22,7 +22,7 @@ import cs.ucl.ac.uk.evolve.EvolveProject;
 
 public class BearsEvolveExperiment {
 
-	final static int INDEPENDENT_RUNS = 5;
+	final static int INDEPENDENT_RUNS = 30;
 	final String dataDirectory = "data/";
 	final static String referencePareto = "pareto_front";
 	final static String resultDirectory = "result";
