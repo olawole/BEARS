@@ -12,6 +12,7 @@ import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.util.JMetalLogger;
 
 import cs.ucl.ac.uk.barp.model.Project;
 import cs.ucl.ac.uk.barp.project.utilities.ConfigSetting;
@@ -50,7 +51,7 @@ public class Optimization {
 	public List<IntegerSolution> run(){
 		AlgorithmRunner algRunner = new AlgorithmRunner.Executor(algorithm)
 				.execute();
-		System.out.println("Computation time: " + algRunner.getComputingTime());
+		JMetalLogger.logger.info("Computation time: " + algRunner.getComputingTime());
 		return algorithm.getResult();	
 	}
 	

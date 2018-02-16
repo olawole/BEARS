@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.util.JMetalLogger;
 
 import cs.ucl.ac.uk.barp.model.Project;
 import cs.ucl.ac.uk.barp.model.ReleasePlan;
@@ -48,7 +49,8 @@ public class BearsEvolveExperiment {
 				List<ReleasePlan> allPlans = new ArrayList<>();
 				List<Double> evolveRuntimes = new ArrayList<Double>();
 				List<Double> bearsRuntimes = new ArrayList<Double>();
-				for (int k = 0; k < INDEPENDENT_RUNS; k++) {					
+				for (int k = 0; k < INDEPENDENT_RUNS; k++) {	
+					JMetalLogger.logger.info("RUNNING: " + name + " Run " + k);
 					project.setEffortCapacity(experiment.setEffortCapacity(i));
 					project.setBudgetPerRelease(experiment.setBudgetCapacity(i));
 					project.setNumberOfIterations(i);
@@ -75,6 +77,7 @@ public class BearsEvolveExperiment {
 					allPlans.addAll(evolvePlan);
 					allPlans.addAll(bearsPlan);
 				}
+				JMetalLogger.logger.info("RF: Writing Pareto Front to " + name + "_" + i + ".rf");
 				experiment.writeRuntimes(BEARSPATH + "/" + name + "_" + i, bearsRuntimes);
 				experiment.writeRuntimes(EVOLVEPATH + "/" + name + "_" + i, evolveRuntimes);
 				//allPlans = ParetoOptimalUtil.removeDuplicate(allPlans);
