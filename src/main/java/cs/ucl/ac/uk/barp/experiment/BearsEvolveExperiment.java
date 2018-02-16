@@ -33,8 +33,10 @@ public class BearsEvolveExperiment {
 	final int noOfHorizons = 12;
 	final double budgetPerRelease = 500;
 	final String distributionType = "LogNormal";
+	
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		//JMetalLogger.configureLoggers(null);
 		BearsEvolveExperiment experiment = new BearsEvolveExperiment();
 		HashMap<String, Project> projects = experiment.getProjects();
 		String EVOLVEPATH = resultDirectory + "/evolve";
