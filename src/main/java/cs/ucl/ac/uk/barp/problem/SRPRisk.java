@@ -46,7 +46,7 @@ public class SRPRisk extends AbstractIntegerProblem implements ConstrainedProble
 		// this.urgency = project.urgencyMatrix;
 		this.effort = project.effortMatrix;
 		this.releaseImportance = project.releaseImp;
-		this.noOfReleases = releaseImportance.length;
+		this.noOfReleases = project.capacity.length;
 		this.effortCapacity = project.capacity;
 		// this.stakeholderWeight = project.stakeImp;
 		// noOfStakeholders = stakeholderWeight.length;
