@@ -49,7 +49,7 @@ public class Bears1VsBears2 {
 		
 		ObjectiveValueUtil.computePlanBears1Objective(bearsPlansRigidObj, project);
 		
-		ScatterBearsRigidVBearsRigidObj plot1 = new ScatterBearsRigidVBearsRigidObj("Flexible Vs Rigid Bears", bearsPlansRigidObj, rigidPlansRigidObj);
+		ScatterBearsRigidVBearsRigidObj plot1 = new ScatterBearsRigidVBearsRigidObj("", bearsPlansRigidObj, rigidPlansRigidObj);
 		ScatterBearsRigidVBears plot = new ScatterBearsRigidVBears("Flexible Vs Rigid Bears", bearsOptimal.getSolutions(), rigidPlans);
 		plot1.drawPlot();
 		plot.drawPlot();

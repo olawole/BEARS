@@ -4,6 +4,7 @@ package cs.ucl.ac.uk.barp.release.view;
 import java.awt.Color;
 import java.awt.Paint;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.util.List;
 
 import javax.swing.WindowConstants;
@@ -17,6 +18,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
+import org.jfree.util.ShapeUtilities;
 
 import cs.ucl.ac.uk.barp.model.ReleasePlan;
 
@@ -59,9 +61,9 @@ public class ScatterPlot extends ApplicationFrame {
     	plot.setBackgroundPaint(Color.WHITE);
     	plot.setDomainGridlinesVisible(false);
     	XYDotRenderer renderer = new XYDotRenderer();
-        renderer.setDotWidth(4);
-        renderer.setDotHeight(4);
-        renderer.setSeriesPaint(0, Color.RED);
+        renderer.setDotWidth(6);
+        renderer.setDotHeight(6);
+        renderer.setSeriesPaint(0, Color.GREEN);
         renderer.setSeriesPaint(1, Color.BLACK);
         plot.setRenderer(renderer);
     	plot.setDomainCrosshairVisible(true);

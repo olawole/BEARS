@@ -10,6 +10,7 @@ import java.util.List;
 import org.uma.jmetal.qualityindicator.impl.Epsilon;
 import org.uma.jmetal.qualityindicator.impl.GenericIndicator;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
+import org.uma.jmetal.qualityindicator.impl.hypervolume.WFGHypervolume;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
@@ -19,24 +20,22 @@ import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.util.PointSolution;
 
-public class ExperimentIndicator {
+public class ComputeIndicators {
 	
 	final static List<GenericIndicator<IntegerSolution>> indicators = Arrays.asList(
 			new PISAHypervolume<IntegerSolution>(),
 			new Epsilon<IntegerSolution>());
-	final String referencePareto = "pareto_front4";
-	final String baseDir = "result4";
-	final String[] methodDirectory = {"bears", "sprisk"};
-//	final String[] problems = {"b30", "b50", "b100", "b200"};
-//	final int[] noReleases = {1,2,3,4,5};
-	final String[] problems = {"councilNew2"};
-	final int[] noReleases = {3};
-	final static int INDEPENDENT_RUNS = 1;
+	final String referencePareto = "pareto_front";
+	final String baseDir = "result";
+	final String[] methodDirectory = {"bears", "evolveU","rigid", "evolve","deterministicBears"};
+	final String[] problems = {"b30", "b50", "b100", "b200"};
+	final int[] noReleases = {1,2,3,4,5};
+	final static int INDEPENDENT_RUNS = 30;
 	String[] problemList;
 	
 
-	public ExperimentIndicator() {
-		problemList = new String[1];
+	public ComputeIndicators() {
+		problemList = new String[20];
 		int k = 0;
 		for(int i = 0; i < problems.length; i++){
 			for (int j = 0; j < noReleases.length; j ++){
@@ -45,8 +44,8 @@ public class ExperimentIndicator {
 		}
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException{
-		ExperimentIndicator experiment = new ExperimentIndicator();
+	public static void run() throws FileNotFoundException{
+		ComputeIndicators experiment = new ComputeIndicators();
 		for (GenericIndicator<IntegerSolution> indicator : indicators){
 		for (String method : experiment.methodDirectory){
 			String methodDir = experiment.baseDir + "/" + method;

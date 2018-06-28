@@ -36,7 +36,7 @@ public class Experiment {
 	final String distributionType = "LogNormal";
 	
 
-	public static void main(String[] args) throws IOException {
+	public static void run() throws IOException {
 		Experiment experiment = new Experiment();
 		createDirectory(referencePareto);
 		createDirectory(resultDirectory);

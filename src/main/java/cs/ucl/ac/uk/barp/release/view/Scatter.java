@@ -52,8 +52,10 @@ public class Scatter extends ApplicationFrame {
 
     }
     
-    public Scatter(String title, List<ReleasePlan> solutions, List<ReleasePlan> evolvePlan) {
+    public Scatter(String title, List<ReleasePlan> optimal, List<ReleasePlan> evolvePlan) {
     	super(title);
+    	optimalSolutions = optimal;
+        evolveSolutions = evolvePlan;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -86,7 +88,7 @@ public class Scatter extends ApplicationFrame {
     public XYDataset createDataset(){
     	float x,y;
     	XYSeriesCollection seriesCollection = new XYSeriesCollection();
-        XYSeries series = new XYSeries("BEARS RP");
+        XYSeries series = new XYSeries("BEARS");
         for (ReleasePlan plan : optimalSolutions){
     			x = (float) plan.getExpectedPunctuality();
     			y = (float) plan.getBusinessValue();
@@ -99,13 +101,16 @@ public class Scatter extends ApplicationFrame {
 			y = (float) plan.getBusinessValue();
 			series1.add(x, y);
     	}
-        
         XYSeries series2 = new XYSeries("SRPRisk");
-        for (ReleasePlan plan : srpSolutions){
-        	x = (float) plan.getExpectedPunctuality();
-			y = (float) plan.getBusinessValue();
-			series2.add(x, y);
-    	}
+        if (srpSolutions != null){
+        	for (ReleasePlan plan : srpSolutions){
+            	x = (float) plan.getExpectedPunctuality();
+    			y = (float) plan.getBusinessValue();
+    			series2.add(x, y);
+        	}
+        }
+        
+        
         
 //        XYSeries series2 = new XYSeries("EVOLVE optimal (ReleasePlanner)");
 //        for (ReleasePlan plan : dominatedSolutions){
@@ -115,7 +120,8 @@ public class Scatter extends ApplicationFrame {
 //    	}
         seriesCollection.addSeries(series);
         seriesCollection.addSeries(series1);
-        seriesCollection.addSeries(series2);
+        if (srpSolutions != null)
+        	seriesCollection.addSeries(series2);
         //seriesCollection.addSeries(series2);
         
         return seriesCollection;

@@ -24,11 +24,11 @@ public class BearsEvolveExperiment {
 
 	final static int INDEPENDENT_RUNS = 30;
 	final String dataDirectory = "data/";
-	final static String referencePareto = "pareto_front";
-	final static String resultDirectory = "result";
-	final String[] files = { "b30", "b50", "b100", "b200" };
-	final static int[] noOfReleases = { 1, 2, 3, 4, 5 };
-	final double capacityPerRelease = 400.0;
+	final static String referencePareto = "pareto_front1";
+	final static String resultDirectory = "result1";
+	final String[] files = { "councilNew2" };
+	final static int[] noOfReleases = { 1, 2, 3 };
+	final double capacityPerRelease = 500.0;
 	final double interestRate = 0.02;
 	final int noOfHorizons = 12;
 	final double budgetPerRelease = 500;
@@ -36,7 +36,6 @@ public class BearsEvolveExperiment {
 	
 
 	public static void main(String[] args) throws IOException {
-		//JMetalLogger.configureLoggers(null);
 		BearsEvolveExperiment experiment = new BearsEvolveExperiment();
 		HashMap<String, Project> projects = experiment.getProjects();
 		String EVOLVEPATH = resultDirectory + "/evolve";
@@ -47,7 +46,7 @@ public class BearsEvolveExperiment {
 		for (Map.Entry<String, Project> entry : projects.entrySet()) {
 			String name = entry.getKey();
 			Project project = entry.getValue();
-			for (int i = 1; i <= noOfReleases.length; i++) {
+			for (int i = 3; i <= noOfReleases.length; i++) {
 				List<ReleasePlan> allPlans = new ArrayList<>();
 				List<Double> evolveRuntimes = new ArrayList<Double>();
 				List<Double> bearsRuntimes = new ArrayList<Double>();
@@ -71,8 +70,8 @@ public class BearsEvolveExperiment {
 					List<ReleasePlan> evolvePlan = ObjectiveValueUtil.computeBearsInObjectives(evolveSolutions,
 							project);
 					List<ReleasePlan> bearsPlan = ObjectiveValueUtil.computeBearsInObjectives(bearsSolutions, project);
-					//bearsPlan = ParetoOptimalUtil.removeDuplicate(bearsPlan);
-					//evolvePlan = ParetoOptimalUtil.removeDuplicate(evolvePlan);
+					bearsPlan = ParetoOptimalUtil.removeDuplicate(bearsPlan);
+					evolvePlan = ParetoOptimalUtil.removeDuplicate(evolvePlan);
 					experiment.writeSolutions(BEARSPATH + "/" + name + "_" + i , bearsPlan, k);
 					experiment.writeSolutions(EVOLVEPATH + "/" + name + "_" + i, evolvePlan, k);
 
@@ -80,9 +79,9 @@ public class BearsEvolveExperiment {
 					allPlans.addAll(bearsPlan);
 				}
 				JMetalLogger.logger.info("RF: Writing Pareto Front to " + name + "_" + i + ".rf");
-				experiment.writeRuntimes(BEARSPATH + "/" + name + "_" + i, bearsRuntimes);
-				experiment.writeRuntimes(EVOLVEPATH + "/" + name + "_" + i, evolveRuntimes);
-				//allPlans = ParetoOptimalUtil.removeDuplicate(allPlans);
+//				experiment.writeRuntimes(BEARSPATH + "/" + name + "_" + i, bearsRuntimes);
+//				experiment.writeRuntimes(EVOLVEPATH + "/" + name + "_" + i, evolveRuntimes);
+				allPlans = ParetoOptimalUtil.removeDuplicate(allPlans);
 				allPlans = ParetoOptimalUtil.findParetoOptimal(allPlans);
 				experiment.writeReferencePareto(name + "_" + i, allPlans);
 

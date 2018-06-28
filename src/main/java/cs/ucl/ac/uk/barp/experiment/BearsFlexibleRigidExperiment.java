@@ -23,11 +23,11 @@ public class BearsFlexibleRigidExperiment {
 
 	final static int INDEPENDENT_RUNS = 30;
 	final String dataDirectory = "data/";
-	final static String referencePareto = "pareto_front";
-	final static String resultDirectory = "result";
-	final String[] files = { "b30", "b50", "b100", "b200" };
-	final static int[] noOfReleases = { 1, 2, 3, 4, 5 };
-	final double capacityPerRelease = 400.0;
+	final static String referencePareto = "pareto_front3";
+	final static String resultDirectory = "result3";
+	final String[] files = { "councilNew2"};
+	final static int[] noOfReleases = { 1, 2, 3 };
+	final double capacityPerRelease = 500.0;
 	final double interestRate = 0.02;
 	final int noOfHorizons = 12;
 	final double budgetPerRelease = 500;
@@ -46,7 +46,7 @@ public class BearsFlexibleRigidExperiment {
 		for (Map.Entry<String, Project> entry : projects.entrySet()) {
 			String name = entry.getKey();
 			Project project = entry.getValue();
-			for (int i = 1; i <= noOfReleases.length; i++) {
+			for (int i = 3; i <= noOfReleases.length; i++) {
 				List<ReleasePlan> allPlans = new ArrayList<>();
 				List<Double> rigidRuntimes = new ArrayList<Double>();
 				List<Double> bearsRuntimes = new ArrayList<Double>();
@@ -67,7 +67,7 @@ public class BearsFlexibleRigidExperiment {
 					endTime = System.currentTimeMillis();
 					Double bearsRuntime = (endTime - startTime) / 1000.0;
 					bearsRuntimes.add(bearsRuntime);
-					List<ReleasePlan> rigidPlan = ObjectiveValueUtil.computeBearsObjectives(rigidSolutions,
+					List<ReleasePlan> rigidPlan = ObjectiveValueUtil.computeBearsInObjectives(rigidSolutions,
 							project);
 					List<ReleasePlan> bearsPlan = ObjectiveValueUtil.computeBearsInObjectives(bearsSolutions, project);
 					//bearsPlan = ParetoOptimalUtil.removeDuplicate(bearsPlan);

@@ -146,7 +146,7 @@ public class SRPRisk extends AbstractIntegerProblem implements ConstrainedProble
 	
 	private double computeRisk() {
 		double riskProbability;
-		double N = effort.length;
+		double N = effort[0].length;
 		double noEffortExceedCapacity = 0;
 		for (int j = 0; j < N; j++) {
 			for (int i = 0; i < noOfReleases; i++){

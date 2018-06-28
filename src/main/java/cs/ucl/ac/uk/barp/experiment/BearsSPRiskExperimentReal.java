@@ -21,25 +21,31 @@ import cs.ucl.ac.uk.barp.project.utilities.ProjectParser;
 import cs.ucl.ac.uk.evolve.EvolveProject;
 import cs.ucl.ac.uk.srprisk.SRPRiskProject;
 
-public class BearsSPRiskExperiment {
+public class BearsSPRiskExperimentReal {
 
 	final static int INDEPENDENT_RUNS = 30;
-	final String dataDirectory = "data/";
-	final static String referencePareto = "pareto_front4";
-	final static String resultDirectory = "result4";
-	final String[] files = {"councilNew2"};
-	final static int[] noOfReleases = { 1, 2, 3 };
-	final double capacityPerRelease = 500.0;
+	//final String dataDirectory = "data/";
+	final static String referencePareto = "pareto_front";
+	final static String resultDirectory = "result";
 	final double interestRate = 0.02;
 	final int noOfHorizons = 12;
-	final double budgetPerRelease = 500;
 	final String distributionType = "LogNormal";
+	HashMap<String, double[]> importance;
 	
+	public BearsSPRiskExperimentReal(){
+		importance = new HashMap<>();
+		importance.put("council", new double[]{9,8,7});
+		importance.put("RALICR", new double[]{9,8,7});
+		importance.put("RALICP", new double[]{9,8,7});
+		importance.put("ReleasePlanner", new double[]{9,5,3});
+		importance.put("WordProcessing", new double[]{9,8,8});
+	}
 
 	public static void main(String[] args) throws IOException {
 		//JMetalLogger.configureLoggers(null);
-		BearsSPRiskExperiment experiment = new BearsSPRiskExperiment();
+		BearsSPRiskExperimentReal experiment = new BearsSPRiskExperimentReal();
 		HashMap<String, Project> projects = experiment.getProjects();
+		createDirectory(resultDirectory);
 		String SRPRISKPATH = resultDirectory + "/sprisk";
 		String BEARSPATH = resultDirectory + "/bears";
 		createDirectory(SRPRISKPATH);
@@ -48,19 +54,16 @@ public class BearsSPRiskExperiment {
 		for (Map.Entry<String, Project> entry : projects.entrySet()) {
 			String name = entry.getKey();
 			Project project = entry.getValue();
-			for (int i = 3; i <= noOfReleases.length; i++) {
 				List<ReleasePlan> allPlans = new ArrayList<>();
 				List<Double> srpRuntimes = new ArrayList<Double>();
 				List<Double> bearsRuntimes = new ArrayList<Double>();
 				for (int k = 0; k < INDEPENDENT_RUNS; k++) {	
 					JMetalLogger.logger.info("RUNNING: " + name + " Run " + k);
-					project.setEffortCapacity(experiment.setEffortCapacity(i));
-					project.setBudgetPerRelease(experiment.setBudgetCapacity(i));
-					project.setNumberOfIterations(i);
-					SRPRiskProject srpProject = ObjectiveValueUtil.convertProjectToSRPRisk(project, true);
+					SRPRiskProject srpProject = ObjectiveValueUtil.convertProjectToSRPRisk(project, false);
+					srpProject.releaseImp = experiment.importance.get(name);
 					Optimization optimisation = new Optimization(project, "Barp", "NSGAII");
 					Long startTime = System.currentTimeMillis();
-					List<IntegerSolution> evolveSolutions = ObjectiveValueUtil.runSRPRisk(srpProject);
+					List<IntegerSolution> srpSolutions = ObjectiveValueUtil.runSRPRisk(srpProject);
 					Long endTime = System.currentTimeMillis();
 					Double srpRuntime = (endTime - startTime) / 1000.0;
 					srpRuntimes.add(srpRuntime);
@@ -69,25 +72,24 @@ public class BearsSPRiskExperiment {
 					endTime = System.currentTimeMillis();
 					Double bearsRuntime = (endTime - startTime) / 1000.0;
 					bearsRuntimes.add(bearsRuntime);
-					List<ReleasePlan> evolvePlan = ObjectiveValueUtil.computeBearsInObjectives(evolveSolutions,
+					List<ReleasePlan> srpPlan = ObjectiveValueUtil.computeBearsInObjectives(srpSolutions,
 							project);
 					List<ReleasePlan> bearsPlan = ObjectiveValueUtil.computeBearsInObjectives(bearsSolutions, project);
 					//bearsPlan = ParetoOptimalUtil.removeDuplicate(bearsPlan);
 					//evolvePlan = ParetoOptimalUtil.removeDuplicate(evolvePlan);
-					experiment.writeSolutions(BEARSPATH + "/" + name + "_" + i , bearsPlan, k);
-					experiment.writeSolutions(SRPRISKPATH + "/" + name + "_" + i, evolvePlan, k);
+					experiment.writeSolutions(BEARSPATH + "/" + name, bearsPlan, k);
+					experiment.writeSolutions(SRPRISKPATH + "/" + name, srpPlan, k);
 
-					allPlans.addAll(evolvePlan);
+					allPlans.addAll(srpPlan);
 					allPlans.addAll(bearsPlan);
 				}
-				JMetalLogger.logger.info("RF: Writing Pareto Front to " + name + "_" + i + ".rf");
-				experiment.writeRuntimes(BEARSPATH + "/" + name + "_" + i, bearsRuntimes);
-				experiment.writeRuntimes(SRPRISKPATH + "/" + name + "_" + i, srpRuntimes);
+				JMetalLogger.logger.info("RF: Writing Pareto Front to " + name + ".rf");
+				experiment.writeRuntimes(BEARSPATH + "/" + name, bearsRuntimes);
+				experiment.writeRuntimes(SRPRISKPATH + "/" + name, srpRuntimes);
 				//allPlans = ParetoOptimalUtil.removeDuplicate(allPlans);
 				allPlans = ParetoOptimalUtil.findParetoOptimal(allPlans);
-				experiment.writeReferencePareto(name + "_" + i, allPlans);
+				experiment.writeReferencePareto(name, allPlans);
 
-			}
 		}
 
 	}
@@ -153,36 +155,62 @@ public class BearsSPRiskExperiment {
 
 	private HashMap<String, Project> getProjects() {
 		HashMap<String, Project> projects = new HashMap<>();
-		for (int i = 0; i < files.length; i++) {
-			String filePath = dataDirectory + files[i] + ".csv";
-			try {
-				Project project = ProjectParser.parseCSVToProjectExp(filePath, distributionType);
-				project.setInterestRate(interestRate);
-				project.setNumberOfInvestmentPeriods(noOfHorizons);
-				project.checkTransitiveDependency();
-				MCSimulator.simulate(project.getWorkItems(), noOfHorizons, interestRate);
-				projects.put(files[i], project);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			Project councilProject = ProjectParser.parseCSVToProjectExp("data/councilNew2.csv", distributionType);
+			councilProject.setInterestRate(interestRate);
+			councilProject.setNumberOfInvestmentPeriods(noOfHorizons);
+			councilProject.setEffortCapacity(new double[]{500, 500, 500});
+			councilProject.setBudgetPerRelease(new double[]{0,0,0});
+			councilProject.setNumberOfIterations(3);
+			councilProject.checkTransitiveDependency();
+			MCSimulator.simulate(councilProject.getWorkItems(), noOfHorizons, interestRate);
+			
+			Project ralicR = ProjectParser.parseCSVToProjectExp("data/ralic-rate.csv", distributionType);
+			ralicR.setInterestRate(interestRate);
+			ralicR.setNumberOfInvestmentPeriods(noOfHorizons);
+			ralicR.setEffortCapacity(new double[]{1000, 1000, 1000, 1000, 1000});
+			ralicR.setBudgetPerRelease(new double[]{0,0,0,0,0});
+			ralicR.setNumberOfIterations(5);
+			ralicR.checkTransitiveDependency();
+			MCSimulator.simulate(ralicR.getWorkItems(), noOfHorizons, interestRate);
+			
+			Project ralicP = ProjectParser.parseCSVToProjectExp("data/ralic-point.csv", distributionType);
+			ralicP.setInterestRate(interestRate);
+			ralicP.setNumberOfInvestmentPeriods(noOfHorizons);
+			ralicP.setEffortCapacity(new double[]{1000, 1000, 1000, 1000, 1000});
+			ralicP.setBudgetPerRelease(new double[]{0,0,0,0,0});
+			ralicP.setNumberOfIterations(5);
+			ralicP.checkTransitiveDependency();
+			MCSimulator.simulate(ralicP.getWorkItems(), noOfHorizons, interestRate);
+			
+			Project wordProcessing = ProjectParser.parseCSVToProjectExp("data/word-processing.csv", distributionType);
+			wordProcessing.setInterestRate(interestRate);
+			wordProcessing.setNumberOfInvestmentPeriods(noOfHorizons);
+			wordProcessing.setEffortCapacity(new double[]{725, 693, 675});
+			wordProcessing.setBudgetPerRelease(new double[]{0, 0, 0});
+			wordProcessing.setNumberOfIterations(3);
+			wordProcessing.checkTransitiveDependency();
+			MCSimulator.simulate(wordProcessing.getWorkItems(), noOfHorizons, interestRate);
+			
+			Project releasePlanner = ProjectParser.parseCSVToProjectExp("data/releaseplanner-data.csv", distributionType);
+			releasePlanner.setInterestRate(interestRate);
+			releasePlanner.setNumberOfInvestmentPeriods(noOfHorizons);
+			releasePlanner.setEffortCapacity(new double[]{8604, 6960, 7420});
+			releasePlanner.setBudgetPerRelease(new double[]{0,0,0});
+			releasePlanner.setNumberOfIterations(3);
+			releasePlanner.checkTransitiveDependency();
+			MCSimulator.simulate(releasePlanner.getWorkItems(), noOfHorizons, interestRate);
+			
+			projects.put("council", councilProject);
+			projects.put("RALICR", ralicR);
+			projects.put("RALICP", ralicP);
+			projects.put("WordProcessing", wordProcessing);
+			projects.put("ReleasePlanner", releasePlanner);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		return projects;
-	}
-
-	private double[] setEffortCapacity(int noOfRelease) {
-		double[] capacity = new double[noOfRelease];
-		for (int i = 0; i < noOfRelease; i++) {
-			capacity[i] = capacityPerRelease;
-		}
-		return capacity;
-	}
-
-	private double[] setBudgetCapacity(int noOfRelease) {
-		double[] budget = new double[noOfRelease];
-		for (int i = 0; i < noOfRelease; i++) {
-			budget[i] = budgetPerRelease;
-		}
-		return budget;
 	}
 
 }

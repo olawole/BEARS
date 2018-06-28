@@ -60,7 +60,7 @@ public class MainRigid1 {
 		List<IntegerSolution> solutions = optimisation.run();
 		System.out.println(solutions.size());
 		OptimalSolutions optimal = new OptimalSolutions();
-		new ScatterPlotView(optimal, "Plan within budget (%)");
+		new ScatterPlotView(optimal, "Expected Effort Overrun (%)");
 //		new RoadMapView(optimal, noOfReleases, filename);
 //		new BarChartView(optimal, noOfReleases);
 //		new TableView(optimal, noOfReleases);

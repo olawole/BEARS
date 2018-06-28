@@ -72,6 +72,7 @@ public class OptimalSolutions {
 			rPlan.setBusinessValue(Math.abs(solution.getObjective(0)));
 			//rPlan.setInvestmentRisk(solution.getObjective(1));
 			rPlan.setExpectedPunctuality((1 - solution.getObjective(1)) * 100);
+//			rPlan.setExpectedPunctuality(solution.getObjective(1));
 			solutions.add(rPlan);
 			uniqueSolutions.add(planString);
 		}	

@@ -30,11 +30,11 @@ public class Main {
 	static String algorithmType;
 	
 	public Main() {
-		filename = "councilNew2.csv";
+		filename = "word-processing.csv"; // "councilNew2.csv";
 		noOfReleases = 3;
 		noOfInvestmentHorizon = 12;
-		budget = new double[]{500, 350, 200};
-		capacity = new double[]{500,400,400};
+		budget = new double[]{0, 0, 0};
+		capacity = new double[]{725, 693, 675};
 //		capacity = new double[]{80, 70, 60};//, 50};
 
 		interestRate = 0.02;
@@ -45,7 +45,7 @@ public class Main {
 	public static void main(String[] args) throws Exception{
 		new Main();
 		String problemType = getProblemType();
-		Project project = ProjectParser.parseCSVToProject(filename, distributionType);
+		Project project = ProjectParser.parseCSVToProjectExp(filename, distributionType);
 		project.checkTransitiveDependency();
 		project.setEffortCapacity(capacity);
 		project.setInterestRate(interestRate);
@@ -64,7 +64,7 @@ public class Main {
 		new RoadMapView(optimal, noOfReleases, filename);
 		new BarChartView(optimal, noOfReleases);
 		new TableView(optimal, noOfReleases);
-		new CashAnalysisView(optimal, project.getNumberOfInvestmentPeriods(), project.getBudgetPerRelease(), project.getInterestRate());
+		//new CashAnalysisView(optimal, project.getNumberOfInvestmentPeriods(), project.getBudgetPerRelease(), project.getInterestRate());
 		optimal.setSolutions(solutions, project);
 		System.out.println(optimal.getSolutions().size());
 		InformationValueAnalyser.computeInformationValue(optimal, project.getWorkItems());	

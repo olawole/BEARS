@@ -75,21 +75,21 @@ public class ScatterBearsRigidVBearsRigidObj extends ApplicationFrame {
     public XYDataset createDataset(){
     	float x,y;
     	XYSeriesCollection seriesCollection = new XYSeriesCollection();
-        XYSeries series = new XYSeries("BEARS Flexible");
-        for (ReleasePlan plan : optimalSolutions){
-    			x = (float) plan.getRiskMeasure();
-    			y = (float) plan.getBusinessValue();
-    			series.add(x, y);
-    	}
+//        XYSeries series = new XYSeries("BEARS Flexible");
+//        for (ReleasePlan plan : optimalSolutions){
+//    			x = (float) plan.getRiskMeasure();
+//    			y = (float) plan.getBusinessValue();
+//    			series.add(x, y);
+//    	}
         
-        XYSeries series1 = new XYSeries("BEARS Rigid");
+        XYSeries series1 = new XYSeries("BEARS-fixed");
         for (ReleasePlan plan : rigidSolutions){
         	x = (float) plan.getRiskMeasure();
 			y = (float) plan.getBusinessValue();
 			series1.add(x, y);
     	}
         
-        seriesCollection.addSeries(series);
+//        seriesCollection.addSeries(series);
         seriesCollection.addSeries(series1);
         //seriesCollection.addSeries(series2);
         

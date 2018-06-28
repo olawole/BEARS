@@ -294,17 +294,5 @@ public class BEARS extends AbstractIntegerProblem implements ConstrainedProblem<
 		latenessProbability = diff / actualP.size();
 		return latenessProbability;
 	}
-	
-	// for (int i = 1; i <= noOfReleases; i++){
-				// Release release = rPlan.getRelease(i);
-				// if(release != null){
-				// for (WorkItem wi : release.getwItems()){
-				// sumEffort += wi.getEffortSimulation()[j];
-				// if(wi.getValue() != null)
-				// sanpv += wi.getSanpv()[j][i-1];
-				// }
-				// sanpv -= releaseBudget[i-1];
-				// }
-				// }
 
 }
