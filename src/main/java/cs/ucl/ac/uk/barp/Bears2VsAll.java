@@ -19,6 +19,7 @@ import cs.ucl.ac.uk.barp.project.utilities.ParetoOptimalUtil;
 import cs.ucl.ac.uk.barp.project.utilities.ProjectParser;
 import cs.ucl.ac.uk.barp.project.utilities.SolutionFileWriterUtil;
 import cs.ucl.ac.uk.barp.release.OptimalSolutions;
+import cs.ucl.ac.uk.barp.release.view.ScatterBearsVSAll;
 import cs.ucl.ac.uk.barp.release.view.ScatterDeterministic;
 import cs.ucl.ac.uk.barp.release.view.ScatterPlotView;
 import cs.ucl.ac.uk.barp.release.view.ScatterUncertainty;
@@ -28,28 +29,29 @@ import cs.ucl.ac.uk.srprisk.SRPRiskProject;
 public class Bears2VsAll {
 
 	public static void main(String[] args) throws Exception {
-		Project project = ProjectParser.parseCSVToProject(ExperimentConfiguration.FILENAME,
+		Project project = ProjectParser.parseCSVToProjectExp("data/councilNew2.csv",
 				ExperimentConfiguration.distributionType);
 		project.checkTransitiveDependency();
-		project.setEffortCapacity(ExperimentConfiguration.capacity);
+		project.setEffortCapacity(new double[]{40, 40, 40});
 		project.setInterestRate(ExperimentConfiguration.interestRate);
 		project.setNumberOfInvestmentPeriods(ExperimentConfiguration.noOfInvestmentHorizon);
-		project.setNumberOfIterations(ExperimentConfiguration.noOfReleases);
-		project.setBudgetPerRelease(ExperimentConfiguration.budget);
+		project.setNumberOfIterations(3);
+		project.setBudgetPerRelease(new double[]{0, 0, 0});
 		// simulation
 		MCSimulator.simulate(project.getWorkItems(), ExperimentConfiguration.noOfInvestmentHorizon,
 				ExperimentConfiguration.interestRate);
 		// convert project to Evolve II
-		EvolveProject evolve = ObjectiveValueUtil.convertProjectToEvolve(project, true);
+		EvolveProject evolve = ObjectiveValueUtil.convertProjectToEvolve(project, false);
+		evolve.releaseImp = new double[]{9,8,7};
 		EvolveProject bears0 = ObjectiveValueUtil.convertProjectToEvolve(project, false);
 		// Convert project to SRPRisk
-		SRPRiskProject srpProject = ObjectiveValueUtil.convertProjectToSRPRisk(project, true);
+		SRPRiskProject srpProject = ObjectiveValueUtil.convertProjectToSRPRisk(project, false);
 		Optimization optimisation1 = new Optimization(project, "Bears1", ExperimentConfiguration.algorithmType);
 		Optimization optimisation = new Optimization(project, "Barp", ExperimentConfiguration.algorithmType);
 
 		// Run Evolve II and SRPRisk
 		List<IntegerSolution> evolveSolutions = ObjectiveValueUtil.runEvolve(evolve);
-		List<IntegerSolution> bears0Solutions = ObjectiveValueUtil.runEvolve(bears0);
+		List<IntegerSolution> bears0Solutions = ObjectiveValueUtil.runBears0(bears0);
 		List<IntegerSolution> srpSolutions = ObjectiveValueUtil.runSRPRisk(srpProject);
 		List<IntegerSolution> bearsSolutions = optimisation.run();
 		List<IntegerSolution> bears1Solutions = optimisation1.run();
@@ -112,6 +114,8 @@ public class Bears2VsAll {
 		ScatterUncertainty s1 = new ScatterUncertainty("", optimal.getSolutions(), rigidPlans, srpPlan);
 		s1.drawPlot();
 		
+		ScatterBearsVSAll sAll = new ScatterBearsVSAll("", optimal.getSolutions(), evolvePlan, srpPlan, bears0Plan, rigidPlans);
+		sAll.drawPlot();
 //		rigid.drawPlot();
 //		srp.drawPlot();
 

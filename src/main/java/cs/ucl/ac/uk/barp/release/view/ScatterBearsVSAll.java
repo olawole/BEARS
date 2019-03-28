@@ -95,35 +95,35 @@ public class ScatterBearsVSAll extends ApplicationFrame {
     public XYDataset createDataset(){
     	float x,y;
     	XYSeriesCollection seriesCollection = new XYSeriesCollection();
-        XYSeries series = new XYSeries("BEARS RP");
+        XYSeries series = new XYSeries("BEARS");
         for (ReleasePlan plan : optimalSolutions){
     			x = (float) plan.getExpectedPunctuality();
     			y = (float) plan.getBusinessValue();
     			series.add(x, y);
     	}
         
-        XYSeries series1 = new XYSeries("EVOLVE");
+        XYSeries series1 = new XYSeries("EVOLVE-II");
         for (ReleasePlan plan : evolveSolutions){
         	x = (float) plan.getExpectedPunctuality();
 			y = (float) plan.getBusinessValue();
 			series1.add(x, y);
     	}
         
-        XYSeries series2 = new XYSeries("SRPRisk");
+        XYSeries series2 = new XYSeries("EVOLVE-with-uncertainty");
         for (ReleasePlan plan : srpSolutions){
         	x = (float) plan.getExpectedPunctuality();
 			y = (float) plan.getBusinessValue();
 			series2.add(x, y);
     	}
         
-        XYSeries series3 = new XYSeries("BEARS RIGID");
+        XYSeries series3 = new XYSeries("BEARS-fixed-scope");
         for (ReleasePlan plan : bears1Solutions){
         	x = (float) plan.getExpectedPunctuality();
 			y = (float) plan.getBusinessValue();
 			series3.add(x, y);
     	}
         
-        XYSeries series4 = new XYSeries("BEARS0");
+        XYSeries series4 = new XYSeries("BEARS-deterministic");
         for (ReleasePlan plan : bears0Solutions){
         	x = (float) plan.getExpectedPunctuality();
 			y = (float) plan.getBusinessValue();

@@ -51,7 +51,7 @@ public class SRPRisk extends AbstractIntegerProblem implements ConstrainedProble
 		// this.stakeholderWeight = project.stakeImp;
 		// noOfStakeholders = stakeholderWeight.length;
 		noOfFeatures = effort.length;
-
+		averageEffort = new double[noOfReleases];
 		setNumberOfVariables(noOfFeatures);
 		setNumberOfConstraints(noOfReleases);
 		setNumberOfObjectives(2);
@@ -179,18 +179,18 @@ public class SRPRisk extends AbstractIntegerProblem implements ConstrainedProble
 
 	@Override
 	public void evaluateConstraints(IntegerSolution solution) {
-//		int noOfViolation = 0;
-//		double total = 0.0;
-//		for (int k = 0; k < noOfReleases; k++) {
-//			double constraint2 = effortCapacity[k] - averageEffort[k];
-//			if (constraint2 < 0) {
-//				noOfViolation++;
-//				total += constraint2;
-//
-//			}
-//		}
-//		numberOfViolatedConstraints.setAttribute(solution, noOfViolation);
-//		overallConstraintViolationDegree.setAttribute(solution, total);
+		int noOfViolation = 0;
+		double total = 0.0;
+		for (int k = 0; k < noOfReleases; k++) {
+			double constraint2 = effortCapacity[k] - averageEffort[k];
+			if (constraint2 < 0) {
+				noOfViolation++;
+				total += constraint2;
+
+			}
+		}
+		numberOfViolatedConstraints.setAttribute(solution, noOfViolation);
+		overallConstraintViolationDegree.setAttribute(solution, total);
 	}
 
 	/**

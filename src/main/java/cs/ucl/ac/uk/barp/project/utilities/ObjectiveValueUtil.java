@@ -361,7 +361,7 @@ public class ObjectiveValueUtil {
 		Problem<IntegerSolution> problem = new SRPRisk(srpRisk);
 		CrossoverOperator<IntegerSolution> crossover = new IntegerSBXCrossover(ConfigSetting.CROSSOVER_PROBABILITY,
 				ConfigSetting.CROSSOVER_DISTRIBUTION_INDEX);
-		MutationOperator<IntegerSolution> mutation = new IntegerPolynomialMutation(ConfigSetting.MUTATION_PROBABILITY,
+		MutationOperator<IntegerSolution> mutation = new IntegerPolynomialMutation(1.0 / srpRisk.getFeatures().size(),
 				ConfigSetting.MUTATION_DISTRIBUTION_INDEX);
 		SelectionOperator<List<IntegerSolution>, IntegerSolution> selection = new BinaryTournamentSelection<IntegerSolution>();
 		Algorithm<List<IntegerSolution>> algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation)
@@ -417,7 +417,7 @@ public class ObjectiveValueUtil {
 		Problem<IntegerSolution> problem = new MORP(evolve);
 		CrossoverOperator<IntegerSolution> crossover = new IntegerSBXCrossover(ConfigSetting.CROSSOVER_PROBABILITY,
 				ConfigSetting.CROSSOVER_DISTRIBUTION_INDEX);
-		MutationOperator<IntegerSolution> mutation = new IntegerPolynomialMutation(ConfigSetting.MUTATION_PROBABILITY,
+		MutationOperator<IntegerSolution> mutation = new IntegerPolynomialMutation(1.0 / evolve.getFeatures().size(),
 				ConfigSetting.MUTATION_DISTRIBUTION_INDEX);
 		SelectionOperator<List<IntegerSolution>, IntegerSolution> selection = new BinaryTournamentSelection<IntegerSolution>();
 		// Algorithm<List<IntegerSolution>> algorithm = new
@@ -437,7 +437,7 @@ public class ObjectiveValueUtil {
 
 	public static List<IntegerSolution> runBears0(EvolveProject evolve) {
 		Problem<IntegerSolution> problem = new BEARS0(evolve);
-		CrossoverOperator<IntegerSolution> crossover = new IntegerSBXCrossover(ConfigSetting.CROSSOVER_PROBABILITY,
+		CrossoverOperator<IntegerSolution> crossover = new IntegerSBXCrossover(1.0 / evolve.getFeatures().size(),
 				ConfigSetting.CROSSOVER_DISTRIBUTION_INDEX);
 		MutationOperator<IntegerSolution> mutation = new IntegerPolynomialMutation(ConfigSetting.MUTATION_PROBABILITY,
 				ConfigSetting.MUTATION_DISTRIBUTION_INDEX);

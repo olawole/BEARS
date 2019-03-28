@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.uma.jmetal.solution.IntegerSolution;
+import org.uma.jmetal.solution.Solution;
+
 import cs.ucl.ac.uk.barp.model.ReleasePlan;
 
 public class ParetoOptimalUtil {
@@ -138,6 +141,80 @@ public class ParetoOptimalUtil {
 				j--;
 			}
 		}
+	}
+	
+	public static List<IntegerSolution> sortValuePoint(List<IntegerSolution> solutions, int size) {
+		// remove duplicates
+		List<IntegerSolution> uniqueSol = new ArrayList<IntegerSolution>();
+		List<Double> uniqueNo = new ArrayList<Double>();
+		for (int j = 0; j < solutions.size(); j++){
+			if(!uniqueNo.contains(solutions.get(j).getObjective(0))){
+				uniqueNo.add(solutions.get(j).getObjective(0));
+				uniqueSol.add(solutions.get(j));
+			}
+		}
+		
+		for (int i = 1; i < uniqueSol.size(); i++) {
+			double index = uniqueSol.get(i).getObjective(0);
+			int j = i;
+			while (j > 0 && uniqueSol.get(j - 1).getObjective(0) < index) {
+				Collections.swap(uniqueSol, j, j - 1);
+				j--;
+			}
+		}
+		if (uniqueSol.size() <= size){
+			return uniqueSol;
+		}
+		List<IntegerSolution> result = new ArrayList<IntegerSolution>(uniqueSol.subList(0, size));
+		return result;
+	}
+	
+	public static List<IntegerSolution> findParetoOptimalSol(List<IntegerSolution> solutions) {
+		List<IntegerSolution> rPlans = new ArrayList<IntegerSolution>(solutions);
+		solutions = new ArrayList<IntegerSolution>();
+		for (int i = 0; i < rPlans.size(); i++) {
+			boolean pareto = true;
+			for (int j = 0; j < rPlans.size(); j++) {
+				if (i == j)
+					continue;
+				if (dominates(rPlans.get(j), rPlans.get(i))) {
+					pareto = false;
+					break;
+				}
+			}
+			if (pareto) {
+				solutions.add(rPlans.get(i));
+			}
+		}
+		return solutions;
+	}
+	
+	public static boolean all(IntegerSolution plan1, IntegerSolution plan2) {
+		boolean value = false;
+		if (plan1.getObjective(0) <= plan2.getObjective(0)
+				&& plan1.getObjective(1) <= plan2.getObjective(1)) {
+			value = true;
+		}
+		return value;
+	}
+
+	public static boolean any(IntegerSolution plan1, IntegerSolution plan2) {
+		boolean value = false;
+		if (plan1.getObjective(0) < plan2.getObjective(0)
+				|| plan1.getObjective(1) < plan2.getObjective(1)) {
+			value = true;
+		}
+		return value;
+	}
+
+	public static boolean dominates(IntegerSolution plan1, IntegerSolution plan2) {
+		boolean dominate = false;
+
+		if (all(plan1, plan2) && any(plan1, plan2)) {
+			dominate = true;
+		}
+
+		return dominate;
 	}
 
 }

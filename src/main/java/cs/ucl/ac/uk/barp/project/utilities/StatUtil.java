@@ -27,6 +27,16 @@ public class StatUtil {
 		return mydata.getMean();
 	}
 	
+	public static double[] sort(double[] data){
+		DescriptiveStatistics mydata = new DescriptiveStatistics();
+		double size = data.length;
+		
+		for (int i = 0; i < size; i++){
+			mydata.addValue(data[i]);
+		}
+		return mydata.getSortedValues();
+	}
+	
 	public static double stdev(double[] data){
 		DescriptiveStatistics mydata = new DescriptiveStatistics();
 		double size = data.length;
@@ -56,6 +66,26 @@ public class StatUtil {
 			mydata.addValue(data[i]);
 		}
 		return mydata.getMax();
+	}
+	
+	public static double percentile(double[] data, double n){
+		DescriptiveStatistics mydata = new DescriptiveStatistics();
+		double size = data.length;
+		
+		for (int i = 0; i < size; i++){
+			mydata.addValue(data[i]);
+		}
+		return mydata.getPercentile(n);
+	}
+	
+	public static double min(double[] data){
+		DescriptiveStatistics mydata = new DescriptiveStatistics();
+		double size = data.length;
+		
+		for (int i = 0; i < size; i++){
+			mydata.addValue(data[i]);
+		}
+		return mydata.getMin();
 	}
 	
 	public static int sum(Integer[] data){

@@ -27,7 +27,7 @@ public class Optimization {
 
 	public Optimization(Project project) {
 		crossover = new IntegerSBXCrossover(ConfigSetting.CROSSOVER_PROBABILITY, ConfigSetting.CROSSOVER_DISTRIBUTION_INDEX);
-		mutation = new IntegerPolynomialMutation(ConfigSetting.MUTATION_PROBABILITY, ConfigSetting.MUTATION_DISTRIBUTION_INDEX);
+		mutation = new IntegerPolynomialMutation(1.0 / project.getWorkItems().size(), ConfigSetting.MUTATION_DISTRIBUTION_INDEX);
 		selection = new BinaryTournamentSelection<IntegerSolution>();
 		problem = ProblemFactory.getProblem("Barp", project);
 		algorithm = AlgorithmFactory.getAlgorithm(AlgorithmType.NSGAII, crossover, mutation, selection, problem);
@@ -40,7 +40,7 @@ public class Optimization {
 		}
 		else {
 			crossover = new IntegerSBXCrossover(ConfigSetting.CROSSOVER_PROBABILITY, ConfigSetting.CROSSOVER_DISTRIBUTION_INDEX);
-			mutation = new IntegerPolynomialMutation(ConfigSetting.MUTATION_PROBABILITY, ConfigSetting.MUTATION_DISTRIBUTION_INDEX);
+			mutation = new IntegerPolynomialMutation(1.0 / project.getWorkItems().size(), ConfigSetting.MUTATION_DISTRIBUTION_INDEX);
 			selection = new BinaryTournamentSelection<IntegerSolution>();
 			problem = ProblemFactory.getProblem(probType, project);
 			algorithm = AlgorithmFactory.getAlgorithm(algT, crossover, mutation, selection, problem);

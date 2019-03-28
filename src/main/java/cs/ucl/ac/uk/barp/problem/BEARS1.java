@@ -258,16 +258,16 @@ public class BEARS1 extends AbstractIntegerProblem implements ConstrainedProblem
 
 	@Override
 	public void evaluateConstraints(IntegerSolution solution) {
-//		int noOfViolation = 0;
-//		double threshold = 0;
-//		for (int i = 0; i < noOfReleases; i++){
-//			if (effortPerRelease[i] > capacity[i]){
-//				++noOfViolation;
-//				threshold += capacity[i] - effortPerRelease[i];
-//			}
-//		}
-//		numberOfViolatedConstraints.setAttribute(solution, noOfViolation);
-//		overallConstraintViolationDegree.setAttribute(solution, threshold);
+		int noOfViolation = 0;
+		double threshold = 0;
+		for (int i = 0; i < noOfReleases; i++){
+			if (effortPerRelease[i] > capacity[i]){
+				++noOfViolation;
+				threshold += capacity[i] - effortPerRelease[i];
+			}
+		}
+		numberOfViolatedConstraints.setAttribute(solution, noOfViolation);
+		overallConstraintViolationDegree.setAttribute(solution, threshold);
 
 	}
 //

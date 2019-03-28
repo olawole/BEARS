@@ -74,11 +74,11 @@ public class BEARS0 extends AbstractIntegerProblem implements ConstrainedProblem
 	@Override
 	public void evaluate(IntegerSolution solution) {
 		boolean isValid = isValid(repairSolution(solution));
+		effortNeededPerRelease = new double[noOfReleases];
 		if (isValid){
 			double netPresentValue = 0.0;
 			double sumEffort = 0.0;
-			effortNeededPerRelease = new double[noOfReleases];
-			
+						
 			for (int k = 1; k <= noOfReleases; k++){
 				double value = 0;
 				double effort = 0;
@@ -121,18 +121,18 @@ public class BEARS0 extends AbstractIntegerProblem implements ConstrainedProblem
 	@Override
 	public void evaluateConstraints(IntegerSolution solution) {
 		//double[] constraints = new double[getNumberOfConstraints()];
-//		int noOfViolation = 0;
-//		double total = 0.0;
-//		for(int k = 0; k < noOfReleases; k++){
-//			double constraint2 = effortCapacity[k] - effortNeededPerRelease[k];
-//			if (constraint2 < 0){
-//				noOfViolation++;
-//				total += constraint2;
-//				
-//			}
-//		}
-//		numberOfViolatedConstraints.setAttribute(solution, noOfViolation);
-//		overallConstraintViolationDegree.setAttribute(solution, total);
+		int noOfViolation = 0;
+		double total = 0.0;
+		for(int k = 0; k < noOfReleases; k++){
+			double constraint2 = effortCapacity[k] - effortNeededPerRelease[k];
+			if (constraint2 < 0){
+				noOfViolation++;
+				total += constraint2;
+				
+			}
+		}
+		numberOfViolatedConstraints.setAttribute(solution, noOfViolation);
+		overallConstraintViolationDegree.setAttribute(solution, total);
 	}
 	
 	/**

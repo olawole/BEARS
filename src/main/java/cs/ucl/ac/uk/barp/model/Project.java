@@ -20,6 +20,16 @@ public class Project {
 	public Project() {
 		workItems = new HashMap<String, WorkItem>();
 	}
+	
+	public Project(Project project){
+		this.setWorkItems(project.getWorkItems());
+		this.setInterestRate(project.interestRate);
+		this.setNumberOfInvestmentPeriods(project.getNumberOfInvestmentPeriods());
+		this.setBudgetPerRelease(project.getBudgetPerRelease());
+		this.setEffortCapacity(project.getEffortCapacity());
+		this.setNumberOfIterations(project.getNumberOfIterations());
+		this.setWorkItemVector();
+	}
 
 	public void add(WorkItem wItem) {
 		if (workItems.containsKey(wItem.getItemId())) {

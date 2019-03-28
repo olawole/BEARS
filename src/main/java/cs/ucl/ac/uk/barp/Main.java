@@ -30,11 +30,11 @@ public class Main {
 	static String algorithmType;
 	
 	public Main() {
-		filename = "word-processing.csv"; // "councilNew2.csv";
+		filename = "data/councilNew2.csv";
 		noOfReleases = 3;
 		noOfInvestmentHorizon = 12;
 		budget = new double[]{0, 0, 0};
-		capacity = new double[]{725, 693, 675};
+		capacity = new double[]{40, 40, 40};
 //		capacity = new double[]{80, 70, 60};//, 50};
 
 		interestRate = 0.02;
