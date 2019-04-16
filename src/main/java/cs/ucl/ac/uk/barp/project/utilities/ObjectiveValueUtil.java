@@ -365,7 +365,7 @@ public class ObjectiveValueUtil {
 				ConfigSetting.MUTATION_DISTRIBUTION_INDEX);
 		SelectionOperator<List<IntegerSolution>, IntegerSolution> selection = new BinaryTournamentSelection<IntegerSolution>();
 		Algorithm<List<IntegerSolution>> algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation)
-				.setSelectionOperator(selection).setMaxEvaluations(25000).setPopulationSize(100).build();
+				.setSelectionOperator(selection).setMaxEvaluations(10000).setPopulationSize(100).build();
 
 		// Algorithm<List<IntegerSolution>> algorithm = new
 		// SPEA2Builder<IntegerSolution>(problem, crossover, mutation)
@@ -429,7 +429,7 @@ public class ObjectiveValueUtil {
 		// .build();
 
 		Algorithm<List<IntegerSolution>> algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation)
-				.setSelectionOperator(selection).setMaxEvaluations(25000).setPopulationSize(100).build();
+				.setSelectionOperator(selection).setMaxEvaluations(50000).setPopulationSize(100).build();
 		@SuppressWarnings("unused")
 		AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 		return algorithm.getResult();
@@ -451,7 +451,7 @@ public class ObjectiveValueUtil {
 		// .build();
 
 		Algorithm<List<IntegerSolution>> algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation)
-				.setSelectionOperator(selection).setMaxEvaluations(25000).setPopulationSize(100).build();
+				.setSelectionOperator(selection).setMaxEvaluations(50000).setPopulationSize(100).build();
 		@SuppressWarnings("unused")
 		AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 		return algorithm.getResult();

@@ -146,10 +146,10 @@ public class ParetoOptimalUtil {
 	public static List<IntegerSolution> sortValuePoint(List<IntegerSolution> solutions, int size) {
 		// remove duplicates
 		List<IntegerSolution> uniqueSol = new ArrayList<IntegerSolution>();
-		List<Double> uniqueNo = new ArrayList<Double>();
+		List<String> uniqueNo = new ArrayList<String>();
 		for (int j = 0; j < solutions.size(); j++){
-			if(!uniqueNo.contains(solutions.get(j).getObjective(0))){
-				uniqueNo.add(solutions.get(j).getObjective(0));
+			if(!uniqueNo.contains(solutions.get(j).toSolutionString())){
+				uniqueNo.add(solutions.get(j).toSolutionString());
 				uniqueSol.add(solutions.get(j));
 			}
 		}
