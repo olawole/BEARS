@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="/Users/olawoleoni/Documents/workspace/BARP-New/lib/commons-math3-3.6-javadoc.jar"/>
+	<classpathentry kind="lib" path="/Users/olawoleoni/Documents/workspace/BARP-New/lib/commons-math3-3.6.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-problem"/>
+	<classpathentry kind="lib" path="lib/opencsv-3.7.jar"/>
+	<classpathentry kind="lib" path="lib/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jmetal-algorithm"/>
+	<classpathentry kind="lib" path="lib/JRIEngine.jar"/>
+	<classpathentry kind="lib" path="lib/REngine.jar"/>
+	<classpathentry kind="lib" path="lib/Rserve.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
