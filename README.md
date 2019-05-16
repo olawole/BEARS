@@ -2,7 +2,7 @@
 BEARS is a JAVA tool that supports project planners in making release planning decisions under uncertainty in the context of release cycles with fixed date and flexible work scope.
 "The design and evaluation of BEARS are described in:
 
-Olawole Oni and Emmanuel Letier, [Bayesian Economic Analysis for Software Release Planning under Uncertainty, Under Submission, 2019](https://github.com/olawole/BEARS/blob/master/BEARS-2019.pdf)."
+[Olawole Oni and Emmanuel Letier, Bayesian Economic Analysis for Software Release Planning under Uncertainty, Under Submission, 2019](https://github.com/olawole/BEARS/blob/master/BEARS-2019.pdf)."
 
 # Download and Installation
 Download the jar file [here](https://drive.google.com/file/d/18Lsu9rvc8ItERebjtTKH6ENewAAXnu_G/view?usp=sharing)
