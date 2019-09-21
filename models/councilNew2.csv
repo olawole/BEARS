@@ -1,4 +1,4 @@
-Work Item,Mean,SD,Mean,SD,Precedence
+ID,Effort Mean,Effort SD,Value mean,Value SD,Precedence
 A,1.747,0.73,2.51,1.04,"1,2"
 B,2.61,0.65,2.97,0.75,"1,2"
 C,1.88,0.64,2.51,1.04,"A,3"
