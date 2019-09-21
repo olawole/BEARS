@@ -1,4 +1,4 @@
-ID,EFFORT MEAN,EFFORT SD,VALUE MEAN,VALUE SD,Dependency
+ID,Effort Mean,Effort SD,Value mean,Value SD,Precedence
 File-1,4.45,0.18,4.6,0.7,"File-4,File-5,File-6,File-7,File-8,File-9,File-10,File-11,View-2,View-3,View-4,View-5,Tools-1,Tools-2,File-12"
 File-2,4.59,0.18,4.6,0.7,"File-3,File-6,File-7,File-8,File-9,File-10,File-11,Edit-1,Edit-2,View-2,View-3,View-4,View-5,Insert-1,Insert-2,Insert-3"
 File-3,2.51,0.29,4.28,0.7,File-12
