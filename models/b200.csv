@@ -1,4 +1,4 @@
-Item,Effort,,Value,,Precursor
+ID,Effort Mean,Effort SD,Value mean,Value SD,Precedence
 A,5.168,0.066,2.896,0.499,
 B,4.847,0.196,3.546,0.419,"A,H"
 C,5.167,0.241,3.567,0.759,
