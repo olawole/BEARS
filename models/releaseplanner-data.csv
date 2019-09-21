@@ -1,4 +1,4 @@
-ID,EFFORT MEAN,EFFORT SD,VALUE MEAN,VALUE SD,Dependency
+ID,Effort Mean,Effort SD,Value mean,Value SD,Precedence
 A1,6.9,0.15,5,0.71,
 A2,7.36,0.3,4.96,0.7,
 A3,6.01,0.15,5.1,0.71,
