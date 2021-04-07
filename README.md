@@ -1,8 +1,10 @@
 # BAYESIAN ECONOMIC ANALYSIS FOR RELEASE PLANNING (BEARS)
 BEARS is a JAVA tool that supports project planners in making release planning decisions under uncertainty in the context of release cycles with fixed date and flexible work scope.
-"The design and evaluation of BEARS are described in:
+The design and evaluation of BEARS are described in:
 
-[Olawole Oni and Emmanuel Letier, Bayesian Economic Analysis for Software Release Planning under Uncertainty, Under Submission, 2019](https://github.com/olawole/BEARS/blob/master/BEARS-2019.pdf)."
+[Olawole Oni and Emmanuel Letier, Analysing Uncertainty in Release Planning: A Method and Experiment for Fixed-Date Release Cycles, Under Submission, 2021](https://github.com/olawole/BEARS/blob/master/main-tosem.pdf).
+
+The research is a summary of the work carried out during my PhD studies. Full thesis can be downloaded [here](https://github.com/olawole/BEARS/blob/master/Thesis_Olawole_Oni.pdf)
 
 # Download and Installation
 Download the jar file [here](https://drive.google.com/file/d/18Lsu9rvc8ItERebjtTKH6ENewAAXnu_G/view?usp=sharing)
@@ -45,5 +47,3 @@ To replicate the experiment, download and extract the supporting document into a
 java -jar  BearsTool.jar  --exp true
 
 After the execution of the experiment two folders "pareto_front" and "result" will be created in the current working directory. The reference Pareto front for each of the problem are stored in the "pareto_front". In the result folder, there are sub-folders for each of the methods i.e. bears, evolve etc.
-
-NOTE: Running experiment takes considerable amount of time and computing resources.
