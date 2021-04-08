@@ -2,7 +2,7 @@
 BEARS is a JAVA tool that supports project planners in making release planning decisions under uncertainty in the context of release cycles with fixed date and flexible work scope.
 The design and evaluation of BEARS are described in:
 
-[Olawole Oni and Emmanuel Letier, Analysing Uncertainty in Release Planning: A Method and Experiment for Fixed-Date Release Cycles, Under Submission, 2021](https://github.com/olawole/BEARS/blob/master/main-tosem.pdf).
+[Olawole Oni and Emmanuel Letier, Analysing Uncertainty in Release Planning: A Method and Experiment for Fixed-Date Release Cycles, Under Submission, 2021](https://github.com/olawole/BEARS/blob/master/BEARS-paper.pdf).
 
 The research is a summary of the work carried out during my PhD studies. Full thesis can be downloaded [here](https://github.com/olawole/BEARS/blob/master/Thesis_Olawole_Oni.pdf)
 
